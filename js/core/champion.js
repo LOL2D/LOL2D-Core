@@ -1,13 +1,14 @@
-class Player {
+class Champion {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);
         this.targetMove = null;
-        this.size = 20;
-        this.speed = 1.5;
+        this.size = 50;
+        this.speed = 3;
         this.fillColor = "white";
         this.strokeColor = "black";
         this.bound = null;
+        this.crowdControls = [];
 
         // set value
         for (let c in config) {
@@ -16,8 +17,15 @@ class Player {
     }
 
     run() {
+        this.runCrowdControls();
         this.move();
         this.show();
+    }
+
+    runCrowdControls() {
+        for (let c of this.crowdControls) {
+            c.effect(this);
+        }
     }
 
     show() {

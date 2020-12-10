@@ -1,13 +1,14 @@
 class GameMap {
-    constructor(config) {
+    constructor(config = {}) {
         // default value
         this.width = 1000;
         this.height = 1000;
-        this.edgeColor = "gray";
+        this.bgColor = "#555555";
+        this.edgeColor = [50, 50];
         this.edgeWeight = 3;
         this.grid = true;
         this.gridSize = 300;
-        this.gridColor = "gray";
+        this.gridColor = [50, 50];
         this.gridWeight = 3;
 
         // set value
@@ -35,18 +36,23 @@ class GameMap {
     }
 
     drawGrid(camera) {
-        stroke(this.gridColor);
-        strokeWeight(this.gridWeight);
-        let delta = 1;
-
         let { x: leftScreen, y: topScreen } = camera.convert(0, 0);
         let { x: rightScreen, y: bottomScreen } = camera.convert(width, height);
 
-        let leftMap = max(leftScreen, 0);
-        let rightMap = min(rightScreen, this.width);
-        let topMap = max(topScreen, 0);
-        let bottomMap = min(bottomScreen, this.height);
+        let leftMap = max(leftScreen - 50, 0);
+        let rightMap = min(rightScreen + 50, this.width);
+        let topMap = max(topScreen - 50, 0);
+        let bottomMap = min(bottomScreen + 50, this.height);
 
+        // fill bgcolor
+        fill(this.bgColor);
+        rect(leftMap, topMap, rightMap - leftMap, bottomMap - topMap);
+
+        // draw grid
+        stroke(this.gridColor);
+        strokeWeight(this.gridWeight);
+
+        let delta = 1;
         for (let x = leftMap; x < rightMap; x += delta) {
             if (floor(x) % this.gridSize == 0) {
                 /* while you find 1 x%this.gridSize==0 

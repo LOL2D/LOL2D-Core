@@ -4,7 +4,7 @@ class Camera {
         this.position = createVector(0, 0);
         this.target = createVector(0, 0);
         this.follow = true;
-        this.followLerp = 0.7;
+        this.followLerp = 0.1;
         this.scale = 0.1;
         this.scaleTo = 1;
         this.scaleLerp = 0.07;
