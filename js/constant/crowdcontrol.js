@@ -13,7 +13,7 @@ const ListCrowdControls = {
     Airborne: { // hất tung
         movement: DISABLED,
         attacking: DISABLED,
-        abilities = DISABLED,
+        abilities: DISABLED,
         interruptsChannels = YES,
         disabledSummonerSpells = [],
         removal = [],
