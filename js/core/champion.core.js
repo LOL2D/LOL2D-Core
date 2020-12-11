@@ -70,4 +70,10 @@ class Champion extends MovementObject {
             this.abilities[abilityKey].isAvailable()
         );
     }
+
+    loseHealth(value) {
+        this.health -= value;
+        fill("red");
+        circle(this.position.x, this.position.y, this.size);
+    }
 }

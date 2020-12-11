@@ -15,16 +15,16 @@ class OrbOfDeceptionObject extends AbilityObject {
     effect(champion) {
         if (
             this.state == "forward" &&
-            this.effectedState1.indexOf(champion) >= 0
+            this.effectedState1.indexOf(champion) < 0
         ) {
             this.effectedState1.push(champion);
-            champion.health -= this.damage;
+            champion.loseHealth(this.damage);
         } else if (
             this.state == "backward" &&
-            this.effectedState2.indexOf(champion) >= 0
+            this.effectedState2.indexOf(champion) < 0
         ) {
             this.effectedState2.push(champion);
-            champion.health -= this.damage;
+            champion.loseHealth(this.damage);
         }
     }
 
