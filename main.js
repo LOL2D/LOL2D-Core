@@ -1,29 +1,24 @@
 let p1, p2;
 let camera;
 let gamemap;
-let arr = [];
+let input;
+let abilityObjs = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     preventRightClick();
+    textAlign(CENTER, CENTER);
 
     gamemap = new GameMap();
     camera = new Camera();
+    input = new Input();
 
-    p1 = new Champion({
-        position: createVector(random(gamemap.width), random(gamemap.height)),
-        bound: gamemap.getBound(),
-    });
-    p2 = new Champion({
-        position: createVector(random(gamemap.width), random(gamemap.height)),
+    p1 = new Ahri({
         bound: gamemap.getBound(),
     });
 
     camera.target = p1.position;
-
-    for (let i = 0; i < 15; i++) {
-        arr.push({ x: random(gamemap.width), y: random(gamemap.height) });
-    }
+    input.champion = p1;
 }
 
 function draw() {
@@ -43,39 +38,47 @@ function draw() {
     gamemap.drawEdge();
     gamemap.drawGrid(camera);
 
-    strokeWeight(0);
-    fill("red");
-    for (let a of arr) {
-        circle(a.x, a.y, 20);
+    // input
+    if (keyIsPressed) {
+        input.keyDown(keyCode, camera.convert(mouseX, mouseY));
     }
 
     p1.run();
-    p2.run();
+
+    for (let i = abilityObjs.length - 1; i >= 0; i--) {
+        abilityObjs[i].run();
+
+        if (abilityObjs[i].checkFinished()) {
+            abilityObjs.splice(i, 1);
+        }
+    }
 
     camera.endState();
-
-    // show mouse cursor
-    strokeWeight(10);
-    stroke(150);
-    line(mouseX, mouseY, pmouseX, pmouseY);
-    strokeWeight(1);
-
-    // show fps
-    noStroke();
-    fill("black");
-    text("FPS: " + ~~frameRate(), 10, 10);
 }
 
-function keyPressed() {
-    if (keyCode == 32) {
-        camera.follow = !camera.follow;
+// ----------- p5js input -----------
+function keyPressed() {}
+function keyReleased() {
+    let newSpellObject = input.keyReleased(
+        keyCode,
+        camera.convert(mouseX, mouseY)
+    );
+
+    if (newSpellObject) abilityObjs.push(newSpellObject);
+}
+function keyTyped() {}
+
+function mousePressed() {}
+function mouseReleased() {}
+function mouseClicked() {}
+function mouseDragged() {}
+function mouseMoved() {}
+function doubleClicked() {}
+
+function mouseWheel() {
+    if (event.delta > 0) {
+        if (camera.scaleTo > 0.5) camera.scaleTo -= camera.scaleTo / 10;
+    } else {
+        if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
     }
-}
-
-function mouseWheel(event) {
-    // if (event.delta > 0) {
-    //     if (camera.scaleTo > 0.5) camera.scaleTo -= camera.scaleTo / 10;
-    // } else {
-    //     if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
-    // }
 }

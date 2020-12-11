@@ -1,14 +1,13 @@
-class Champion {
+class MovementObject {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);
         this.targetMove = null;
-        this.size = 50;
+        this.size = 75;
         this.speed = 3;
         this.fillColor = "white";
         this.strokeColor = "black";
         this.bound = null;
-        this.crowdControls = [];
 
         // set value
         for (let c in config) {
@@ -16,37 +15,30 @@ class Champion {
         }
     }
 
-    run() {
-        this.runCrowdControls();
-        this.move();
-        this.show();
-    }
-
-    runCrowdControls() {
-        for (let c of this.crowdControls) {
-            c.effect(this);
-        }
-    }
-
     show() {
         fill(this.fillColor);
         stroke(this.strokeColor);
+        strokeWeight(1);
         circle(this.position.x, this.position.y, this.size);
     }
 
     move() {
         // move to targetMove
-        const { dist, sub } = p5.Vector;
         const { targetMove, position, speed } = this;
 
-        if (targetMove && dist(position, targetMove) > speed) {
-            let direction = sub(targetMove, position);
+        if (!this.isArrivedTargetMove()) {
+            let direction = p5.Vector.sub(targetMove, position);
             this.position.add(direction.setMag(speed));
         }
 
         // bound position
         let bounded = this.applyBound(position.x, position.y);
         this.position.set(bounded.x, bounded.y);
+    }
+
+    isArrivedTargetMove() {
+        const { targetMove, position, speed } = this;
+        return !targetMove || p5.Vector.dist(position, targetMove) <= speed;
     }
 
     moveTo(x, y) {
@@ -71,5 +63,12 @@ class Champion {
         }
 
         return createVector(x, y);
+    }
+
+    overlap(other) {
+        return (
+            p5.Vector.dist(this.position, other.position) <
+            this.size / 2 + other.size / 2
+        );
     }
 }

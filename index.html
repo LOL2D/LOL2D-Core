@@ -7,18 +7,42 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- libs -->
     <script src="js/lib/p5.min.js"></script>
 </head>
 
 <body>
+    <!-- helpers -->
     <script src="js/helper/utils.js"></script>
-    <script src="js/constant/crowdcontrol.js"></script>
 
-    <script src="js/core/camera.js"></script>
-    <script src="js/core/gamemap.js"></script>
-    <script src="js/core/champion.js"></script>
-    <script src="js/core/crowdcontrol.js"></script>
+    <!-- constaints -->
+    <script src="js/constant/crowd-control.constaint.js"></script>
+    <script src="js/constant/hotkeys.constant.js"></script>
 
+    <!-- core -->
+    <script src="js/core/movement-object.core.js"></script>
+    <script src="js/core/camera.core.js"></script>
+    <script src="js/core/gamemap.core.js"></script>
+    <script src="js/core/champion.core.js"></script>
+    <script src="js/core/ability.core.js"></script>
+    <script src="js/core/ability-object.core.js"></script>
+    <script src="js/core/crowd-control.core.js"></script>
+    <script src="js/core/input.core.js"></script>
+
+    <!-- crowd-controls -->
+    <script src="js/extends/crowd-controls/airborne.crowd-control.js"></script>
+
+    <!-- ability objects -->
+    <script src="js/extends/abilitie-objects/orb-of-deception.object.js"></script>
+
+    <!-- ability -->
+    <script src="js/extends/abilities/orb-of-deception.ability.js"></script>
+
+    <!-- champions -->
+    <script src="js/extends/champions/ahri.champion.js"></script>
+
+    <!-- main -->
     <script src="main.js"></script>
 </body>
 

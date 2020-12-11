@@ -1,8 +1,8 @@
 class GameMap {
     constructor(config = {}) {
         // default value
-        this.width = 1000;
-        this.height = 1000;
+        this.width = 5000;
+        this.height = 5000;
         this.bgColor = "#555555";
         this.edgeColor = [50, 50];
         this.edgeWeight = 3;
