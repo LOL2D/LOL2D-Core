@@ -47,23 +47,14 @@ class InputCore {
 
     keyReleased(_keyCode) {
         if (this.previewAbilityId) {
-            const { hotkeys, champion } = this;
-
-            switch (_keyCode) {
-                case hotkeys.CastSpell1:
-                    return champion.castSpell("spell1", this.mousePos);
-
-                case hotkeys.CastSpell2:
-                    return champion.castSpell("spell2", this.mousePos);
-
-                case hotkeys.CastSpell3:
-                    return champion.castSpell("spell3", this.mousePos);
-
-                case hotkeys.CastSpell4:
-                    return champion.castSpell("spell4", this.mousePos);
-            }
+            let result = this.champion.castSpell(
+                this.previewAbilityId,
+                this.mousePos
+            );
 
             this.previewAbilityId = null;
+
+            return result;
         }
     }
 
