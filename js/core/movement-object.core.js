@@ -7,6 +7,7 @@ class MovementObjectCore {
         this.speed = 3;
         this.fillColor = "white";
         this.strokeColor = "black";
+        this.strokeWeight = 1;
         this.bound = null;
 
         this.isShowPositionTracking = false;
@@ -21,12 +22,16 @@ class MovementObjectCore {
     show() {
         fill(this.fillColor);
         stroke(this.strokeColor);
-        strokeWeight(1);
+        strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.radius * 2);
 
         if (this.isShowPositionTracking) {
             // add positionTracks
-            this.positionTracks.push({ x: this.position.x, y: this.position.y });
+            this.positionTracks.push({
+                x: this.position.x,
+                y: this.position.y,
+            });
+            
             if (this.positionTracks.length > 10) {
                 this.positionTracks.shift();
             }

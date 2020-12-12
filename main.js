@@ -47,9 +47,13 @@ function draw() {
         input.keyDown(keyCode, camera.convert(mouseX, mouseY));
     }
 
+    input.run(camera.convert(mouseX, mouseY));
+
+    // champions
     p1.run();
     p2.run();
 
+    // ability objects
     for (let i = abilityObjs.length - 1; i >= 0; i--) {
         abilityObjs[i].run();
 
@@ -68,12 +72,11 @@ function draw() {
 }
 
 // ----------- p5js input -----------
-function keyPressed() {}
+function keyPressed() {
+    input.keyPressed(keyCode);
+}
 function keyReleased() {
-    let newSpellObject = input.keyReleased(
-        keyCode,
-        camera.convert(mouseX, mouseY)
-    );
+    let newSpellObject = input.keyReleased(keyCode);
 
     if (newSpellObject) {
         if (Array.isArray(newSpellObject)) abilityObjs.push(...newSpellObject);
@@ -82,7 +85,9 @@ function keyReleased() {
 }
 function keyTyped() {}
 
-function mousePressed() {}
+function mousePressed() {
+    input.mousePressed();
+}
 function mouseReleased() {}
 function mouseClicked() {}
 function mouseDragged() {}
