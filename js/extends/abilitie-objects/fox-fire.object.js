@@ -6,7 +6,7 @@ class FoxFireObject extends AbilityObjectCore {
         this.isShowPositionTracking = true;
 
         this.startedTime = millis();
-        this.lifeTime = 5000;
+        this.lifeSpan = 5000;
         this.delayTime = 1000;
         this.speed = 4;
         this.toTargetSpeed = 15;
@@ -72,7 +72,7 @@ class FoxFireObject extends AbilityObjectCore {
     // override
     checkFinished() {
         let endOfLife =
-            !this.targetChampion && millis() - this.startedTime > this.lifeTime;
+            !this.targetChampion && millis() - this.startedTime > this.lifeSpan;
 
         let touchedTarget =
             this.targetChampion && this.overlap(this.targetChampion);

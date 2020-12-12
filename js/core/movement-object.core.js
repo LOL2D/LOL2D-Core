@@ -33,8 +33,8 @@ class MovementObjectCore {
 
             // show positionTracks
             if (this.positionTracks.length > 2) {
-                stroke("#5577bb55");
-                strokeWeight(this.radius);
+                stroke("#5577bb44");
+                strokeWeight(this.radius * 2);
                 noFill();
                 beginShape();
                 for (let t of this.positionTracks) {
