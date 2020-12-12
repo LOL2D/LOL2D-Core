@@ -1,4 +1,4 @@
-class AbilityObject extends MovementObject {
+class AbilityObjectCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
@@ -6,6 +6,8 @@ class AbilityObject extends MovementObject {
         this.owner = null;
         this.isStarted = false;
         this.finished = false; // flag
+        this.effectRadius = 0;
+        this.isShowEffectRadius = false;
 
         // set value
         for (let c in config) {
@@ -20,6 +22,7 @@ class AbilityObject extends MovementObject {
         }
 
         this.move();
+        this.isShowEffectRadius && this.showEffectRadius();
         this.show();
 
         if (this.checkFinished() || this.finished) {
@@ -27,7 +30,16 @@ class AbilityObject extends MovementObject {
             this.finished = true;
         }
     }
+
+    showEffectRadius() {
+        stroke("#5577bb55");
+        fill("#5577bb22");
+        strokeWeight(3);
+        circle(this.position.x, this.position.y, this.effectRadius * 2);
+    }
+
     onStarted() {}
     onFinished() {}
     checkFinished() {}
+    effect() {}
 }

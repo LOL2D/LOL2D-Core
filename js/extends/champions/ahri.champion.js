@@ -1,10 +1,10 @@
-class Ahri extends Champion {
+class Ahri extends ChampionCore {
     constructor(config = {}) {
         super(config);
 
         this.abilities = {
             spell1: new OrbOfDeception({ owner: this }),
-            spell2: null,
+            spell2: new FoxFire({ owner: this }),
             spell3: null,
             spell4: null,
 

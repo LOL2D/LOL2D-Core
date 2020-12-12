@@ -1,4 +1,4 @@
-class Champion extends MovementObject {
+class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
@@ -28,7 +28,7 @@ class Champion extends MovementObject {
         text(
             this.health + ";" + this.mana,
             this.position.x,
-            this.position.y - this.size / 2 - 20
+            this.position.y - this.radius - 20
         );
     }
 
@@ -74,6 +74,6 @@ class Champion extends MovementObject {
     loseHealth(value) {
         this.health -= value;
         fill("red");
-        circle(this.position.x, this.position.y, this.size);
+        circle(this.position.x, this.position.y, this.radius * 2);
     }
 }

@@ -1,4 +1,4 @@
-class GameMap {
+class GameMapCore {
     constructor(config = {}) {
         // default value
         this.width = 5000;

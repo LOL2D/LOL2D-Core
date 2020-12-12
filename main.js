@@ -6,12 +6,12 @@ let abilityObjs = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    preventRightClick();
     textAlign(CENTER, CENTER);
+    preventRightClick();
 
-    gamemap = new GameMap();
-    camera = new Camera();
-    input = new Input();
+    gamemap = new GameMapCore();
+    camera = new CameraCore();
+    input = new InputCore();
 
     p1 = new Ahri({
         bound: gamemap.getBound(),
@@ -62,6 +62,8 @@ function draw() {
     }
 
     camera.endState();
+
+    showFPS();
 }
 
 // ----------- p5js input -----------
@@ -72,7 +74,10 @@ function keyReleased() {
         camera.convert(mouseX, mouseY)
     );
 
-    if (newSpellObject) abilityObjs.push(newSpellObject);
+    if (newSpellObject) {
+        if (Array.isArray(newSpellObject)) abilityObjs.push(...newSpellObject);
+        else abilityObjs.push(newSpellObject);
+    }
 }
 function keyTyped() {}
 

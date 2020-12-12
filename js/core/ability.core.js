@@ -1,5 +1,5 @@
 // https://leagueoflegends.fandom.com/wiki/Champion_ability
-class Ability {
+class AbilityCore {
     constructor(config = {}) {
         this.owner = null;
         this.lastCastSpell = 0;
@@ -11,7 +11,10 @@ class Ability {
 
     previewCastSpell() {}
 
-    castSpell() {}
+    castSpell() {
+        this.lastCastSpell = millis();
+        this.onStarted();
+    }
 
     onStarted() {}
 

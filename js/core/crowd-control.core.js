@@ -1,4 +1,4 @@
-class CrowdControl {
+class CrowdControlCore {
     constructor(config = {}) {
         this.movement = ALLOWED;
         this.attacking = ALLOWED;

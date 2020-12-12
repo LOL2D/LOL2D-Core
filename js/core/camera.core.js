@@ -1,4 +1,4 @@
-class Camera {
+class CameraCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);

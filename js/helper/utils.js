@@ -8,9 +8,10 @@ function preventRightClick() {
     );
 }
 
-function showFPS(x = 10, y = 10) {
-    noStroke();
-    fill("black");
+function showFPS(x = 30, y = 10) {
+    strokeWeight(1);
+    stroke("black");
+    fill("white");
     text("FPS: " + ~~frameRate(), x, y);
 }
 

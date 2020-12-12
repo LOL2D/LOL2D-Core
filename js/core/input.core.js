@@ -1,4 +1,4 @@
-class Input {
+class InputCore {
     constructor(config = {}) {
         this.hotkeys = {
             ...DEFAULT_HOTKEYS,

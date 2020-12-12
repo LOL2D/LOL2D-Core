@@ -1,13 +1,16 @@
-class MovementObject {
+class MovementObjectCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);
         this.targetMove = null;
-        this.size = 75;
+        this.radius = 40;
         this.speed = 3;
         this.fillColor = "white";
         this.strokeColor = "black";
         this.bound = null;
+
+        this.positionTracking = false;
+        this.positionTracks = [];
 
         // set value
         for (let c in config) {
@@ -19,7 +22,27 @@ class MovementObject {
         fill(this.fillColor);
         stroke(this.strokeColor);
         strokeWeight(1);
-        circle(this.position.x, this.position.y, this.size);
+        circle(this.position.x, this.position.y, this.radius * 2);
+
+        if (this.positionTracking) {
+            // add tracks
+            this.tracks.push({ x: this.position.x, y: this.position.y });
+            if (this.tracks.length > 10) {
+                this.tracks.shift();
+            }
+
+            // show tracks
+            if (this.tracks.length > 2) {
+                stroke("#5577bb55");
+                strokeWeight(this.radius / 2);
+                noFill();
+                beginShape();
+                for (let t of this.tracks) {
+                    vertex(t.x, t.y);
+                }
+                endShape();
+            }
+        }
     }
 
     move() {
@@ -29,6 +52,8 @@ class MovementObject {
         if (!this.isArrivedTargetMove()) {
             let direction = p5.Vector.sub(targetMove, position);
             this.position.add(direction.setMag(speed));
+        } else if (targetMove != null) {
+            this.position.set(targetMove.x, targetMove.y);
         }
 
         // bound position
@@ -54,21 +79,18 @@ class MovementObject {
     applyBound(x, y) {
         if (this.bound) {
             const { top, bottom, left, right } = this.bound;
-            const halfSize = this.size / 2;
 
             return createVector(
-                constrain(x, left + halfSize, right - halfSize),
-                constrain(y, top + halfSize, bottom - halfSize)
+                constrain(x, left + this.radius, right - this.radius),
+                constrain(y, top + this.radius, bottom - this.radius)
             );
         }
 
         return createVector(x, y);
     }
 
-    overlap(other) {
-        return (
-            p5.Vector.dist(this.position, other.position) <
-            this.size / 2 + other.size / 2
-        );
+    overlap(other, customRange) {
+        let range = customRange || this.radius + other.radius;
+        return p5.Vector.dist(this.position, other.position) < range;
     }
 }
