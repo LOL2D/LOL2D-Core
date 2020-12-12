@@ -52,7 +52,7 @@ class FoxFire extends AbilityCore {
     onStarted() {
         // this.speedTemp = this.owner.speed;
         // this.owner.speed += 2;
-        this.owner.mana -= 60;
+        this.owner.loseMana(this.cost);
     }
 
     // override

@@ -49,7 +49,7 @@ class OrbOfDeception extends AbilityCore {
     // override
     onStarted() {
         this.speedTemp = this.owner.speed;
-        this.owner.mana -= 60;
+        this.owner.loseMana(this.cost);
     }
 
     // override

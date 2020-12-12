@@ -18,14 +18,27 @@ class ChampionCore extends MovementObjectCore {
             avatarSpell2: null,
         };
 
-        this.health = 100;
-        this.mana = 100;
+        this.level = 18;
+
+        this.maxHealth = 1000;
+        this.maxMana = 1000;
+
+        this.health = this.maxHealth;
+        this.mana = this.maxMana;
+
+        this.fakeHealth = 0;
+        this.healthRegen = 0.5;
+        this.manaRegen = 0.5;
 
         this.notiEffects = [];
+        this.healthBar = new HealthBarCore({ champion: this });
     }
 
     show() {
         super.show();
+
+        // health bar
+        this.healthBar.show();
 
         // show notification effects
         for (let i = this.notiEffects.length - 1; i >= 0; i--) {
@@ -35,20 +48,20 @@ class ChampionCore extends MovementObjectCore {
                 this.notiEffects.splice(i, 1);
             }
         }
+    }
 
-        // show info
-        fill("white");
-        noStroke();
-        text(
-            this.health + ";" + this.mana,
-            this.position.x,
-            this.position.y + this.radius + 20
-        );
+    update() {
+        this.health += this.healthRegen;
+        this.mana += this.manaRegen;
+
+        this.health = constrain(this.health, 0, this.maxHealth);
+        this.mana = constrain(this.mana, 0, this.maxMana);
     }
 
     run() {
         this.startCrowdControls();
         if (this.status.movement != DISABLED) this.move();
+        this.update();
         this.show();
         this.endCrowdControls();
     }
@@ -71,8 +84,9 @@ class ChampionCore extends MovementObjectCore {
     }
 
     castSpell(abilityKey, _mousePos) {
-        if (this.canSpell(abilityKey))
+        if (this.canSpell(abilityKey)) {
             return this.abilities[abilityKey].castSpell(_mousePos);
+        }
 
         return null;
     }
@@ -81,12 +95,18 @@ class ChampionCore extends MovementObjectCore {
         return (
             this.status.abilities == ALLOWED &&
             this.abilities[abilityKey] &&
-            this.abilities[abilityKey].isAvailable()
+            this.abilities[abilityKey].isAvailable() &&
+            this.mana >= this.abilities[abilityKey].cost
         );
     }
 
     loseHealth(value) {
-        this.health -= value;
+        this.fakeHealth -= value;
+
+        if (this.fakeHealth < 0) {
+            this.health -= -this.fakeHealth;
+            this.fakeHealth = 0;
+        }
 
         noStroke();
         fill("red");
@@ -94,8 +114,22 @@ class ChampionCore extends MovementObjectCore {
 
         this.notiEffects.push(
             new NotiEffectCore({
-                text: "-" + value,
-                position: this.position.copy().add(0, -this.radius * 0.5),
+                text: "- " + value,
+                color: "red",
+                position: this.healthBar.position.copy(),
+                velocity: createVector(0, -5),
+            })
+        );
+    }
+
+    loseMana(value) {
+        this.mana -= value;
+
+        this.notiEffects.push(
+            new NotiEffectCore({
+                text: "- " + value,
+                color: "lightblue",
+                position: this.healthBar.position.copy(),
                 velocity: createVector(0, -5),
             })
         );

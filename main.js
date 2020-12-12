@@ -17,6 +17,7 @@ function setup() {
         bound: gamemap.getBound(),
     });
     p2 = new Ahri({
+        position: createVector(500, 500),
         bound: gamemap.getBound(),
     });
 

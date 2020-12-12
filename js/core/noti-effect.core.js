@@ -24,9 +24,10 @@ class NotiEffectCore {
     }
 
     show() {
-        noStroke();
-        fill(this.calculateColor());
-        textSize(20);
+        let c = this.calculateColor();
+        strokeWeight(1);
+        stroke(c);
+        fill(c);
         text(this.text, this.position.x, this.position.y);
     }
 
