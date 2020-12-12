@@ -3,7 +3,7 @@ class FoxFireObject extends AbilityObjectCore {
         super(config);
 
         this.fillColor = "blue";
-        this.positionTracking = true;
+        this.isShowPositionTracking = true;
 
         this.startedTime = millis();
         this.lifeTime = 5000;

@@ -9,7 +9,7 @@ class MovementObjectCore {
         this.strokeColor = "black";
         this.bound = null;
 
-        this.positionTracking = false;
+        this.isShowPositionTracking = false;
         this.positionTracks = [];
 
         // set value
@@ -24,20 +24,20 @@ class MovementObjectCore {
         strokeWeight(1);
         circle(this.position.x, this.position.y, this.radius * 2);
 
-        if (this.positionTracking) {
-            // add tracks
-            this.tracks.push({ x: this.position.x, y: this.position.y });
-            if (this.tracks.length > 10) {
-                this.tracks.shift();
+        if (this.isShowPositionTracking) {
+            // add positionTracks
+            this.positionTracks.push({ x: this.position.x, y: this.position.y });
+            if (this.positionTracks.length > 10) {
+                this.positionTracks.shift();
             }
 
-            // show tracks
-            if (this.tracks.length > 2) {
+            // show positionTracks
+            if (this.positionTracks.length > 2) {
                 stroke("#5577bb55");
-                strokeWeight(this.radius / 2);
+                strokeWeight(this.radius);
                 noFill();
                 beginShape();
-                for (let t of this.tracks) {
+                for (let t of this.positionTracks) {
                     vertex(t.x, t.y);
                 }
                 endShape();

@@ -3,6 +3,7 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         super(config);
 
         this.fillColor = "blue";
+        this.isShowPositionTracking = true;
 
         this.state = "forward"; // 1: go forward, 2: go back to owner
         this.effectedStateForward = []; // list of  champions effected in state forward
