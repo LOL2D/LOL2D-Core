@@ -2,6 +2,8 @@ class Ahri extends ChampionCore {
     constructor(config = {}) {
         super(config);
 
+        this.avatarCircleKey = "asset/image/champion/ahri/Ahri.avatar.circle.png";
+
         this.abilities = {
             spell1: new OrbOfDeception({ owner: this }),
             spell2: new FoxFire({ owner: this }),

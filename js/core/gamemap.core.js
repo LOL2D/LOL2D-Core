@@ -4,11 +4,11 @@ class GameMapCore {
         this.width = 2000;
         this.height = 2000;
         this.bgColor = "#555555";
-        this.edgeColor = [200, 50];
+        this.edgeColor = [200, 100];
         this.edgeWeight = 3;
         this.grid = true;
         this.gridSize = 300;
-        this.gridColor = [50, 50];
+        this.gridColor = [100, 50];
         this.gridWeight = 3;
 
         Helper.Other.setValueFromConfig(this, config);

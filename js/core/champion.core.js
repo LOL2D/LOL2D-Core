@@ -2,6 +2,11 @@ class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
+        // override
+        this.fillColor = "#0000";
+        this.radius = 40;
+
+        // abilities
         this.crowdControls = [];
         this.status = {
             movement: ALLOWED,
@@ -52,6 +57,17 @@ class ChampionCore extends MovementObjectCore {
 
     show() {
         super.show();
+
+        // avatar
+        if (globalassets[this.avatarCircleKey]) {
+            image(
+                globalassets[this.avatarCircleKey],
+                this.position.x,
+                this.position.y,
+                this.radius * 2,
+                this.radius * 2
+            );
+        }
 
         // health bar
         this.healthBar.show();

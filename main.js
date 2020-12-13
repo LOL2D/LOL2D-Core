@@ -1,9 +1,14 @@
 let world;
 let input;
 
+function preload() {
+    loadAssets();
+}
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textAlign(CENTER, CENTER);
+    imageMode(CENTER);
     Helper.Other.preventRightClick();
 
     world = new WorldCore({
