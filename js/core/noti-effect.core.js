@@ -4,6 +4,7 @@ class NotiEffectCore {
         this.position = createVector(0, 0);
         this.velocity = createVector(0, 0);
         this.friction = 0.95;
+        this.movedVector = createVector(0, 0);
 
         this.text = "noti";
         this.color = "red";
@@ -25,15 +26,21 @@ class NotiEffectCore {
         stroke(this.colorAlpha);
         fill(this.colorAlpha);
         textSize(this.textSize);
-        text(this.text, this.position.x, this.position.y);
+        text(
+            this.text,
+            this.position.x + this.movedVector.x,
+            this.position.y + this.movedVector.y
+        );
     }
 
     update() {
-        this.position.add(this.velocity);
+        const lifeTime = millis() - this.startTime;
+
+        this.movedVector.add(this.velocity);
         this.velocity.mult(this.friction);
-        this.alpha = map(millis() - this.startTime, 0, this.lifeSpan, 255, 50);
+        this.alpha = map(lifeTime, 0, this.lifeSpan, 255, 50);
         this.colorAlpha = Utils.applyColorAlpha(this.color, this.alpha);
-        this.textSize = map(millis() - this.startTime, 0, this.lifeSpan, 25, 10);
+        this.textSize = map(lifeTime, 0, this.lifeSpan, 25, 10);
     }
 
     isFinished() {

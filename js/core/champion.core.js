@@ -121,7 +121,7 @@ class ChampionCore extends MovementObjectCore {
             new NotiEffectCore({
                 text: "- " + value,
                 color: "red",
-                position: this.healthBar.position.copy(),
+                position: this.healthBar.position, // reference to healthbar's position
                 velocity: createVector(0, -2),
             })
         );
@@ -134,7 +134,7 @@ class ChampionCore extends MovementObjectCore {
             new NotiEffectCore({
                 text: "- " + value,
                 color: "lightblue",
-                position: this.healthBar.position.copy(),
+                position: this.healthBar.position, // reference to healthbar's position
                 velocity: createVector(0, -2),
             })
         );
