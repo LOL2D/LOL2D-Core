@@ -4,7 +4,7 @@ class GameMapCore {
         this.width = 5000;
         this.height = 5000;
         this.bgColor = "#555555";
-        this.edgeColor = [50, 50];
+        this.edgeColor = [200, 50];
         this.edgeWeight = 3;
         this.grid = true;
         this.gridSize = 300;
@@ -45,8 +45,8 @@ class GameMapCore {
         let bottomMap = min(bottomScreen + 50, this.height);
 
         // fill bgcolor
-        fill(this.bgColor);
-        rect(leftMap, topMap, rightMap - leftMap, bottomMap - topMap);
+        //fill(this.bgColor);
+        //rect(leftMap, topMap, rightMap - leftMap, bottomMap - topMap);
 
         // draw grid
         stroke(this.gridColor);

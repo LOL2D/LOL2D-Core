@@ -2,6 +2,7 @@ class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
+        // core attributes
         this.crowdControls = [];
         this.status = {
             movement: ALLOWED,
@@ -19,17 +20,15 @@ class ChampionCore extends MovementObjectCore {
         };
 
         this.level = 18;
-
         this.maxHealth = 1000;
         this.maxMana = 1000;
-
         this.health = this.maxHealth;
         this.mana = this.maxMana;
-
         this.fakeHealth = 0;
         this.healthRegen = 0.5;
         this.manaRegen = 0.5;
 
+        // UI
         this.notiEffects = [];
         this.healthBar = new HealthBarCore({ champion: this });
     }

@@ -5,16 +5,20 @@ class InputCore {
             ...config.hotkeys,
         };
 
-        this.champion = config.champion;
+        this.world = config.world;
+
         this.mousePos = createVector(0, 0);
         this.previewAbilityId = null;
     }
 
     run(_mousePos) {
-        this.mousePos = _mousePos;
+        this.mousePos = this.world.camera.convert(_mousePos.x, _mousePos.y);
 
         if (this.previewAbilityId) {
-            this.champion.previewCastSpell(this.previewAbilityId, _mousePos);
+            this.world.player.previewCastSpell(
+                this.previewAbilityId,
+                this.mousePos
+            );
         }
     }
 
@@ -47,7 +51,7 @@ class InputCore {
 
     keyReleased(_keyCode) {
         if (this.previewAbilityId) {
-            let result = this.champion.castSpell(
+            let result = this.world.player.castSpell(
                 this.previewAbilityId,
                 this.mousePos
             );
@@ -55,6 +59,12 @@ class InputCore {
             this.previewAbilityId = null;
 
             return result;
+        }
+    }
+
+    mouseIsPressed() {
+        if (mouseButton == RIGHT) {
+            this.world.player.moveTo(this.mousePos.x, this.mousePos.y);
         }
     }
 
