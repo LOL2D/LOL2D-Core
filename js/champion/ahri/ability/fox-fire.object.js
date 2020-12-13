@@ -39,7 +39,7 @@ class FoxFireObject extends AbilityObjectCore {
     }
 
     // override
-    effect(champions) {
+    effectChampions(champions) {
         if (!this.targetChampion) {
             if (this.isReadyToEffect()) {
                 let champ = this.getClosestEnemyInRange(
@@ -60,6 +60,16 @@ class FoxFireObject extends AbilityObjectCore {
                 this.targetChampion.loseHealth(this.damage);
                 this.touchedTarget = true;
             }
+
+            // test - show path to target
+            stroke("gray");
+            strokeWeight(2);
+            line(
+                this.position.x,
+                this.position.y,
+                this.targetChampion.position.x,
+                this.targetChampion.position.y
+            );
         }
     }
 

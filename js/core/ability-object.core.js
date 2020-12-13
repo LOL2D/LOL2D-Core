@@ -81,5 +81,6 @@ class AbilityObjectCore extends MovementObjectCore {
     onStarted() {}
     onFinished() {}
     checkFinished() {}
-    effect() {}
+    effectChampions() {}
+    effectAbilities() {}
 }

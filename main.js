@@ -70,7 +70,7 @@ function draw() {
         abilityObjs[i].run();
 
         // effect
-        abilityObjs[i].effect(listChampions);
+        abilityObjs[i].effectChampions(listChampions);
 
         // check finish
         if (abilityObjs[i].checkFinished()) {
