@@ -24,6 +24,7 @@ class NotiEffectCore {
         strokeWeight(1);
         stroke(this.colorAlpha);
         fill(this.colorAlpha);
+        textSize(this.textSize);
         text(this.text, this.position.x, this.position.y);
     }
 
@@ -32,6 +33,7 @@ class NotiEffectCore {
         this.velocity.mult(this.friction);
         this.alpha = map(millis() - this.startTime, 0, this.lifeSpan, 255, 50);
         this.colorAlpha = Utils.applyColorAlpha(this.color, this.alpha);
+        this.textSize = map(millis() - this.startTime, 0, this.lifeSpan, 25, 10);
     }
 
     isFinished() {

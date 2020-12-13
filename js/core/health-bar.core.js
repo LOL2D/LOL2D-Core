@@ -6,14 +6,17 @@ class HealthBarCore {
         this.width = 150;
         this.height = 20;
         this.manaHeight = 5;
-        this.border = 1;
+        this.healthManaGap = 1;
+        this.borderWidth = 3;
+        this.borderRadius = [2, 2, 2, 2];
 
         this.healthColor = "#43C41D";
         this.fakeHealthColor = "#C8C8CB";
         this.manaColor = "#6CB3D5";
         this.levelColor = "#3287B9";
         this.levelBg = "#101F26";
-        this.borderColor = "black";
+        this.emptyBg = "#020F15";
+        this.borderColor = "#5B5C57";
 
         this.position = createVector(0, 0);
 
@@ -35,16 +38,19 @@ class HealthBarCore {
             topleft.y + this.height / 2
         );
 
-        noStroke();
-
         // background
-        fill(this.borderColor);
+        fill(this.emptyBg);
+        stroke(this.borderColor);
+        strokeWeight(this.borderWidth);
         rect(
-            topleft.x - this.border,
-            topleft.y - this.border,
-            this.width + this.border * 2,
-            this.height + this.border * 2
+            topleft.x - this.borderWidth / 2,
+            topleft.y - this.borderWidth / 2,
+            this.width + this.borderWidth,
+            this.height + this.borderWidth,
+            ...this.borderRadius
         );
+
+        noStroke();
 
         // health
         const { health, fakeHealth, maxHealth } = this.champion;
@@ -57,7 +63,7 @@ class HealthBarCore {
             topleft.x + this.height,
             topleft.y,
             healthW,
-            this.height - this.manaHeight - this.border
+            this.height - this.manaHeight - this.healthManaGap
         );
 
         // fake health
@@ -68,7 +74,7 @@ class HealthBarCore {
             topleft.x + this.height + healthW,
             topleft.y,
             fakeHW,
-            this.height - this.manaHeight - this.border
+            this.height - this.manaHeight - this.healthManaGap
         );
 
         // mana
@@ -90,6 +96,7 @@ class HealthBarCore {
         fill(this.levelColor);
         stroke(this.levelColor);
         strokeWeight(1);
+        textSize(14);
         text(
             this.champion.level,
             topleft.x + this.height / 2,
