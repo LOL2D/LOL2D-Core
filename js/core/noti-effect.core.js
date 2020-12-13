@@ -15,7 +15,6 @@ class NotiEffectCore {
         // set value f
         Utils.setValueFromConfig(this, config);
 
-        }
     }
 
     run() {
