@@ -1,7 +1,13 @@
 class WorldCore {
     constructor(config = {}) {
-        // setting
-        this.enemyCount = 4;
+        this.championsClassName = {
+            player: null,
+            allies: [],
+            enemies: [],
+        };
+
+        // set value from config
+        Helper.Other.setValueFromConfig(this, config);
 
         // setup
         this.setup();
@@ -15,35 +21,58 @@ class WorldCore {
         this.abilityObjects = [];
         this.champions = [];
         this.listAI = [];
-        this.player = null;
 
         // ----- setup value -----
         this.gamemap = new GameMapCore();
         this.camera = new CameraCore();
 
         // my champion
-        this.player = new Ahri({
-            bound: this.gamemap.getBound(),
-            health: 500
-        });
-        this.champions.push(this.player);
-        this.camera.target = this.player.position;
+        if (this.championsClassName.player) {
+            this.player = new this.championsClassName.player({
+                isAllyWithPlayer: true,
+                world: this,
+                position: createVector(random(1000), random(1000)),
+                bound: this.gamemap.getBound(),
+            });
+            this.champions.push(this.player);
+            this.camera.follow(this.player.position);
+        }
 
-        // enemy champions
-        for (let i = 0; i < this.enemyCount; i++) {
-            let champ = new Ahri({
+        // ally champions
+        for (let champClass of this.championsClassName.allies) {
+            let champ = new champClass({
+                isAllyWithPlayer: true,
+                world: this,
                 position: createVector(random(1000), random(1000)),
                 bound: this.gamemap.getBound(),
             });
 
             this.champions.push(champ);
-        }
 
-        // AI
-        for (let i = 1; i <= this.enemyCount / 2; i++) {
+            // add AI control
             this.listAI.push(
                 new AICore({
-                    champion: this.champions[i],
+                    champion: champ,
+                    world: this,
+                })
+            );
+        }
+
+        // enemy champions
+        for (let champClass of this.championsClassName.enemies) {
+            let champ = new champClass({
+                isAllyWithPlayer: false,
+                world: this,
+                position: createVector(random(1000), random(1000)),
+                bound: this.gamemap.getBound(),
+            });
+
+            this.champions.push(champ);
+
+            // add AI control
+            this.listAI.push(
+                new AICore({
+                    champion: champ,
                     world: this,
                 })
             );
@@ -58,7 +87,7 @@ class WorldCore {
         this.gamemap.drawGrid(this.camera);
 
         // func is something need to execute after world's camera beginState
-        func();
+        func && func();
 
         // champions AI
         for (let ai of this.listAI) {
@@ -85,5 +114,16 @@ class WorldCore {
         // ----------- end camera -----------
     }
 
-    addNewSpellObjects(objs) {}
+    addNewSpellObjects(something) {
+        if (something) {
+            if (Array.isArray(something))
+                this.abilityObjects.push(...something);
+            else this.abilityObjects.push(something);
+        }
+    }
+
+    // ------------- utils -------------
+    getMousePosition() {
+        return this.camera.convert(mouseX, mouseY);
+    }
 }

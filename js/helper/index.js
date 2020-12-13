@@ -4,4 +4,5 @@ const Helper = {
     Collide: CollideHelper,
     UI: UIHelper,
     Other: OtherHelper,
+    Distance: DistanceHelper,
 };

@@ -2,7 +2,7 @@ class HealthBarCore {
     constructor(config = {}) {
         this.champion = null;
 
-        this.distanceFromChamp = 30;
+        this.distanceFromChamp = 20;
         this.width = 150;
         this.height = 20;
         this.manaHeight = 5;

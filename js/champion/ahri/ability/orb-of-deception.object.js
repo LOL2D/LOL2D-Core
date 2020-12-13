@@ -6,7 +6,6 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         // override
         this.fillColor = "blue";
         this.isShowPositionTracking = true;
-        this.isShowEffectRadius = true;
 
         // custom attribute
         this.STATE = {
@@ -21,11 +20,18 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
 
     // override
     effectChampions(champions) {
-        let champ = this.getClosestEnemyInRange(champions, this.radius, true);
+        let closestEnemy = Helper.Distance.getClosestChampionInRange({
+            rootPosition: this.position,
+            champions: champions,
+            inRange: this.radius,
+            addChampRadiusToRange: true,
+            allyWithPlayer: !this.owner.isAllyWithPlayer,
+            excludes: [this.owner],
+        });
 
-        if (champ && this.effectedChampions.indexOf(champ) < 0) {
-            champ.loseHealth(this.damage);
-            this.effectedChampions.push(champ);
+        if (closestEnemy && this.effectedChampions.indexOf(closestEnemy) < 0) {
+            closestEnemy.loseHealth(this.damage);
+            this.effectedChampions.push(closestEnemy);
         }
     }
 

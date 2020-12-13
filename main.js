@@ -6,7 +6,13 @@ function setup() {
     textAlign(CENTER, CENTER);
     Helper.Other.preventRightClick();
 
-    world = new WorldCore();
+    world = new WorldCore({
+        championsClassName: {
+            player: Ahri,
+            allies: [Ahri],
+            enemies: [Ahri, Ahri],
+        },
+    });
 
     input = new InputCore({
         world: world,
@@ -18,8 +24,7 @@ function draw() {
 
     // run world
     world.run(() => {
-        // input
-        input.run(createVector(mouseX, mouseY));
+        input.run();
 
         if (mouseIsPressed) {
             input.mouseIsPressed();
@@ -29,6 +34,7 @@ function draw() {
         }
     });
 
+    // show fps
     Helper.UI.showFPS();
 }
 
@@ -51,13 +57,7 @@ function mouseMoved() {}
 function doubleClicked() {}
 
 function mouseWheel(event) {
-    if (event.delta > 0) {
-        if (world.camera.scaleTo > 0.5)
-            world.camera.scaleTo -= world.camera.scaleTo / 10;
-    } else {
-        if (world.camera.scaleTo < 5)
-            world.camera.scaleTo += world.camera.scaleTo / 10;
-    }
+    input.mouseWheel(event);
 }
 
 function windowResized() {

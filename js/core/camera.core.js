@@ -2,8 +2,8 @@ class CameraCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);
-        this.target = createVector(0, 0);
-        this.follow = true;
+        this.target = null;
+        this.isFollow = true;
         this.followLerp = 0.1;
         this.scale = 0.1;
         this.scaleTo = 1;
@@ -24,7 +24,7 @@ class CameraCore {
         this.scale = lerp(this.scale, this.scaleTo, this.scaleLerp);
 
         // follow target
-        if (this.follow) {
+        if (this.isFollow) {
             this.position = p5.Vector.lerp(
                 this.position,
                 this.target,
@@ -46,7 +46,7 @@ class CameraCore {
         pop();
     }
 
-    changeTarget(target) {
+    follow(target) {
         this.target = target;
     }
 

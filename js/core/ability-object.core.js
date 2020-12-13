@@ -35,46 +35,6 @@ class AbilityObjectCore extends MovementObjectCore {
         circle(this.position.x, this.position.y, this.effectRadius * 2);
     }
 
-    getEnemyInRange(champions, inRange, addChampRadiusToRange) {
-        let champsInRange = [];
-
-        for (let champ of champions) {
-            let distance = p5.Vector.dist(this.position, champ.position);
-            let range = addChampRadiusToRange
-                ? inRange + champ.radius
-                : inRange;
-
-            if (distance < range) {
-                champsInRange.push(champ);
-            }
-        }
-
-        return champsInRange;
-    }
-
-    getClosestEnemy(champions) {
-        let closestChamp = null;
-        let closestDistance = Infinity;
-
-        for (let champ of champions) {
-            if (champ != this.owner) {
-                let distance = p5.Vector.dist(champ.position, this.position);
-                if (distance < closestDistance) {
-                    closestChamp = champ;
-                    closestDistance = distance;
-                }
-            }
-        }
-
-        return closestChamp;
-    }
-
-    getClosestEnemyInRange(champions, inRange, addChampRadiusToRange) {
-        return this.getClosestEnemy(
-            this.getEnemyInRange(champions, inRange, addChampRadiusToRange)
-        );
-    }
-
     onStarted() {}
     onFinished() {}
     checkFinished() {}

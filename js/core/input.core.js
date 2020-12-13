@@ -11,14 +11,11 @@ class InputCore {
         this.previewAbilityId = null;
     }
 
-    run(_mousePos) {
-        this.mousePos = this.world.camera.convert(_mousePos.x, _mousePos.y);
+    run() {
+        this.mousePos = this.world.getMousePosition();
 
         if (this.previewAbilityId) {
-            this.world.player.previewCastSpell(
-                this.previewAbilityId,
-                this.mousePos
-            );
+            this.world.player.previewCastSpell(this.previewAbilityId);
         }
     }
 
@@ -51,18 +48,9 @@ class InputCore {
 
     keyReleased(_keyCode) {
         if (this.previewAbilityId) {
-            let newSpellObject = this.world.player.castSpell(
-                this.previewAbilityId,
-                this.mousePos
-            );
+            this.world.player.castSpell(this.previewAbilityId, this.mousePos);
 
             this.previewAbilityId = null;
-
-            if (newSpellObject) {
-                if (Array.isArray(newSpellObject))
-                    this.world.abilityObjects.push(...newSpellObject);
-                else this.world.abilityObjects.push(newSpellObject);
-            }
         }
     }
 
@@ -76,6 +64,16 @@ class InputCore {
         if (this.previewAbilityId) {
             // cancel cast spell on mouse clicked
             this.previewAbilityId = null;
+        }
+    }
+
+    mouseWheel(event) {
+        const { camera } = this.world;
+
+        if (event.delta > 0) {
+            if (camera.scaleTo > 0.5) camera.scaleTo -= camera.scaleTo / 10;
+        } else {
+            if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
         }
     }
 }

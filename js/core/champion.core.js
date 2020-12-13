@@ -32,11 +32,22 @@ class ChampionCore extends MovementObjectCore {
         this.mana = this.maxMana;
 
         // UI
+        this.world = null;
         this.notiEffects = [];
-        this.healthBar = new HealthBarCore({ champion: this });
 
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
+
+        // team
+        const c =
+            COLOR.HEALTHBAR.HEALTH[this.isAllyWithPlayer ? "ALLY" : "ENEMY"];
+
+        this.healthBar = new HealthBarCore({
+            champion: this,
+            healthColor: c,
+        });
+        this.strokeColor = c;
+        this.strokeWeight = 4;
     }
 
     show() {
@@ -83,17 +94,14 @@ class ChampionCore extends MovementObjectCore {
         this.status.abilities = ALLOWED;
     }
 
-    previewCastSpell(abilityKey, _mousePos) {
-        if (this.canSpell(abilityKey))
-            this.abilities[abilityKey].preview(_mousePos);
+    previewCastSpell(abilityKey) {
+        if (this.canSpell(abilityKey)) this.abilities[abilityKey].preview();
     }
 
-    castSpell(abilityKey, _mousePos) {
+    castSpell(abilityKey, destination) {
         if (this.canSpell(abilityKey)) {
-            return this.abilities[abilityKey].castSpell(_mousePos);
+            this.abilities[abilityKey].castSpell(destination);
         }
-
-        return null;
     }
 
     canSpell(abilityKey) {

@@ -41,15 +41,18 @@ class FoxFireObject extends AbilityObjectCore {
     effectChampions(champions) {
         if (!this.targetChampion) {
             if (this.isReadyToEffect()) {
-                let champ = this.getClosestEnemyInRange(
-                    champions,
-                    this.effectRadius,
-                    true
-                );
+                let closestEnemy = Helper.Distance.getClosestChampionInRange({
+                    rootPosition: this.position,
+                    champions: champions,
+                    inRange: this.effectRadius,
+                    addChampRadiusToRange: true,
+                    allyWithPlayer: !this.owner.isAllyWithPlayer,
+                    excludes: [this.owner],
+                });
 
-                if (champ) {
-                    this.targetMove = champ.position;
-                    this.targetChampion = champ;
+                if (closestEnemy) {
+                    this.targetMove = closestEnemy.position;
+                    this.targetChampion = closestEnemy;
                     this.speed = this.toTargetSpeed;
                     this.isShowPositionTracking = true;
                     this.abilityRef.lastEffectTime = millis();
@@ -61,7 +64,7 @@ class FoxFireObject extends AbilityObjectCore {
                 this.touchedTarget = true;
             }
 
-            // ---- test ---- 
+            // ---- test ----
             //this.showLineToTarget();
         }
     }

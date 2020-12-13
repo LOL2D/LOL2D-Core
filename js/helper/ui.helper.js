@@ -1,5 +1,5 @@
 const UIHelper = {
-    showFPS(x = 30, y = 10) {
+    showFPS(x = 40, y = 15) {
         strokeWeight(1);
         stroke("black");
         fill("white");

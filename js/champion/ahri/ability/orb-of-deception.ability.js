@@ -12,10 +12,10 @@ class OrbOfDeception extends AbilityCore {
     }
 
     // override
-    preview(_mousePos) {
+    preview() {
         const vec = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
-            _mousePos,
+            this.owner.world.getMousePosition(),
             this.effectRadius
         );
 
@@ -27,16 +27,16 @@ class OrbOfDeception extends AbilityCore {
     }
 
     // override
-    castSpell(_mousePos) {
-        super.castSpell(_mousePos);
+    castSpell(destination) {
+        super.castSpell();
 
         const { to: target } = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
-            _mousePos,
+            destination,
             this.effectRadius
         );
 
-        return new OrbOfDeceptionObject({
+        const orbObj = new OrbOfDeceptionObject({
             position: this.owner.position.copy(),
             owner: this.owner,
             damage: this.damage,
@@ -44,6 +44,8 @@ class OrbOfDeception extends AbilityCore {
             speed: this.speed,
             radius: this.width / 2,
         });
+
+        this.owner.world.addNewSpellObjects(orbObj);
     }
 
     // override

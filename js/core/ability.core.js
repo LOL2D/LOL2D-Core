@@ -9,7 +9,7 @@ class AbilityCore {
 
     previewCastSpell() {}
 
-    castSpell() {
+    castSpell(destination) {
         this.lastCastSpell = millis();
         this.onStarted();
     }

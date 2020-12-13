@@ -16,11 +16,11 @@ class FoxFire extends AbilityCore {
     }
 
     // override
-    preview(_mousePos) {
+    preview() {
         stroke(COLOR.ABILITY.PREVIEW.BORDER);
         fill(COLOR.ABILITY.PREVIEW.FILL);
         strokeWeight(3);
-        
+
         circle(
             this.owner.position.x,
             this.owner.position.y,
@@ -29,8 +29,8 @@ class FoxFire extends AbilityCore {
     }
 
     // override
-    castSpell(_mousePos) {
-        super.castSpell(_mousePos);
+    castSpell(destination) {
+        super.castSpell();
 
         let listFireFoxObjects = [];
 
@@ -47,7 +47,7 @@ class FoxFire extends AbilityCore {
             );
         }
 
-        return listFireFoxObjects;
+        this.owner.world.addNewSpellObjects(listFireFoxObjects);
     }
 
     // override
