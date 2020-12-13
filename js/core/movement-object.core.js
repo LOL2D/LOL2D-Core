@@ -37,7 +37,7 @@ class MovementObjectCore {
 
             // show positionTracks
             if (this.positionTracks.length > 2) {
-                stroke("#5577bb44");
+                stroke(Utils.applyColorAlpha(this.fillColor, 50));
                 strokeWeight(this.radius * 2);
                 noFill();
                 beginShape();

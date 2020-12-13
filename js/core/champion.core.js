@@ -2,7 +2,6 @@ class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
-        // core attributes
         this.crowdControls = [];
         this.status = {
             movement: ALLOWED,
@@ -19,14 +18,18 @@ class ChampionCore extends MovementObjectCore {
             avatarSpell2: null,
         };
 
-        this.level = 18;
+        // base statistic
         this.maxHealth = 1000;
         this.maxMana = 1000;
-        this.health = this.maxHealth;
-        this.mana = this.maxMana;
         this.fakeHealth = 0;
         this.healthRegen = 0.5;
         this.manaRegen = 0.5;
+
+        // attributes
+        this.exp = 0;
+        this.level = 18;
+        this.health = this.maxHealth;
+        this.mana = this.maxMana;
 
         // UI
         this.notiEffects = [];
@@ -119,7 +122,7 @@ class ChampionCore extends MovementObjectCore {
                 text: "- " + value,
                 color: "red",
                 position: this.healthBar.position.copy(),
-                velocity: createVector(0, -5),
+                velocity: createVector(0, -2),
             })
         );
     }
@@ -132,7 +135,7 @@ class ChampionCore extends MovementObjectCore {
                 text: "- " + value,
                 color: "lightblue",
                 position: this.healthBar.position.copy(),
-                velocity: createVector(0, -5),
+                velocity: createVector(0, -2),
             })
         );
     }

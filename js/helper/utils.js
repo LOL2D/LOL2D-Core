@@ -15,21 +15,21 @@ const Utils = {
         );
     },
 
-    showFPS: (x = 30, y = 10) => {
+    showFPS(x = 30, y = 10) {
         strokeWeight(1);
         stroke("black");
         fill("white");
         text("FPS: " + ~~frameRate(), x, y);
     },
 
-    showCursor: () => {
+    showCursor() {
         strokeWeight(10);
         stroke(150);
         line(mouseX, mouseY, pmouseX, pmouseY);
         strokeWeight(1);
     },
 
-    getVectorWithRange: (rootVector, targetVector, range) => {
+    getVectorWithRange(rootVector, targetVector, range) {
         let from = rootVector.copy();
         let to = p5.Vector.add(
             from,
@@ -42,7 +42,7 @@ const Utils = {
         };
     },
 
-    rectFromVectorRange: (vectorRange, rectWidth) => {
+    rectFromVectorRange(vectorRange, rectWidth) {
         const { from, to } = vectorRange;
 
         const vecSub = to.copy().sub(from);
@@ -56,7 +56,13 @@ const Utils = {
         pop();
     },
 
-    collidePointCircle: (px, py, cx, cy, cr) => {
+    applyColorAlpha(colorCode, alpha) {
+        let c = color(colorCode);
+        c.setAlpha(alpha);
+        return c;
+    },
+
+    collidePointCircle(px, py, cx, cy, cr) {
         return dist(px, py, cx, cy) <= cr;
     },
 };

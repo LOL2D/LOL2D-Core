@@ -1,8 +1,8 @@
 class GameMapCore {
     constructor(config = {}) {
         // default value
-        this.width = 5000;
-        this.height = 5000;
+        this.width = 1000;
+        this.height = 1000;
         this.bgColor = "#555555";
         this.edgeColor = [200, 50];
         this.edgeWeight = 3;

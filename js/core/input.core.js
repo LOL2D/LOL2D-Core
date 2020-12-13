@@ -51,14 +51,18 @@ class InputCore {
 
     keyReleased(_keyCode) {
         if (this.previewAbilityId) {
-            let result = this.world.player.castSpell(
+            let newSpellObject = this.world.player.castSpell(
                 this.previewAbilityId,
                 this.mousePos
             );
 
             this.previewAbilityId = null;
 
-            return result;
+            if (newSpellObject) {
+                if (Array.isArray(newSpellObject))
+                    this.world.abilityObjects.push(...newSpellObject);
+                else this.world.abilityObjects.push(newSpellObject);
+            }
         }
     }
 

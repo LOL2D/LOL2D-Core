@@ -37,13 +37,7 @@ function keyPressed() {
     input.keyPressed(keyCode);
 }
 function keyReleased() {
-    let newSpellObject = input.keyReleased(keyCode);
-
-    if (newSpellObject) {
-        if (Array.isArray(newSpellObject))
-            world.abilityObjects.push(...newSpellObject);
-        else world.abilityObjects.push(newSpellObject);
-    }
+    input.keyReleased(keyCode);
 }
 function keyTyped() {}
 
@@ -56,7 +50,7 @@ function mouseDragged() {}
 function mouseMoved() {}
 function doubleClicked() {}
 
-function mouseWheel() {
+function mouseWheel(event) {
     if (event.delta > 0) {
         if (world.camera.scaleTo > 0.5)
             world.camera.scaleTo -= world.camera.scaleTo / 10;

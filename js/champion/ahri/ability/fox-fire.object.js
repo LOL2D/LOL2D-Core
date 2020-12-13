@@ -61,15 +61,8 @@ class FoxFireObject extends AbilityObjectCore {
                 this.touchedTarget = true;
             }
 
-            // test - show path to target
-            stroke("gray");
-            strokeWeight(2);
-            line(
-                this.position.x,
-                this.position.y,
-                this.targetChampion.position.x,
-                this.targetChampion.position.y
-            );
+            // ---- test ---- 
+            //this.showLineToTarget();
         }
     }
 
@@ -111,5 +104,16 @@ class FoxFireObject extends AbilityObjectCore {
                     this.abilityRef.foxFireRotateRadius + this.radius + 10
                 )
             );
+    }
+
+    showLineToTarget() {
+        stroke("gray");
+        strokeWeight(2);
+        line(
+            this.position.x,
+            this.position.y,
+            this.targetChampion.position.x,
+            this.targetChampion.position.y
+        );
     }
 }

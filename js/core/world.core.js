@@ -1,5 +1,14 @@
 class WorldCore {
     constructor(config = {}) {
+        // setting
+        this.enemyCount = 4;
+
+        // setup
+        this.setup();
+    }
+
+    setup() {
+        // ----- default value -----
         this.gamemap = null;
         this.camera = null;
 
@@ -8,35 +17,33 @@ class WorldCore {
         this.listAI = [];
         this.player = null;
 
-        // setting
-        this.AICount = 4;
-
-        // setup
-        this.setup();
-    }
-
-    setup() {
+        // ----- setup value -----
         this.gamemap = new GameMapCore();
         this.camera = new CameraCore();
 
         // my champion
         this.player = new Ahri({
             bound: this.gamemap.getBound(),
+            health: 500
         });
         this.champions.push(this.player);
         this.camera.target = this.player.position;
 
-        // AI champions
-        for (let i = 0; i < this.AICount; i++) {
+        // enemy champions
+        for (let i = 0; i < this.enemyCount; i++) {
             let champ = new Ahri({
                 position: createVector(random(1000), random(1000)),
                 bound: this.gamemap.getBound(),
             });
 
             this.champions.push(champ);
+        }
+
+        // AI
+        for (let i = 1; i <= this.enemyCount / 2; i++) {
             this.listAI.push(
                 new AICore({
-                    champion: champ,
+                    champion: this.champions[i],
                     world: this,
                 })
             );
@@ -78,5 +85,5 @@ class WorldCore {
         // ----------- end camera -----------
     }
 
-    convertToWorldPosition() {}
+    addNewSpellObjects(objs) {}
 }

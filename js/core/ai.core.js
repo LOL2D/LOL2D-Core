@@ -13,11 +13,12 @@ class AICore {
     }
 
     autoMove() {
-        // basic move test
+        // basic move
         if (this.champion.isArrivedTargetMove() || !this.champion.targetMove) {
+            let len = random(100, 1000);
             let newTarget = this.champion.position
                 .copy()
-                .add(random(-500, 500), random(-500, 500));
+                .add(random(-len, len), random(-len, len));
 
             newTarget.x = constrain(
                 newTarget.x,
@@ -35,6 +36,10 @@ class AICore {
         }
     }
 
-    autoAttack() {}
-    autoDefense() {}
+    autoAttack() {
+        // TODO add your code here
+    }
+    autoDefense() {
+        // TODO add your code here
+    }
 }
