@@ -4,7 +4,7 @@ class AbilityCore {
         this.owner = null;
         this.lastCastSpell = 0;
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     previewCastSpell() {}

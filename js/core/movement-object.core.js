@@ -15,7 +15,7 @@ class MovementObjectCore {
         this.positionTracksLength = 10;
         this.positionTrackColor = "#fff3";
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     show() {

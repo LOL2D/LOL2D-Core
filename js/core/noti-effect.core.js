@@ -13,7 +13,7 @@ class NotiEffectCore {
         this.lifeSpan = 1000;
         this.startTime = millis();
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     run() {
@@ -39,7 +39,7 @@ class NotiEffectCore {
         this.movedVector.add(this.velocity);
         this.velocity.mult(this.friction);
         this.alpha = map(lifeTime, 0, this.lifeSpan, 255, 50);
-        this.colorAlpha = Utils.applyColorAlpha(this.color, this.alpha);
+        this.colorAlpha = Helper.Color.applyColorAlpha(this.color, this.alpha);
         this.textSize = map(lifeTime, 0, this.lifeSpan, 25, 10);
     }
 

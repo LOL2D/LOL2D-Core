@@ -11,7 +11,7 @@ class CameraCore {
         this.borderSize = 25;
         this.borderSpeed = 20;
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     beginState() {

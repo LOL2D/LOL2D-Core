@@ -11,7 +11,7 @@ class GameMapCore {
         this.gridColor = [50, 50];
         this.gridWeight = 3;
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     drawEdge() {

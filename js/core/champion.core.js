@@ -36,7 +36,7 @@ class ChampionCore extends MovementObjectCore {
         this.healthBar = new HealthBarCore({ champion: this });
 
         // set value from config
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     show() {

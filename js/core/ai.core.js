@@ -3,7 +3,7 @@ class AICore {
         this.champion = null;
         this.world = {};
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     run() {

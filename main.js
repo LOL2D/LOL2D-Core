@@ -4,7 +4,7 @@ let input;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textAlign(CENTER, CENTER);
-    Utils.preventRightClick();
+    Helper.Other.preventRightClick();
 
     world = new WorldCore();
 
@@ -29,7 +29,7 @@ function draw() {
         }
     });
 
-    Utils.showFPS();
+    Helper.UI.showFPS();
 }
 
 // ----------- p5js input -----------

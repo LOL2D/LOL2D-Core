@@ -13,7 +13,7 @@ class OrbOfDeception extends AbilityCore {
 
     // override
     preview(_mousePos) {
-        const vec = Utils.getVectorWithRange(
+        const vec = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
             _mousePos,
             this.effectRadius
@@ -23,14 +23,14 @@ class OrbOfDeception extends AbilityCore {
         fill(COLOR.ABILITY.PREVIEW.FILL);
         strokeWeight(3);
 
-        Utils.rectFromVectorRange(vec, this.width);
+        Helper.UI.rectFromVectorRange(vec, this.width);
     }
 
     // override
     castSpell(_mousePos) {
         super.castSpell(_mousePos);
 
-        const { to: target } = Utils.getVectorWithRange(
+        const { to: target } = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
             _mousePos,
             this.effectRadius

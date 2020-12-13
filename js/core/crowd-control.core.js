@@ -12,7 +12,7 @@ class CrowdControlCore {
 
         this.startTime = millis();
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     effect() {}

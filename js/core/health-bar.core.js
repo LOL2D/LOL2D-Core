@@ -20,7 +20,7 @@ class HealthBarCore {
 
         this.position = createVector(0, 0);
 
-        Utils.setValueFromConfig(this, config);
+        Helper.Other.setValueFromConfig(this, config);
     }
 
     show() {
