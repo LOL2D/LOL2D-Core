@@ -13,39 +13,46 @@ class MovementObjectCore {
         this.isShowPositionTracking = false;
         this.positionTracks = [];
         this.positionTracksLength = 10;
+        this.positionTrackColor = "#fff3";
 
         Utils.setValueFromConfig(this, config);
     }
 
     show() {
+        // show position track
+        if (this.isShowPositionTracking) {
+            this.showPositionTrack();
+        }
+
+        // show this
         fill(this.fillColor);
         stroke(this.strokeColor);
         strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.radius * 2);
+    }
 
-        if (this.isShowPositionTracking) {
-            // add positionTracks
-            this.positionTracks.push({
-                x: this.position.x,
-                y: this.position.y,
-            });
+    showPositionTrack() {
+        // add positionTracks
+        this.positionTracks.push({
+            x: this.position.x,
+            y: this.position.y,
+        });
 
-            // limit track length
-            if (this.positionTracks.length > this.positionTracksLength) {
-                this.positionTracks.shift();
+        // limit track length
+        if (this.positionTracks.length > this.positionTracksLength) {
+            this.positionTracks.shift();
+        }
+
+        // show positionTracks
+        if (this.positionTracks.length > 2) {
+            stroke(this.positionTrackColor);
+            strokeWeight(this.radius * 2);
+            noFill();
+            beginShape();
+            for (let t of this.positionTracks) {
+                vertex(t.x, t.y);
             }
-
-            // show positionTracks
-            if (this.positionTracks.length > 2) {
-                stroke(Utils.applyColorAlpha(this.fillColor, 50));
-                strokeWeight(this.radius * 2);
-                noFill();
-                beginShape();
-                for (let t of this.positionTracks) {
-                    vertex(t.x, t.y);
-                }
-                endShape();
-            }
+            endShape();
         }
     }
 
