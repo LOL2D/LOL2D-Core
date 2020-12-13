@@ -1,44 +1,40 @@
 class FoxFireObject extends AbilityObjectCore {
     constructor(config = {}) {
+        // get value from config
         super(config);
 
-        this.fillColor = "blue";
+        // override
+        this.effectRadius = this.effectRadius - this.owner.radius * 2;
         this.isShowPositionTracking = true;
+        this.targetMove = null;
+        this.radius = 15;
+        this.speed = 4;
 
+        // custom attribute
         this.startedTime = millis();
         this.lifeSpan = 5000;
         this.delayTime = 1000;
-        this.speed = 4;
         this.toTargetSpeed = 15;
         this.rotateSpeed = 4;
-        this.radius = 15;
-
-        this.targetMove = null;
         this.targetChampion = null;
-        this.effectRadius = this.effectRadius - this.owner.radius * 2;
-
-        // line track effect
-        this.tracks = [];
+        this.unreadyColor = "#00F5";
+        this.readyColor = "#00F";
     }
 
     // override
     show() {
-        if (this.isReadyToEffect()) {
-            this.fillColor = "blue";
-        } else {
-            this.fillColor = "#0505";
-        }
+        this.fillColor = this.isReadyToEffect()
+            ? this.readyColor
+            : this.unreadyColor;
 
         super.show();
     }
 
     // override
     overlap(champion) {
-        if (!this.targetChampion) {
-            return super.overlap(champion, this.effectRadius + champion.radius);
-        }
-
-        return super.overlap(champion);
+        return this.targetChampion
+            ? super.overlap(champion, this.radius)
+            : super.overlap(champion, this.effectRadius + champion.radius);
     }
 
     // override

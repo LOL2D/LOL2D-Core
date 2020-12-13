@@ -1,40 +1,56 @@
-function preventRightClick() {
-    document.getElementsByTagName("canvas")[0].addEventListener(
-        "contextmenu",
-        function (evt) {
-            evt.preventDefault();
-        },
-        false
-    );
-}
+const Utils = {
+    preventRightClick: () => {
+        document.getElementsByTagName("canvas")[0].addEventListener(
+            "contextmenu",
+            function (evt) {
+                evt.preventDefault();
+            },
+            false
+        );
+    },
 
-function showFPS(x = 30, y = 10) {
-    strokeWeight(1);
-    stroke("black");
-    fill("white");
-    text("FPS: " + ~~frameRate(), x, y);
-}
+    showFPS: (x = 30, y = 10) => {
+        strokeWeight(1);
+        stroke("black");
+        fill("white");
+        text("FPS: " + ~~frameRate(), x, y);
+    },
 
-function showCursor() {
-    strokeWeight(10);
-    stroke(150);
-    line(mouseX, mouseY, pmouseX, pmouseY);
-    strokeWeight(1);
-}
+    showCursor: () => {
+        strokeWeight(10);
+        stroke(150);
+        line(mouseX, mouseY, pmouseX, pmouseY);
+        strokeWeight(1);
+    },
 
-function getVectorRange(rootVector, targetVector, range) {
-    let from = rootVector.copy();
-    let to = p5.Vector.add(
-        from,
-        p5.Vector.sub(targetVector, from).setMag(range)
-    );
+    getVectorWithRange: (rootVector, targetVector, range) => {
+        let from = rootVector.copy();
+        let to = p5.Vector.add(
+            from,
+            p5.Vector.sub(targetVector, from).setMag(range)
+        );
 
-    return {
-        from,
-        to,
-    };
-}
+        return {
+            from,
+            to,
+        };
+    },
 
-function collidePointCircle(px, py, cx, cy, cr) {
-    return dist(px, py, cx, cy) <= cr;
-}
+    rectFromVectorRange: (vectorRange, rectWidth) => {
+        const { from, to } = vectorRange;
+
+        const vecSub = to.copy().sub(from);
+        const rectLength = vecSub.mag();
+        const angle = vecSub.heading();
+
+        push();
+        translate(from.x, from.y);
+        rotate(angle);
+        rect(0, -rectWidth / 2, rectLength, rectWidth);
+        pop();
+    },
+
+    collidePointCircle: (px, py, cx, cy, cr) => {
+        return dist(px, py, cx, cy) <= cr;
+    },
+};

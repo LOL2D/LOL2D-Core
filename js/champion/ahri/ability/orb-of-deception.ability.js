@@ -4,7 +4,7 @@ class OrbOfDeception extends AbilityCore {
 
         this.cooldown = 1000;
         this.castTime = 250;
-        this.range = 400;
+        this.effectRadius = 400;
         this.width = 50;
         this.speed = 15;
         this.cost = 65; // Mana
@@ -13,27 +13,27 @@ class OrbOfDeception extends AbilityCore {
 
     // override
     preview(_mousePos) {
-        stroke("#5577bb55");
-        strokeWeight(this.width);
-        noFill();
-
-        const { from, to } = getVectorRange(
+        const vec = Utils.getVectorWithRange(
             this.owner.position.copy(),
             _mousePos,
-            this.range
+            this.effectRadius
         );
 
-        line(from.x, from.y, to.x, to.y);
+        stroke(COLOR.ABILITY.PREVIEW.BORDER);
+        fill(COLOR.ABILITY.PREVIEW.FILL);
+        strokeWeight(3);
+
+        Utils.rectFromVectorRange(vec, this.width);
     }
 
     // override
     castSpell(_mousePos) {
         super.castSpell(_mousePos);
 
-        const { to: target } = getVectorRange(
+        const { to: target } = Utils.getVectorWithRange(
             this.owner.position.copy(),
             _mousePos,
-            this.range
+            this.effectRadius
         );
 
         return new OrbOfDeceptionObject({

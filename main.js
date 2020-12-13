@@ -7,7 +7,7 @@ let abilityObjs = [];
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textAlign(CENTER, CENTER);
-    preventRightClick();
+    Utils.preventRightClick();
 
     gamemap = new GameMapCore();
     camera = new CameraCore();
@@ -68,7 +68,7 @@ function draw() {
 
     camera.endState();
 
-    showFPS();
+    Utils.showFPS();
 }
 
 // ----------- p5js input -----------
