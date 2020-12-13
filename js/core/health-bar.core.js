@@ -17,9 +17,7 @@ class HealthBarCore {
 
         this.position = createVector(0, 0);
 
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     show() {

@@ -31,6 +31,9 @@ class ChampionCore extends MovementObjectCore {
         // UI
         this.notiEffects = [];
         this.healthBar = new HealthBarCore({ champion: this });
+
+        // set value from config
+        Utils.setValueFromConfig(this, config);
     }
 
     show() {

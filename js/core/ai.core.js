@@ -3,9 +3,7 @@ class AICore {
         this.champion = null;
         this.world = {};
 
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     run() {

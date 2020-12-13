@@ -12,9 +12,9 @@ class NotiEffectCore {
         this.lifeSpan = 1000;
         this.startTime = millis();
 
-        // set value
-        for (let c in config) {
-            this[c] = config[c];
+        // set value f
+        Utils.setValueFromConfig(this, config);
+
         }
     }
 

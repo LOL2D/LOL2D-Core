@@ -11,10 +11,7 @@ class GameMapCore {
         this.gridColor = [50, 50];
         this.gridWeight = 3;
 
-        // set value
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     drawEdge() {

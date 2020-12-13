@@ -12,9 +12,7 @@ class CrowdControlCore {
 
         this.startTime = millis();
 
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     effect() {}

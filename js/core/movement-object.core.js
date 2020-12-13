@@ -14,10 +14,7 @@ class MovementObjectCore {
         this.positionTracks = [];
         this.positionTracksLength = 10;
 
-        // set value
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     show() {

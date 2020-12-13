@@ -4,9 +4,7 @@ class AbilityCore {
         this.owner = null;
         this.lastCastSpell = 0;
 
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     previewCastSpell() {}

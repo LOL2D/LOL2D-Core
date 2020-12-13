@@ -11,10 +11,7 @@ class CameraCore {
         this.borderSize = 25;
         this.borderSpeed = 20;
 
-        // set value
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     beginState() {

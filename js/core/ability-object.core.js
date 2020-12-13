@@ -9,10 +9,7 @@ class AbilityObjectCore extends MovementObjectCore {
         this.effectRadius = 0;
         this.isShowEffectRadius = false;
 
-        // set value
-        for (let c in config) {
-            this[c] = config[c];
-        }
+        Utils.setValueFromConfig(this, config);
     }
 
     run() {
