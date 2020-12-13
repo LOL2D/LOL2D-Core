@@ -47,6 +47,14 @@ class InputCore {
     }
 
     keyReleased(_keyCode) {
+        const { hotkeys } = this;
+
+        switch (_keyCode) {
+            case hotkeys.ToogleLockCam:
+                this.world.camera.isFollow = !this.world.camera.isFollow;
+                break;
+        }
+
         if (this.previewAbilityId) {
             this.world.player.castSpell(this.previewAbilityId, this.mousePos);
 
