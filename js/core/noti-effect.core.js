@@ -12,11 +12,7 @@ class NotiEffectCore {
         this.lifeSpan = 1000;
         this.startTime = millis();
 
-        // set value f
         Utils.setValueFromConfig(this, config);
-
-        // calculate color for later use
-        this.colorAlpha = Utils.applyColorAlpha(this.color, this.alpha);
     }
 
     run() {
@@ -35,6 +31,7 @@ class NotiEffectCore {
         this.position.add(this.velocity);
         this.velocity.mult(this.friction);
         this.alpha = map(millis() - this.startTime, 0, this.lifeSpan, 255, 50);
+        this.colorAlpha = Utils.applyColorAlpha(this.color, this.alpha);
     }
 
     isFinished() {
