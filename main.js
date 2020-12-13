@@ -1,28 +1,39 @@
-let p1, p2;
 let camera;
 let gamemap;
 let input;
+
 let abilityObjs = [];
+let listChampions = [];
+let myChamp;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textAlign(CENTER, CENTER);
     Utils.preventRightClick();
 
+    // core
     gamemap = new GameMapCore();
     camera = new CameraCore();
     input = new InputCore();
 
-    p1 = new Ahri({
+    // players
+    myChamp = new Ahri({
         bound: gamemap.getBound(),
     });
-    p2 = new Ahri({
-        position: createVector(500, 500),
-        bound: gamemap.getBound(),
-    });
+    listChampions.push(myChamp);
 
-    camera.target = p1.position;
-    input.champion = p1;
+    for (let i = 0; i < 4; i++) {
+        listChampions.push(
+            new Ahri({
+                position: createVector(random(1000), random(1000)),
+                bound: gamemap.getBound(),
+            })
+        );
+    }
+
+    // set
+    camera.target = myChamp.position;
+    input.champion = myChamp;
 }
 
 function draw() {
@@ -32,7 +43,7 @@ function draw() {
     if (mouseIsPressed) {
         if (mouseButton == RIGHT) {
             let worldPos = camera.convert(mouseX, mouseY);
-            p1.moveTo(worldPos.x, worldPos.y);
+            myChamp.moveTo(worldPos.x, worldPos.y);
         }
     }
 
@@ -50,17 +61,18 @@ function draw() {
     input.run(camera.convert(mouseX, mouseY));
 
     // champions
-    p1.run();
-    p2.run();
+    for (let champ of listChampions) {
+        champ.run();
+    }
 
     // ability objects
     for (let i = abilityObjs.length - 1; i >= 0; i--) {
         abilityObjs[i].run();
 
-        if (abilityObjs[i].overlap(p2)) {
-            abilityObjs[i].effect(p2);
-        }
+        // effect
+        abilityObjs[i].effect(listChampions);
 
+        // check finish
         if (abilityObjs[i].checkFinished()) {
             abilityObjs.splice(i, 1);
         }
@@ -100,4 +112,8 @@ function mouseWheel() {
     } else {
         if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
     }
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight, true);
 }

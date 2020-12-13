@@ -19,11 +19,12 @@ class FoxFireObject extends AbilityObjectCore {
         this.targetChampion = null;
         this.unreadyColor = "#00F5";
         this.readyColor = "#00F";
+        this.touchedTarget = false;
     }
 
     // override
     show() {
-        this.fillColor = this.isReadyToEffect()
+        this.fillColor = this.isDelayTimeFinished()
             ? this.readyColor
             : this.unreadyColor;
 
@@ -38,19 +39,27 @@ class FoxFireObject extends AbilityObjectCore {
     }
 
     // override
-    effect(champion) {
+    effect(champions) {
         if (!this.targetChampion) {
-            if (
-                this.isReadyToEffect() &&
-                this.abilityRef.isReadyToNextEffect()
-            ) {
-                this.targetMove = champion.position;
-                this.targetChampion = champion;
-                this.speed = this.toTargetSpeed;
-                this.abilityRef.lastEffectTime = millis();
+            if (this.isReadyToEffect()) {
+                let champ = this.getClosestEnemyInRange(
+                    champions,
+                    this.effectRadius,
+                    true
+                );
+
+                if (champ) {
+                    this.targetMove = champ.position;
+                    this.targetChampion = champ;
+                    this.speed = this.toTargetSpeed;
+                    this.abilityRef.lastEffectTime = millis();
+                }
             }
         } else {
-            champion.loseHealth(this.damage);
+            if (this.overlap(this.targetChampion)) {
+                this.targetChampion.loseHealth(this.damage);
+                this.touchedTarget = true;
+            }
         }
     }
 
@@ -70,13 +79,16 @@ class FoxFireObject extends AbilityObjectCore {
         let endOfLife =
             !this.targetChampion && millis() - this.startedTime > this.lifeSpan;
 
-        let touchedTarget =
-            this.targetChampion && this.overlap(this.targetChampion);
-
-        return endOfLife || touchedTarget;
+        return endOfLife || this.touchedTarget;
     }
 
     isReadyToEffect() {
+        return (
+            this.isDelayTimeFinished() && this.abilityRef.isReadyToNextEffect()
+        );
+    }
+
+    isDelayTimeFinished() {
         return millis() - this.startedTime > this.delayTime;
     }
 

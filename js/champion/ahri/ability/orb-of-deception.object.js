@@ -20,10 +20,12 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
     }
 
     // override
-    effect(champion) {
-        if (this.effectedChampions.indexOf(champion) < 0) {
-            champion.loseHealth(this.damage);
-            this.effectedChampions.push(champion);
+    effect(champions) {
+        let champ = this.getClosestEnemyInRange(champions, this.radius, true);
+
+        if (champ && this.effectedChampions.indexOf(champ) < 0) {
+            champ.loseHealth(this.damage);
+            this.effectedChampions.push(champ);
         }
     }
 
