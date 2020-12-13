@@ -10,6 +10,7 @@ class FoxFire extends AbilityCore {
         this.damage = 40;
 
         this.foxFireCount = 3;
+        this.foxFireRotateRadius = this.owner.radius;
         this.lastEffectTime = 0;
         this.nextEffectDelay = 400;
     }

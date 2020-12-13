@@ -5,7 +5,6 @@ class FoxFireObject extends AbilityObjectCore {
 
         // override
         this.effectRadius = this.effectRadius - this.owner.radius * 2;
-        this.isShowPositionTracking = true;
         this.targetMove = null;
         this.radius = 15;
         this.speed = 4;
@@ -17,7 +16,7 @@ class FoxFireObject extends AbilityObjectCore {
         this.toTargetSpeed = 15;
         this.rotateSpeed = 4;
         this.targetChampion = null;
-        this.unreadyColor = "#00F5";
+        this.unreadyColor = "#F002";
         this.readyColor = "#00F";
         this.touchedTarget = false;
     }
@@ -52,6 +51,7 @@ class FoxFireObject extends AbilityObjectCore {
                     this.targetMove = champ.position;
                     this.targetChampion = champ;
                     this.speed = this.toTargetSpeed;
+                    this.isShowPositionTracking = true;
                     this.abilityRef.lastEffectTime = millis();
                 }
             }
@@ -106,7 +106,10 @@ class FoxFireObject extends AbilityObjectCore {
         return this.owner.position
             .copy()
             .add(
-                p5.Vector.fromAngle(radians(this.angle), this.owner.radius * 2)
+                p5.Vector.fromAngle(
+                    radians(this.angle),
+                    this.abilityRef.foxFireRotateRadius + this.radius + 10
+                )
             );
     }
 }
