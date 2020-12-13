@@ -12,6 +12,7 @@ class MovementObjectCore {
 
         this.isShowPositionTracking = false;
         this.positionTracks = [];
+        this.positionTracksLength = 10;
 
         // set value
         for (let c in config) {
@@ -31,8 +32,9 @@ class MovementObjectCore {
                 x: this.position.x,
                 y: this.position.y,
             });
-            
-            if (this.positionTracks.length > 10) {
+
+            // limit track length
+            if (this.positionTracks.length > this.positionTracksLength) {
                 this.positionTracks.shift();
             }
 

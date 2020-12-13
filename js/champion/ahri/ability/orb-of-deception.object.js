@@ -1,32 +1,29 @@
 class OrbOfDeceptionObject extends AbilityObjectCore {
     constructor(config = {}) {
+        // get value from config
         super(config);
 
+        // override
         this.fillColor = "blue";
         this.isShowPositionTracking = true;
+        this.isShowEffectRadius = true;
 
-        this.state = "forward"; // 1: go forward, 2: go back to owner
-        this.effectedStateForward = []; // list of  champions effected in state forward
-        this.effectedStateBackward = []; // list of  champions effected in state backward
-        this.limitSpeedBackward = 20;
-
-        this.defaultSpeed = this.speed;
+        // custom attribute
+        this.STATE = {
+            FORWARD: 1,
+            BACKWARD: 2,
+        };
+        this.state = this.STATE.FORWARD;
+        this.effectedChampions = []; // list of  champions effected
+        this.maxSpeedBackward = 20;
+        this.increaseSpeedBackward = 0.2;
     }
 
     // override
     effect(champion) {
-        if (
-            this.state == "forward" &&
-            this.effectedStateForward.indexOf(champion) < 0
-        ) {
-            this.effectedStateForward.push(champion);
+        if (this.effectedChampions.indexOf(champion) < 0) {
             champion.loseHealth(this.damage);
-        } else if (
-            this.state == "backward" &&
-            this.effectedStateBackward.indexOf(champion) < 0
-        ) {
-            this.effectedStateBackward.push(champion);
-            champion.loseHealth(this.damage);
+            this.effectedChampions.push(champion);
         }
     }
 
@@ -34,21 +31,24 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
     move() {
         super.move();
 
-        if (this.isArrivedTargetMove()) {
-            this.state = "backward";
+        // backward
+        if (this.state == this.STATE.BACKWARD) {
+            this.speed += this.increaseSpeedBackward;
+            this.speed = constrain(this.speed, 0, this.maxSpeedBackward);
+        }
+        // forward
+        else if (this.isArrivedTargetMove()) {
+            this.state = this.STATE.BACKWARD;
+            this.effectedChampions = [];
             this.targetMove = this.owner.position;
             this.speed = 0;
-        }
-
-        if (this.state == "backward") {
-            if (this.speed <= this.limitSpeedBackward - 0.2) this.speed += 0.2;
         }
     }
 
     // override
     checkFinished() {
         return (
-            this.state == "backward" &&
+            this.state == this.STATE.BACKWARD &&
             p5.Vector.dist(this.position, this.owner.position) <
                 this.owner.radius
         );
