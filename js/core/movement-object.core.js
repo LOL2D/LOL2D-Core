@@ -13,7 +13,7 @@ class MovementObjectCore {
         this.isShowPositionTracking = false;
         this.positionTracks = [];
         this.positionTracksLength = 10;
-        this.positionTrackColor = "#fff3";
+        this.positionTrackColor = "#7772";
 
         Helper.Other.setValueFromConfig(this, config);
     }
