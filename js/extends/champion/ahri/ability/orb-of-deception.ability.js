@@ -2,11 +2,14 @@ class OrbOfDeception extends AbilityCore {
     constructor(config = {}) {
         super(config);
 
+        // override
         this.cooldown = 1000;
+        this.speed = 15;
+
+        // custom attributes
         this.castTime = 250;
         this.effectRadius = 400;
         this.width = 50;
-        this.speed = 15;
         this.cost = 65; // Mana
         this.damage = 40;
     }

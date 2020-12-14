@@ -2,10 +2,13 @@ class FoxFire extends AbilityCore {
     constructor(config = {}) {
         super(config);
 
+        // override
         this.cooldown = 1000;
+        this.speed = 15;
+
+        // custom attribute
         this.castTime = 250;
         this.effectRadius = 350;
-        this.speed = 15;
         this.cost = 65; // Mana
         this.damage = 40;
 
