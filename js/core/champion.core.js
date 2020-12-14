@@ -1,3 +1,5 @@
+// TODO https://leagueoflegends.fandom.com/wiki/On-action_effects#On-Attack
+// TODO https://leagueoflegends.fandom.com/wiki/Channel
 class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
@@ -146,7 +148,7 @@ class ChampionCore extends MovementObjectCore {
             new NotiEffectCore({
                 text: "- " + value,
                 color: "red",
-                position: this.healthBar.position, // reference to healthbar's position
+                position: this.position, // reference to this position
                 velocity: createVector(0, -2),
             })
         );
@@ -159,7 +161,7 @@ class ChampionCore extends MovementObjectCore {
             new NotiEffectCore({
                 text: "- " + value,
                 color: "lightblue",
-                position: this.healthBar.position, // reference to healthbar's position
+                position: this.position, // reference to healthbar's position
                 velocity: createVector(0, -2),
             })
         );

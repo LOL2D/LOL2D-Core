@@ -9,6 +9,10 @@ class InputCore {
 
         this.mousePos = createVector(0, 0);
         this.previewAbilityId = null;
+
+        this.targetMoveSize = 10;
+        this.targetMoveNormalSize = 10;
+        this.targetMoveClickSize = 40;
     }
 
     run() {
@@ -17,6 +21,23 @@ class InputCore {
         if (this.previewAbilityId) {
             this.world.player.previewCastSpell(this.previewAbilityId);
         }
+
+        if (this.world.player.targetMove) {
+            fill("green");
+            noStroke();
+            circle(
+                this.world.player.targetMove.x,
+                this.world.player.targetMove.y,
+                this.targetMoveSize
+            );
+        }
+
+        this.targetMoveSize -= 3;
+        this.targetMoveSize = constrain(
+            this.targetMoveSize,
+            this.targetMoveNormalSize,
+            this.targetMoveClickSize
+        );
     }
 
     keyDown(_keyCode) {}
@@ -64,6 +85,7 @@ class InputCore {
 
     mouseIsPressed() {
         if (mouseButton == RIGHT) {
+            this.targetMoveSize = this.targetMoveClickSize;
             this.world.player.moveTo(this.mousePos.x, this.mousePos.y);
         }
     }

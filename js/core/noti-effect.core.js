@@ -3,14 +3,15 @@ class NotiEffectCore {
         // default value
         this.position = createVector(0, 0);
         this.velocity = createVector(0, 0);
-        this.friction = 0.95;
+        this.gravity = createVector(0.01, 0.05);
+        //this.friction = 0.95;
         this.movedVector = createVector(0, 0);
 
         this.text = "noti";
         this.color = "red";
         this.alpha = 255;
 
-        this.lifeSpan = 1000;
+        this.lifeSpan = 700;
         this.startTime = millis();
 
         Helper.Other.setValueFromConfig(this, config);
@@ -22,7 +23,7 @@ class NotiEffectCore {
     }
 
     show() {
-        strokeWeight(1);
+        strokeWeight(2);
         stroke(this.colorAlpha);
         fill(this.colorAlpha);
         textSize(this.textSize);
@@ -37,8 +38,9 @@ class NotiEffectCore {
         const lifeTime = millis() - this.startTime;
 
         this.movedVector.add(this.velocity);
-        this.velocity.mult(this.friction);
-        this.alpha = map(lifeTime, 0, this.lifeSpan, 255, 50);
+        this.velocity.add(this.gravity);
+        //this.velocity.mult(this.friction);
+        this.alpha = map(lifeTime, 0, this.lifeSpan, 255, 10);
         this.colorAlpha = Helper.Color.applyColorAlpha(this.color, this.alpha);
         this.textSize = map(lifeTime, 0, this.lifeSpan, 25, 10);
     }

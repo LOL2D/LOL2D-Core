@@ -8,7 +8,7 @@ class GameMapCore {
         this.edgeWeight = 3;
         this.grid = true;
         this.gridSize = 300;
-        this.gridColor = [100, 50];
+        this.gridColor = [130, 50];
         this.gridWeight = 3;
 
         Helper.Other.setValueFromConfig(this, config);

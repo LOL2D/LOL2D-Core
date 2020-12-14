@@ -8,6 +8,8 @@ class FoxFireObject extends AbilityObjectCore {
         this.targetMove = null;
         this.radius = 15;
         this.speed = 4;
+        this.fillColor = "#058DFF";
+        this.positionTrackColor = "#058DFF55";
 
         // custom attribute
         this.startedTime = millis();

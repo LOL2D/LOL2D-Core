@@ -4,8 +4,9 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         super(config);
 
         // override
-        this.fillColor = "blue";
+        this.fillColor = "#77f";
         this.isShowPositionTracking = true;
+        this.positionTrackColor = "#77F5";
 
         // custom attribute
         this.STATE = {
