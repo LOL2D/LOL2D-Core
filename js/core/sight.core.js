@@ -16,7 +16,15 @@ class SightCore {
         // start erase overlay color in sight-area
         this.overlay.erase();
         this.overlay.fill(255);
+        this.drawSights();
+        this.overlay.noErase();
 
+        // show overlay
+        image(this.overlay, width / 2, height / 2);
+    }
+
+    drawSights() {
+        // default sight of champion
         for (let champ of this.world.champions) {
             if (champ.isAllyWithPlayer) {
                 const pos = this.world.camera.worldToCanvas(
@@ -26,9 +34,6 @@ class SightCore {
                 this.overlay.ellipse(pos.x, pos.y, 750);
             }
         }
-        this.overlay.noErase();
-
-        image(this.overlay, width / 2, height / 2);
     }
 
     resize(w, h) {
