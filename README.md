@@ -14,6 +14,7 @@
     - [x] Core GameMap ([code](js/core/gamemap.core.js))
     - [ ] Wall (**working...**)
     - [ ] Turret
+    - [ ] Sight (tầm nhìn)
   - Champion
     - [x] Core Champion ([code](js/core/champion.core.js))
     - [x] Core Health bar ([code](js/core/health-bar.core.js))
@@ -43,3 +44,11 @@
 
 - source: <https://lienminh.garena.vn/game-info/champions>
 - tool crop image: <https://crop-circle.imageonline.co/>
+
+### Link hay trong quá trình làm game
+
+- game machenic: [link](https://leagueoflegends.fandom.com/wiki/Category:Gameplay_elements)
+- sight-and-light with polygon: [link](https://ncase.me/sight-and-light/)
+- mask in p5js: [link](https://editor.p5js.org/figraham/sketches/vOUjYwE3Z)
+- eraser in p5js: [link](https://editor.p5js.org/stalgiag/sketches/eCsygQ7-5)
+- drawingContext in p5js: [link](https://p5js.org/reference/#/p5/drawingContext)
