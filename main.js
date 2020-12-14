@@ -67,4 +67,5 @@ function mouseWheel(event) {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight, true);
+    world.resizeWindow(windowWidth, windowHeight);
 }

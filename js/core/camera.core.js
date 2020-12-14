@@ -50,11 +50,18 @@ class CameraCore {
         this.target = target;
     }
 
-    convert(_x, _y) {
-        let newX = (_x - width * 0.5) / this.scale + this.position.x;
-        let newY = (_y - height * 0.5) / this.scale + this.position.y;
+    canvasToWorld(canvasX, canvasY) {
+        let worldX = (canvasX - width * 0.5) / this.scale + this.position.x;
+        let worldY = (canvasY - height * 0.5) / this.scale + this.position.y;
 
-        return createVector(newX, newY);
+        return createVector(worldX, worldY);
+    }
+
+    worldToCanvas(worldX, worldY) {
+        let canvasX = worldX - this.position.x + width * 0.5;
+        let canvasY = worldY - this.position.y + height * 0.5;
+
+        return createVector(canvasX, canvasY);
     }
 
     isMouseOnEdge() {

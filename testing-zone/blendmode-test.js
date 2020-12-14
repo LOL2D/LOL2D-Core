@@ -20,7 +20,6 @@ function draw() {
     ellipse(width / 2, height / 2, 50);
 
     // clear overlay with overlay color
-    overlay.clear();
     overlay.blendMode(BLEND);
     overlay.background(overlayColor);
 

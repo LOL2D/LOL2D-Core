@@ -33,8 +33,8 @@ class GameMapCore {
     }
 
     drawGrid(camera) {
-        let { x: leftScreen, y: topScreen } = camera.convert(0, 0);
-        let { x: rightScreen, y: bottomScreen } = camera.convert(width, height);
+        let { x: leftScreen, y: topScreen } = camera.canvasToWorld(0, 0);
+        let { x: rightScreen, y: bottomScreen } = camera.canvasToWorld(width, height);
 
         let leftMap = max(leftScreen - 50, 0);
         let rightMap = min(rightScreen + 50, this.width);

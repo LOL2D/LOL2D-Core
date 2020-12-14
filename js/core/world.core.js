@@ -77,6 +77,9 @@ class WorldCore {
                 })
             );
         }
+
+        // sight
+        this.sight = new SightCore({ world: this });
     }
 
     run(func) {
@@ -112,6 +115,9 @@ class WorldCore {
 
         this.camera.endState();
         // ----------- end camera -----------
+
+        // sight
+        this.sight.run();
     }
 
     addNewSpellObjects(something) {
@@ -124,6 +130,10 @@ class WorldCore {
 
     // ------------- utils -------------
     getMousePosition() {
-        return this.camera.convert(mouseX, mouseY);
+        return this.camera.canvasToWorld(mouseX, mouseY);
+    }
+
+    resizeWindow(w, h) {
+        this.sight.resize(w, h);
     }
 }
