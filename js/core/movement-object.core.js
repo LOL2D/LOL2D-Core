@@ -101,6 +101,7 @@ class MovementObjectCore {
     }
 
     overlap(other, customRange) {
+        // TODO convert to helper.collide
         let range = customRange || this.radius + other.radius;
         return p5.Vector.dist(this.position, other.position) < range;
     }

@@ -2,7 +2,12 @@
 
 ## TODO
 
-- World ([code](js/core/world.core.js))
+- Code template (code mẫu để bắt đầu tạo những champion mới, ability mới, ...)
+  - [x] New Champion template ([code](js/template/champion.template.js))
+  - [x] New Ability template ([code](js/template/ability.template.js))
+  - [x] New AbilityObject template ([code](js/template/ability-object.template.js))
+- World
+  - [x] Core World ([code](js/core/world.core.js))
   - [x] Core Camera ([code](js/core/camera.core.js))
   - [x] Core AI ([code](js/core/ai.core.js))
   - Map
@@ -16,11 +21,12 @@
   - Ability
     - [x] Core Ability ([code](js/core/ability.core.js))
     - [x] Core Ability object ([code](js/core/ability-object.core.js))
-    - [ ] Summoner Spell ([code](js/summoner-spell))
+    - [ ] Summoner Spell ([code](js/extends/summoner-spell))
+    - [ ] Crowd Control ([code](js/extends/crowd-control))
 - [x] Core Input ([code](js/core/input.core.js))
 - Champions
-  - [ ] Ahri ([code](js/champion/ahri)) (**working...**)
-  - [ ] Jinx ([code](js/champion/jinx))
+  - [ ] Ahri ([code](js/extends/champion/ahri)) (**working...**)
+  - [ ] Jinx ([code](js/extends/champion/jinx))
 
 ## Resources
 

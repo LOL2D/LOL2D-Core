@@ -55,13 +55,14 @@ class ChampionCore extends MovementObjectCore {
         this.strokeWeight = 4;
     }
 
+    // override
     show() {
         super.show();
 
         // avatar
-        if (globalassets[this.avatarCircleKey]) {
+        if (globalassets[this.avatarCirclePath]) {
             image(
-                globalassets[this.avatarCircleKey],
+                globalassets[this.avatarCirclePath],
                 this.position.x,
                 this.position.y,
                 this.radius * 2,
@@ -98,18 +99,6 @@ class ChampionCore extends MovementObjectCore {
         this.endCrowdControls();
     }
 
-    startCrowdControls() {
-        for (let c of this.crowdControls) {
-            c.effect(this);
-        }
-    }
-
-    endCrowdControls() {
-        this.status.movement = ALLOWED;
-        this.status.attacking = ALLOWED;
-        this.status.abilities = ALLOWED;
-    }
-
     previewCastSpell(abilityKey) {
         if (this.canSpell(abilityKey)) this.abilities[abilityKey].preview();
     }
@@ -127,6 +116,18 @@ class ChampionCore extends MovementObjectCore {
             this.abilities[abilityKey].isAvailable() &&
             this.mana >= this.abilities[abilityKey].cost
         );
+    }
+
+    startCrowdControls() {
+        for (let c of this.crowdControls) {
+            c.effect(this);
+        }
+    }
+
+    endCrowdControls() {
+        this.status.movement = ALLOWED;
+        this.status.attacking = ALLOWED;
+        this.status.abilities = ALLOWED;
     }
 
     loseHealth(value) {
