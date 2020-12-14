@@ -1,5 +1,9 @@
 # LOL2D Core
 
+## Live demo
+
+[play demo](https://lol2d.github.io/LOL2D-Core/)
+
 ## TODO
 
 - Code template (code mẫu để bắt đầu tạo những champion mới, ability mới, ...)
