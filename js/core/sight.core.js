@@ -26,7 +26,7 @@ class SightCore {
                 this.overlay.ellipse(pos.x, pos.y, 750);
             }
         }
-        this.noErase();
+        this.overlay.noErase();
 
         image(this.overlay, width / 2, height / 2);
     }
