@@ -11,11 +11,10 @@ class SightCore {
     run() {
         // clear overlay with overlay color
         this.overlay.clear();
-        this.overlay.blendMode(BLEND);
         this.overlay.background(this.outOfViewColor);
 
-        // remove overlay color in sight-area
-        this.overlay.blendMode(REMOVE);
+        // start erase overlay color in sight-area
+        this.overlay.erase();
         this.overlay.fill(255);
 
         for (let champ of this.world.champions) {
@@ -27,6 +26,7 @@ class SightCore {
                 this.overlay.ellipse(pos.x, pos.y, 750);
             }
         }
+        this.noErase();
 
         image(this.overlay, width / 2, height / 2);
     }
