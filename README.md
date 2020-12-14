@@ -47,8 +47,9 @@
 
 ### Link hay trong quá trình làm game
 
-- game machenic: [link](https://leagueoflegends.fandom.com/wiki/Category:Gameplay_elements)
-- sight-and-light with polygon: [link](https://ncase.me/sight-and-light/)
+- sight-and-light with polygon: [docs](https://ncase.me/sight-and-light/)
+- 2d visibility: [docs](https://www.redblobgames.com/articles/visibility/), [code](https://www.redblobgames.com/articles/visibility/)
 - mask in p5js: [link](https://editor.p5js.org/figraham/sketches/vOUjYwE3Z)
 - eraser in p5js: [link](https://editor.p5js.org/stalgiag/sketches/eCsygQ7-5)
 - drawingContext in p5js: [link](https://p5js.org/reference/#/p5/drawingContext)
+- lol - game machenic: [docs](https://leagueoflegends.fandom.com/wiki/Category:Gameplay_elements)
