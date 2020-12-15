@@ -37,13 +37,13 @@ class AICore {
             newTarget.x = constrain(
                 newTarget.x,
                 this.champion.radius,
-                this.champion.world.gamemap.width - this.champion.radius
+                this.champion.world.groundMap.width - this.champion.radius
             );
 
             newTarget.y = constrain(
                 newTarget.y,
                 this.champion.radius,
-                this.champion.world.gamemap.height - this.champion.radius
+                this.champion.world.groundMap.height - this.champion.radius
             );
 
             this.champion.targetMove = newTarget;
