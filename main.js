@@ -11,6 +11,8 @@ function setup() {
     imageMode(CENTER);
     Helper.Other.preventRightClick();
 
+    cursor(globalassets.normalCursor);
+
     world = new WorldCore({
         championsClassName: {
             player: Ahri,

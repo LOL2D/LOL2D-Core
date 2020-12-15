@@ -1,4 +1,7 @@
-let globalassets = {};
+let globalassets = {
+    // cursor (do not need to loadImage)
+    normalCursor: "asset/image/cursor/normal.cur",
+};
 
 const assetPaths = [
     // ahri
