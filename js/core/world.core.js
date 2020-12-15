@@ -135,6 +135,17 @@ class WorldCore {
         }
         for (let champ of this.champions) {
             champ.run();
+
+            if (champ.isDead()) {
+                if (champ.isAllyWithPlayer) {
+                    champ.position.set(0, this.groundMap.height);
+                } else {
+                    champ.position.set(this.groundMap.width, 0);
+                }
+
+                // restore some heal
+                champ.heal(100);
+            }
         }
 
         // ability objects
