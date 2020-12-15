@@ -8,7 +8,7 @@ class SightCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    run() {
+    draw() {
         // clear overlay with overlay color
         this.overlay.clear();
         this.overlay.background(this.outOfViewColor);
@@ -31,7 +31,11 @@ class SightCore {
                     champ.position.x,
                     champ.position.y
                 );
-                this.overlay.ellipse(pos.x, pos.y, 750);
+                this.overlay.ellipse(
+                    pos.x,
+                    pos.y,
+                    750 * this.world.camera.scale
+                );
             }
         }
     }
