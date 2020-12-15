@@ -82,13 +82,15 @@ class AICore {
         if (this.mode == "defense") {
             if (this.champion.isAllyWithPlayer)
                 this.champion.targetMove.set(
-                    0,
-                    this.champion.world.groundMap.height
+                    this.champion.radius * 2,
+                    this.champion.world.groundMap.height -
+                        this.champion.radius * 2
                 );
             else
                 this.champion.targetMove.set(
-                    this.champion.world.groundMap.width,
-                    0
+                    this.champion.world.groundMap.width -
+                        this.champion.radius * 2,
+                    this.champion.radius * 2
                 );
         }
     }
