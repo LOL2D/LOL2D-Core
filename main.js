@@ -49,6 +49,12 @@ function draw() {
 // ----------- p5js input -----------
 function keyPressed() {
     input.keyPressed(keyCode);
+
+    // test
+    if (key == "z")
+        world.camera.follow(
+            world.champions[~~random(world.champions.length - 1)].position
+        );
 }
 function keyReleased() {
     input.keyReleased(keyCode);
