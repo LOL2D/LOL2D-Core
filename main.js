@@ -17,8 +17,8 @@ function setup() {
     world = new WorldCore({
         championsClassName: {
             player: Ahri,
-            allies: [Ahri],
-            enemies: [Ahri, Ahri],
+            allies: [Ahri, Ahri, Ahri, Ahri],
+            enemies: [Ahri, Ahri, Ahri, Ahri, Ahri],
         },
     });
 
