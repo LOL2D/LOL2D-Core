@@ -30,7 +30,7 @@ class ChampionCore extends MovementObjectCore {
         this.maxMana = 1000;
         this.fakeHealth = 0;
         this.healthRegen = 0;
-        this.manaRegen = 0.5;
+        this.manaRegen = 0;
 
         // attributes
         this.exp = 0;
@@ -168,6 +168,19 @@ class ChampionCore extends MovementObjectCore {
         );
     }
 
+    addMana(value) {
+        this.mana += value;
+
+        this.notiEffects.push(
+            new NotiEffectCore({
+                text: "+ " + value,
+                color: "lightblue",
+                position: this.position, // reference to healthbar's position
+                velocity: createVector(0, -2),
+            })
+        );
+    }
+
     loseMana(value) {
         this.mana -= value;
 
@@ -179,5 +192,9 @@ class ChampionCore extends MovementObjectCore {
                 velocity: createVector(0, -2),
             })
         );
+    }
+
+    isDead() {
+        return this.health == 0;
     }
 }
