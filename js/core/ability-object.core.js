@@ -29,8 +29,8 @@ class AbilityObjectCore extends MovementObjectCore {
     }
 
     showEffectRadius() {
-        stroke(COLOR.ABILITY.PREVIEW.BORDER);
-        fill(COLOR.ABILITY.PREVIEW.FILL);
+        stroke(COLOR.ABILITY.INDICATOR.BORDER);
+        fill(COLOR.ABILITY.INDICATOR.FILL);
         strokeWeight(3);
         circle(this.position.x, this.position.y, this.effectRadius * 2);
     }

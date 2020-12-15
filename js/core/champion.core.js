@@ -101,8 +101,8 @@ class ChampionCore extends MovementObjectCore {
         this.endCrowdControls();
     }
 
-    previewCastSpell(abilityKey) {
-        if (this.canSpell(abilityKey)) this.abilities[abilityKey].preview();
+    showIndicator(abilityKey) {
+        if (this.canSpell(abilityKey)) this.abilities[abilityKey].showIndicator();
     }
 
     castSpell(abilityKey, destination) {

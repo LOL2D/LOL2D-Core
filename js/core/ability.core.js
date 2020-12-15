@@ -8,7 +8,7 @@ class AbilityCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    preview() {}
+    showIndicator() {}
 
     castSpell(destination) {
         this.lastCastSpell = millis();

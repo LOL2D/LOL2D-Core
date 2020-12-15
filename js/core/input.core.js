@@ -8,7 +8,7 @@ class InputCore {
         this.world = config.world;
 
         this.mousePos = createVector(0, 0);
-        this.previewAbilityId = null;
+        this.showIndicatorId = null;
 
         this.targetMoveSize = 10;
         this.targetMoveNormalSize = 10;
@@ -18,8 +18,8 @@ class InputCore {
     run() {
         this.mousePos = this.world.getMousePosition();
 
-        if (this.previewAbilityId) {
-            this.world.player.previewCastSpell(this.previewAbilityId);
+        if (this.showIndicatorId) {
+            this.world.player.showIndicator(this.showIndicatorId);
         }
 
         if (this.world.player.targetMove) {
@@ -47,23 +47,23 @@ class InputCore {
 
         switch (_keyCode) {
             case hotkeys.CastSpell1:
-                this.previewAbilityId = "spell1";
+                this.showIndicatorId = "spell1";
                 break;
 
             case hotkeys.CastSpell2:
-                this.previewAbilityId = "spell2";
+                this.showIndicatorId = "spell2";
                 break;
 
             case hotkeys.CastSpell3:
-                this.previewAbilityId = "spell3";
+                this.showIndicatorId = "spell3";
                 break;
 
             case hotkeys.CastSpell4:
-                this.previewAbilityId = "spell4";
+                this.showIndicatorId = "spell4";
                 break;
 
             default:
-                this.previewAbilityId = null;
+                this.showIndicatorId = null;
         }
     }
 
@@ -76,10 +76,10 @@ class InputCore {
                 break;
         }
 
-        if (this.previewAbilityId) {
-            this.world.player.castSpell(this.previewAbilityId, this.mousePos);
+        if (this.showIndicatorId) {
+            this.world.player.castSpell(this.showIndicatorId, this.mousePos);
 
-            this.previewAbilityId = null;
+            this.showIndicatorId = null;
         }
     }
 
@@ -91,9 +91,9 @@ class InputCore {
     }
 
     mousePressed() {
-        if (this.previewAbilityId) {
+        if (this.showIndicatorId) {
             // cancel cast spell on mouse clicked
-            this.previewAbilityId = null;
+            this.showIndicatorId = null;
         }
     }
 

@@ -15,15 +15,15 @@ class OrbOfDeception extends AbilityCore {
     }
 
     // override
-    preview() {
+    showIndicator() {
         const vec = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
             this.owner.world.getMousePosition(),
             this.effectRadius
         );
 
-        stroke(COLOR.ABILITY.PREVIEW.BORDER);
-        fill(COLOR.ABILITY.PREVIEW.FILL);
+        stroke(COLOR.ABILITY.INDICATOR.BORDER);
+        fill(COLOR.ABILITY.INDICATOR.FILL);
         strokeWeight(3);
 
         Helper.UI.rectFromVectorRange(vec, this.width);

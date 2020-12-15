@@ -1,6 +1,6 @@
 const COLOR = {
     ABILITY: {
-        PREVIEW: {
+        INDICATOR: {
             BORDER: "#5577bb55",
             FILL: "#5577bb22",
         },

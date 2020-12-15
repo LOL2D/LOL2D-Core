@@ -22,7 +22,7 @@ class AbilityName extends AbilityCore {
     }
 
     // override
-    preview() {}
+    showIndicator() {}
 
     // override
     castSpell(destination) {}

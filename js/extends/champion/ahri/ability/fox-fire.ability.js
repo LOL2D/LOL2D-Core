@@ -19,9 +19,9 @@ class FoxFire extends AbilityCore {
     }
 
     // override
-    preview() {
-        stroke(COLOR.ABILITY.PREVIEW.BORDER);
-        fill(COLOR.ABILITY.PREVIEW.FILL);
+    showIndicator() {
+        stroke(COLOR.ABILITY.INDICATOR.BORDER);
+        fill(COLOR.ABILITY.INDICATOR.FILL);
         strokeWeight(3);
 
         circle(

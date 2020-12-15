@@ -4,7 +4,7 @@ class AhriAttack extends AbilityCore {
     }
 
     // override
-    preview() {}
+    showIndicator() {}
 
     // override
     castSpell(destination) {}
