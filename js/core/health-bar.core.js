@@ -14,6 +14,8 @@ class HealthBarCore {
         this.fakeHealthColor = "#C8C8CB";
         this.manaColor = "#6CB3D5";
         this.levelColor = "#3287B9";
+        this.nameColor = "#aaa";
+        this.nameStroke = "#000";
         this.levelBg = "#101F26";
         this.emptyBg = "#020F15";
         this.borderColor = "#5B5C57";
@@ -102,5 +104,11 @@ class HealthBarCore {
             topleft.x + this.height / 2,
             topleft.y + this.height / 2
         );
+
+        // name
+        fill(this.nameColor);
+        stroke(this.nameStroke);
+        textSize(14);
+        text(this.champion.name, topleft.x + this.width / 2, topleft.y - 14);
     }
 }

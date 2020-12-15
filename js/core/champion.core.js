@@ -33,6 +33,7 @@ class ChampionCore extends MovementObjectCore {
         this.manaRegen = 0;
 
         // attributes
+        this.name = "Champion name";
         this.exp = 0;
         this.level = 18;
         this.health = this.maxHealth;
