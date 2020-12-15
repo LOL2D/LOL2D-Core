@@ -142,7 +142,7 @@ class ChampionCore extends MovementObjectCore {
                 text: "+ " + value,
                 color: "green",
                 position: this.position, // reference to this position
-                velocity: createVector(0, -2),
+                velocity: createVector(random(-1, 1), random(-1.5, -2)),
             })
         );
     }
@@ -179,7 +179,7 @@ class ChampionCore extends MovementObjectCore {
                 text: "+ " + value,
                 color: "lightblue",
                 position: this.position, // reference to healthbar's position
-                velocity: createVector(0, -2),
+                velocity: createVector(random(-1, 1), random(-1.5, -2)),
             })
         );
     }
