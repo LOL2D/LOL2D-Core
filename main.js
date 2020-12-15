@@ -11,7 +11,7 @@ function setup() {
     imageMode(CENTER);
     Helper.Other.preventRightClick();
 
-    cursor(globalassets.normalCursor);
+    cursor(globalassets.cursor.normal);
 
     world = new WorldCore({
         championsClassName: {
