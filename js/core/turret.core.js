@@ -56,7 +56,7 @@ class TurretCore {
 
             // attack
             if (this.isReadyToNextAttack()) {
-                this.attackTarget.loseHealth(this.attackDamage);
+                this.attackTarget.loseHealth(this.attackDamage, this);
                 this.lastAttackTime = millis();
             }
 

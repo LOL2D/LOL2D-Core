@@ -37,14 +37,14 @@ class WorldCore {
         this.sight = new SightCore({ world: this });
 
         // ---- demo gameplay -----
-        let playerBase = createVector(250, this.groundMap.height - 250);
-        let enemyBase = createVector(this.groundMap.height - 250, 250);
+        this.playerBase = createVector(250, this.groundMap.height - 250);
+        this.enemyBase = createVector(this.groundMap.height - 250, 250);
         // ------------------------
 
         // turrets
         this.turrets.push(
             new TurretCore({
-                position: playerBase.copy(),
+                position: this.playerBase.copy(),
                 fillColor: "green",
                 isAllyWithPlayer: true,
                 world: this,
@@ -53,7 +53,7 @@ class WorldCore {
 
         this.turrets.push(
             new TurretCore({
-                position: enemyBase.copy(),
+                position: this.enemyBase.copy(),
                 fillColor: "red",
                 isAllyWithPlayer: false,
                 world: this,
@@ -63,9 +63,10 @@ class WorldCore {
         // my champion
         if (this.championsClassName.player) {
             this.player = new this.championsClassName.player({
+                name: "You",
                 isAllyWithPlayer: true,
                 world: this,
-                position: playerBase.copy(),
+                position: this.playerBase.copy(),
                 bound: this.groundMap.getBound(),
             });
             this.champions.push(this.player);
@@ -73,11 +74,13 @@ class WorldCore {
         }
 
         // ally champions
+        let nameIndex = 0;
         for (let champClass of this.championsClassName.allies) {
             let champ = new champClass({
+                name: "Ally " + nameIndex++,
                 isAllyWithPlayer: true,
                 world: this,
-                position: playerBase.copy(),
+                position: this.playerBase.copy(),
                 bound: this.groundMap.getBound(),
             });
 
@@ -93,11 +96,13 @@ class WorldCore {
         }
 
         // enemy champions
+        nameIndex = 0;
         for (let champClass of this.championsClassName.enemies) {
             let champ = new champClass({
+                name: "Enemy " + nameIndex++,
                 isAllyWithPlayer: false,
                 world: this,
-                position: enemyBase.copy(),
+                position: this.enemyBase.copy(),
                 bound: this.groundMap.getBound(),
             });
 
@@ -137,11 +142,21 @@ class WorldCore {
             champ.run();
 
             if (champ.isDead()) {
-                if (champ.isAllyWithPlayer) {
-                    champ.position.set(0, this.groundMap.height);
-                } else {
-                    champ.position.set(this.groundMap.width, 0);
-                }
+                // spawn at base
+                champ.spawn({
+                    position: champ.isAllyWithPlayer
+                        ? this.playerBase
+                        : this.enemyBase,
+                    health: 1,
+                    mana: champ.mana,
+                });
+
+                // decrease level
+                if (champ.level > 0) champ.level--;
+
+                // increase killer's level
+                if (champ.killedBy instanceof ChampionCore)
+                    champ.killedBy.level++;
 
                 // restore some heal
                 champ.heal(100);

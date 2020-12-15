@@ -62,7 +62,7 @@ class FoxFireObject extends AbilityObjectCore {
             }
         } else {
             if (this.overlap(this.targetChampion)) {
-                this.targetChampion.loseHealth(this.damage);
+                this.targetChampion.loseHealth(this.damage, this);
                 this.touchedTarget = true;
             }
 

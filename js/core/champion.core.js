@@ -35,7 +35,7 @@ class ChampionCore extends MovementObjectCore {
         // attributes
         this.name = "Champion name";
         this.exp = 0;
-        this.level = 18;
+        this.level = 0;
         this.health = this.maxHealth;
         this.mana = this.maxMana;
 
@@ -147,12 +147,14 @@ class ChampionCore extends MovementObjectCore {
         );
     }
 
-    loseHealth(value) {
+    loseHealth(value, damageSource) {
         this.fakeHealth -= value;
 
         if (this.fakeHealth < 0) {
             this.health -= -this.fakeHealth;
             this.fakeHealth = 0;
+
+            if (this.health <= 0) this.killedBy = damageSource;
         }
 
         noStroke();
@@ -193,6 +195,13 @@ class ChampionCore extends MovementObjectCore {
                 velocity: createVector(0, -2),
             })
         );
+    }
+
+    spawn({ position, health = this.maxHealth, mana = this.maxMana }) {
+        this.health = health;
+        this.mana = mana;
+        this.position.set(position.x, position.y);
+        this.killedBy = null;
     }
 
     isDead() {

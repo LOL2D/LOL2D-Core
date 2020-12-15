@@ -31,7 +31,7 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         });
 
         if (closestEnemy && this.effectedChampions.indexOf(closestEnemy) < 0) {
-            closestEnemy.loseHealth(this.damage);
+            closestEnemy.loseHealth(this.damage, this);
             this.effectedChampions.push(closestEnemy);
         }
     }
