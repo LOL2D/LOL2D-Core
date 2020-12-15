@@ -17,6 +17,7 @@ class WorldCore {
         // ----- default value -----
         this.gamemap = null;
         this.camera = null;
+        this.terrainMap = null;
 
         this.abilityObjects = [];
         this.champions = [];
@@ -25,6 +26,10 @@ class WorldCore {
         // ----- setup value -----
         this.gamemap = new GameMapCore();
         this.camera = new CameraCore();
+        this.sight = new SightCore({ world: this });
+        this.terrainMap = new TerrainMapCore({
+            map: TERRAIN_MAP.SUMMORNER_RIFT,
+        });
 
         // my champion
         if (this.championsClassName.player) {
@@ -77,9 +82,6 @@ class WorldCore {
                 })
             );
         }
-
-        // sight
-        this.sight = new SightCore({ world: this });
     }
 
     run(func) {
@@ -88,6 +90,8 @@ class WorldCore {
 
         this.gamemap.drawEdge();
         this.gamemap.drawGrid(this.camera);
+
+        this.terrainMap.show();
 
         // func is something need to execute after world's camera beginState
         func && func();
