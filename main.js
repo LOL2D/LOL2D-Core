@@ -9,6 +9,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
+    pixelDensity(1);
     Helper.Other.preventRightClick();
 
     cursor(globalassets.cursor.normal);
