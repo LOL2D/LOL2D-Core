@@ -8,7 +8,7 @@ class AICore {
     }
 
     run() {
-        this.autoShow();
+        //this.autoShow();
         this.autoMove();
         this.autoAttack();
         this.autoDefense();
