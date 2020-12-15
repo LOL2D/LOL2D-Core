@@ -26,17 +26,25 @@ class WorldCore {
         this.listAI = [];
 
         // ----- setup value -----
-        this.groundMap = new GroundMapCore();
+        this.groundMap = new GroundMapCore({
+            width: 2000,
+            height: 2000,
+        });
         this.terrainMap = new TerrainMapCore({
             map: TERRAIN_MAP.SUMMORNER_RIFT,
         });
         this.camera = new CameraCore();
         this.sight = new SightCore({ world: this });
 
+        // ---- demo gameplay -----
+        let playerBase = createVector(250, this.groundMap.height - 250);
+        let enemyBase = createVector(this.groundMap.height - 250, 250);
+        // ------------------------
+
         // turrets
         this.turrets.push(
             new TurretCore({
-                position: createVector(250, 250),
+                position: playerBase.copy(),
                 fillColor: "green",
                 isAllyWithPlayer: true,
                 world: this,
@@ -45,10 +53,7 @@ class WorldCore {
 
         this.turrets.push(
             new TurretCore({
-                position: createVector(
-                    this.groundMap.width - 250,
-                    this.groundMap.height - 250
-                ),
+                position: enemyBase.copy(),
                 fillColor: "red",
                 isAllyWithPlayer: false,
                 world: this,
@@ -60,7 +65,7 @@ class WorldCore {
             this.player = new this.championsClassName.player({
                 isAllyWithPlayer: true,
                 world: this,
-                position: createVector(random(1000), random(1000)),
+                position: playerBase.copy(),
                 bound: this.groundMap.getBound(),
             });
             this.champions.push(this.player);
@@ -72,7 +77,7 @@ class WorldCore {
             let champ = new champClass({
                 isAllyWithPlayer: true,
                 world: this,
-                position: createVector(random(1000), random(1000)),
+                position: playerBase.copy(),
                 bound: this.groundMap.getBound(),
             });
 
@@ -92,7 +97,7 @@ class WorldCore {
             let champ = new champClass({
                 isAllyWithPlayer: false,
                 world: this,
-                position: createVector(random(1000), random(1000)),
+                position: enemyBase.copy(),
                 bound: this.groundMap.getBound(),
             });
 

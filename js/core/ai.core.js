@@ -5,10 +5,15 @@ class AICore {
         this.autoAttackRadius = 300;
 
         Helper.Other.setValueFromConfig(this, config);
+
+        // setup
+        this.champion.targetMove = this.champion.position.copy();
+        this.mode = "attack";
     }
 
     run() {
         //this.autoShow();
+        this.autoChangeMode();
         this.autoMove();
         this.autoAttack();
         this.autoDefense();
@@ -28,25 +33,27 @@ class AICore {
 
     autoMove() {
         // basic move
-        if (this.champion.isArrivedTargetMove() || !this.champion.targetMove) {
-            let len = random(100, 1000);
-            let newTarget = this.champion.position
-                .copy()
-                .add(random(-len, len), random(-len, len));
+        if (this.mode == "attack") {
+            if (this.champion.isArrivedTargetMove()) {
+                let len = random(100, 1000);
+                let newTarget = this.champion.position
+                    .copy()
+                    .add(random(-len, len), random(-len, len));
 
-            newTarget.x = constrain(
-                newTarget.x,
-                this.champion.radius,
-                this.champion.world.groundMap.width - this.champion.radius
-            );
+                newTarget.x = constrain(
+                    newTarget.x,
+                    this.champion.radius,
+                    this.champion.world.groundMap.width - this.champion.radius
+                );
 
-            newTarget.y = constrain(
-                newTarget.y,
-                this.champion.radius,
-                this.champion.world.groundMap.height - this.champion.radius
-            );
+                newTarget.y = constrain(
+                    newTarget.y,
+                    this.champion.radius,
+                    this.champion.world.groundMap.height - this.champion.radius
+                );
 
-            this.champion.targetMove = newTarget;
+                this.champion.targetMove = newTarget;
+            }
         }
     }
 
@@ -71,6 +78,30 @@ class AICore {
     }
 
     autoDefense() {
-        // TODO add your code here
+        // move to turret if health is low
+        if (this.mode == "defense") {
+            if (this.champion.isAllyWithPlayer)
+                this.champion.targetMove.set(
+                    0,
+                    this.champion.world.groundMap.height
+                );
+            else
+                this.champion.targetMove.set(
+                    this.champion.world.groundMap.width,
+                    0
+                );
+        }
+    }
+
+    autoChangeMode() {
+        if (this.mode == "defense") {
+            if (this.champion.health > this.champion.maxHealth * 0.9) {
+                this.mode = "attack";
+            }
+        } else {
+            if (this.champion.health < this.champion.maxHealth * 0.5) {
+                this.mode = "defense";
+            }
+        }
     }
 }

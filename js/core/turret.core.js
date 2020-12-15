@@ -14,7 +14,7 @@ class TurretCore {
         this.healRadius = 350;
         this.healDelayTime = 1000;
         this.lastHealTime = 0;
-        this.healValue = 20;
+        this.healValue = 100;
 
         this.world = null;
         this.isAllyWithPlayer = true;
