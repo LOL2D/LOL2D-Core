@@ -2,7 +2,7 @@
 class SightCore {
     constructor(config = {}) {
         this.overlay = createGraphics(windowWidth, windowHeight);
-        this.outOfViewColor = "#000d";
+        this.outOfViewColor = "#000";
         this.world = null;
 
         Helper.Other.setValueFromConfig(this, config);
