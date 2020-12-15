@@ -59,20 +59,41 @@ class AICore {
 
     autoAttack() {
         if (random(1) < 0.1) {
-            const closestEnemy = Helper.Distance.getClosestChampionInRange({
+            // get all enemies in range
+            const enemies = Helper.Distance.getChampionsInRange({
                 rootPosition: this.champion.position,
                 champions: this.world.champions,
                 inRange: this.autoAttackRadius,
-                addChampRadiusToRange: true,
                 allyWithPlayer: !this.champion.isAllyWithPlayer,
                 excludes: [this.champion],
             });
 
-            if (closestEnemy) {
-                const destination = closestEnemy.position.copy();
+            if (enemies.length > 0) {
+                // find champion that have lowest health
+                let targetChamp = enemies[0];
+                for (let e of enemies) {
+                    if (e.health < targetChamp.health) {
+                        targetChamp = e;
+                    }
+                }
+
+                // spell to it
+                const destination = targetChamp.position.copy();
                 const spellId = random([1, 2, 3, 4]);
 
                 this.champion.castSpell("spell" + spellId, destination);
+
+                // get closer to targetChamp
+                if (this.champion.health >= targetChamp.health) {
+                    let attackRange = 50; // this.champion.attackRange; // not available yet
+
+                    this.targetMove = targetChamp.position
+                        .copy()
+                        .add(
+                            random(-attackRange, attackRange),
+                            random(-attackRange, attackRange)
+                        );
+                }
             }
         }
     }
