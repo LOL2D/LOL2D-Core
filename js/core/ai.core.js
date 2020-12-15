@@ -97,11 +97,17 @@ class AICore {
 
     autoChangeMode() {
         if (this.mode == "defense") {
-            if (this.champion.health > this.champion.maxHealth * 0.9) {
+            if (
+                this.champion.health > this.champion.maxHealth * 0.9 ||
+                this.champion.mana > this.champion.maxMana * 0.9
+            ) {
                 this.mode = "attack";
             }
         } else {
-            if (this.champion.health < this.champion.maxHealth * 0.5) {
+            if (
+                this.champion.health < this.champion.maxHealth * 0.5 ||
+                this.champion.mana < this.champion.maxMana * 0.2
+            ) {
                 this.mode = "defense";
             }
         }
