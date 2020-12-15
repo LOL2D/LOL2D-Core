@@ -57,3 +57,4 @@
 - eraser in p5js: [link](https://editor.p5js.org/stalgiag/sketches/eCsygQ7-5)
 - drawingContext in p5js: [link](https://p5js.org/reference/#/p5/drawingContext)
 - lol - game machenic: [docs](https://leagueoflegends.fandom.com/wiki/Category:Gameplay_elements)
+- lol - structures: [docs](https://leagueoflegends.fandom.com/wiki/Category:Structure)
