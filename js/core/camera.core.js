@@ -42,6 +42,11 @@ class CameraCore {
         }
     }
 
+    // TODO your code below here
+    toWorldCoordinate() {}
+
+    toCanvasCoordinate() {}
+
     endState() {
         pop();
     }
@@ -58,8 +63,8 @@ class CameraCore {
     }
 
     worldToCanvas(worldX, worldY) {
-        let canvasX = worldX - this.position.x + width * 0.5;
-        let canvasY = worldY - this.position.y + height * 0.5;
+        let canvasX = (worldX - this.position.x) * this.scale + width * 0.5;
+        let canvasY = (worldY - this.position.y) * this.scale + height * 0.5;
 
         return createVector(canvasX, canvasY);
     }

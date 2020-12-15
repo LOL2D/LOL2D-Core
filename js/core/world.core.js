@@ -116,8 +116,8 @@ class WorldCore {
         this.camera.endState();
         // ----------- end camera -----------
 
-        // sight
-        this.sight.run();
+        // draw sight overlay to screen
+        this.sight.draw();
     }
 
     addNewSpellObjects(something) {
