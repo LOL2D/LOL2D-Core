@@ -58,42 +58,37 @@ class AICore {
     }
 
     autoAttack() {
-        if (random(1) < 0.1) {
-            // get all enemies in range
-            const enemies = Helper.Distance.getChampionsInRange({
-                rootPosition: this.champion.position,
-                champions: this.world.champions,
-                inRange: this.autoAttackRadius,
-                allyWithPlayer: !this.champion.isAllyWithPlayer,
-                excludes: [this.champion],
-            });
+        // get all enemies in range
+        const enemies = Helper.Distance.getChampionsInRange({
+            rootPosition: this.champion.position,
+            champions: this.world.champions,
+            inRange: this.autoAttackRadius,
+            allyWithPlayer: !this.champion.isAllyWithPlayer,
+            excludes: [this.champion],
+        });
 
-            if (enemies.length > 0) {
-                // find champion that have lowest health
-                let targetChamp = enemies[0];
-                for (let e of enemies) {
-                    if (e.health < targetChamp.health) {
-                        targetChamp = e;
-                    }
+        if (enemies.length > 0) {
+            // find champion that have lowest health
+            let targetChamp = enemies[0];
+            for (let e of enemies) {
+                if (e.health <= targetChamp.health) {
+                    targetChamp = e;
                 }
+            }
 
-                // spell to it
+            // spell to it
+            // if (random(1) < 0.5) {
                 const destination = targetChamp.position.copy();
                 const spellId = random([1, 2, 3, 4]);
 
                 this.champion.castSpell("spell" + spellId, destination);
+            // }
 
-                // get closer to targetChamp
-                if (this.champion.health >= targetChamp.health) {
-                    let attackRange = 50; // this.champion.attackRange; // not available yet
+            // get closer to targetChamp
+            if (this.champion.health >= targetChamp.health) {
+                // let attackRange = 50; // this.champion.attackRange; // not available yet
 
-                    this.targetMove = targetChamp.position
-                        .copy()
-                        .add(
-                            random(-attackRange, attackRange),
-                            random(-attackRange, attackRange)
-                        );
-                }
+                this.champion.targetMove = targetChamp.targetMove.copy();
             }
         }
     }
