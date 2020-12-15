@@ -15,21 +15,45 @@ class WorldCore {
 
     setup() {
         // ----- default value -----
-        this.gamemap = null;
-        this.camera = null;
+        this.groundMap = null;
         this.terrainMap = null;
+        this.camera = null;
 
         this.abilityObjects = [];
         this.champions = [];
+        this.turrets = [];
+
         this.listAI = [];
 
         // ----- setup value -----
-        this.gamemap = new GameMapCore();
-        this.camera = new CameraCore();
-        this.sight = new SightCore({ world: this });
+        this.groundMap = new GroundMapCore();
         this.terrainMap = new TerrainMapCore({
             map: TERRAIN_MAP.SUMMORNER_RIFT,
         });
+        this.camera = new CameraCore();
+        this.sight = new SightCore({ world: this });
+
+        // turrets
+        this.turrets.push(
+            new TurretCore({
+                position: createVector(250, 250),
+                fillColor: "green",
+                isAllyWithPlayer: true,
+                world: this,
+            })
+        );
+
+        this.turrets.push(
+            new TurretCore({
+                position: createVector(
+                    this.groundMap.width - 250,
+                    this.groundMap.height - 250
+                ),
+                fillColor: "red",
+                isAllyWithPlayer: false,
+                world: this,
+            })
+        );
 
         // my champion
         if (this.championsClassName.player) {
@@ -37,7 +61,7 @@ class WorldCore {
                 isAllyWithPlayer: true,
                 world: this,
                 position: createVector(random(1000), random(1000)),
-                bound: this.gamemap.getBound(),
+                bound: this.groundMap.getBound(),
             });
             this.champions.push(this.player);
             this.camera.follow(this.player.position);
@@ -49,7 +73,7 @@ class WorldCore {
                 isAllyWithPlayer: true,
                 world: this,
                 position: createVector(random(1000), random(1000)),
-                bound: this.gamemap.getBound(),
+                bound: this.groundMap.getBound(),
             });
 
             this.champions.push(champ);
@@ -69,7 +93,7 @@ class WorldCore {
                 isAllyWithPlayer: false,
                 world: this,
                 position: createVector(random(1000), random(1000)),
-                bound: this.gamemap.getBound(),
+                bound: this.groundMap.getBound(),
             });
 
             this.champions.push(champ);
@@ -88,10 +112,14 @@ class WorldCore {
         // ----------- begin camera -----------
         this.camera.beginState();
 
-        this.gamemap.drawEdge();
-        this.gamemap.drawGrid(this.camera);
+        this.groundMap.drawEdge();
+        this.groundMap.drawGrid(this.camera);
 
         this.terrainMap.show();
+
+        for (let turret of this.turrets) {
+            turret.run();
+        }
 
         // func is something need to execute after world's camera beginState
         func && func();

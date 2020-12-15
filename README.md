@@ -12,13 +12,13 @@
   - [x] New AbilityObject template ([code](js/template/ability-object.template.js))
 - World
   - [x] Core World ([code](js/core/world.core.js))
-  - [x] Core Camera ([code](js/core/camera.core.js))
   - [x] Core AI ([code](js/core/ai.core.js))
   - Map
-    - [x] Core GameMap ([code](js/core/gamemap.core.js))
-    - [ ] Wall (**working...**)
-    - [ ] Turret
-    - [ ] Sight (tầm nhìn)
+    - [x] Core Camera ([code](js/core/camera.core.js))
+    - [x] Core GroundMap ([code](js/core/ground-map.core.js))
+    - [ ] Core TerrainMap ([code](js/core/terrain-map.core.js)) (**working...**)
+    - [ ] Core Turret ([code](js/core/turret.core.js)) (**working...**)
+    - [ ] Core Sight ([code](js/core/sight.core.js)) (tầm nhìn) (**working...**)
   - Champion
     - [x] Core Champion ([code](js/core/champion.core.js))
     - [x] Core Health bar ([code](js/core/health-bar.core.js))

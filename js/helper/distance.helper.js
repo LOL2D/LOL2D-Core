@@ -1,4 +1,14 @@
 const DistanceHelper = {
+    /* 
+        parameters: {
+            rootPosition: ,
+            champions: array of champions,
+            inRange: range to check,
+            addChampRadiusToRange: true / false,
+            allyWithPlayer: true / false / null(get all),
+            excludes: array of champions want to exclude,
+        }
+    */
     getClosestChampionInRange(config = {}) {
         const enemiesInRange = this.getChampionsInRange(config);
         return this.getClosestChampion(config.rootPosition, enemiesInRange);

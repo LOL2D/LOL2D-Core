@@ -29,7 +29,7 @@ class ChampionCore extends MovementObjectCore {
         this.maxHealth = 1000;
         this.maxMana = 1000;
         this.fakeHealth = 0;
-        this.healthRegen = 0.5;
+        this.healthRegen = 0;
         this.manaRegen = 0.5;
 
         // attributes
@@ -102,7 +102,8 @@ class ChampionCore extends MovementObjectCore {
     }
 
     showIndicator(abilityKey) {
-        if (this.canSpell(abilityKey)) this.abilities[abilityKey].showIndicator();
+        if (this.canSpell(abilityKey))
+            this.abilities[abilityKey].showIndicator();
     }
 
     castSpell(abilityKey, destination) {
@@ -130,6 +131,19 @@ class ChampionCore extends MovementObjectCore {
         this.status.movement = ALLOWED;
         this.status.attacking = ALLOWED;
         this.status.abilities = ALLOWED;
+    }
+
+    heal(value) {
+        this.health += value;
+
+        this.notiEffects.push(
+            new NotiEffectCore({
+                text: "+ " + value,
+                color: "green",
+                position: this.position, // reference to this position
+                velocity: createVector(0, -2),
+            })
+        );
     }
 
     loseHealth(value) {
