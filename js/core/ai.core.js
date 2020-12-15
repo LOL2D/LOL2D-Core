@@ -67,6 +67,9 @@ class AICore {
             excludes: [this.champion],
         });
 
+        // reset target champ
+        this.targetChamp = null;
+
         if (enemies.length > 0) {
             // find champion that have lowest health
             let targetChamp = enemies[0];
@@ -76,19 +79,35 @@ class AICore {
                 }
             }
 
-            // spell to it
-            // if (random(1) < 0.5) {
+            // spell to it - add random check here to decrease power of AI :)
+            if (random(1) < 0.5) {
                 const destination = targetChamp.position.copy();
                 const spellId = random([1, 2, 3, 4]);
 
                 this.champion.castSpell("spell" + spellId, destination);
-            // }
+            }
 
             // get closer to targetChamp
-            if (this.champion.health >= targetChamp.health) {
-                // let attackRange = 50; // this.champion.attackRange; // not available yet
+            let followRange = 250; // this.champion.attackRange; // not available yet
+            let shouldFollow =
+                // check health
+                this.champion.health >= targetChamp.health &&
+                // check distance
+                p5.Vector.dist(
+                    this.champion.targetMove,
+                    targetChamp.targetMove
+                ) > followRange;
 
-                this.champion.targetMove = targetChamp.targetMove.copy();
+            if (shouldFollow) {
+                this.champion.targetMove = targetChamp.targetMove
+                    .copy()
+                    .add(
+                        random(-followRange, followRange),
+                        random(-followRange, followRange)
+                    );
+
+                // save to use in autoChangeMode
+                this.targetChamp = targetChamp;
             }
         }
     }
@@ -121,8 +140,9 @@ class AICore {
             }
         } else {
             if (
-                this.champion.health < this.champion.maxHealth * 0.5 ||
-                this.champion.mana < this.champion.maxMana * 0.2
+                !this.targetChamp &&
+                (this.champion.health < this.champion.maxHealth * 0.5 ||
+                    this.champion.mana < this.champion.maxMana * 0.2)
             ) {
                 this.mode = "defense";
             }
