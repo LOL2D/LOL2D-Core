@@ -152,11 +152,10 @@ class WorldCore {
                 });
 
                 // decrease level
-                if (champ.level > 0) champ.level--;
+                // if (champ.level > 0) champ.level--;
 
                 // increase killer's level
-                if (champ.killedBy instanceof ChampionCore)
-                    champ.killedBy.level++;
+                // if (champ.killedBy) champ.killedBy.level++;
 
                 // restore some heal
                 champ.heal(100);
