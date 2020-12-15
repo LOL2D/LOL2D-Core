@@ -95,11 +95,11 @@ class AICore {
                 // check distance
                 p5.Vector.dist(
                     this.champion.targetMove,
-                    targetChamp.targetMove
+                    targetChamp.position
                 ) > followRange;
 
             if (shouldFollow) {
-                this.champion.targetMove = targetChamp.targetMove
+                this.champion.targetMove = targetChamp.position
                     .copy()
                     .add(
                         random(-followRange, followRange),
