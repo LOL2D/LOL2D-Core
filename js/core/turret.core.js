@@ -10,11 +10,13 @@ class TurretCore {
         this.attackDelayTime = 1500;
         this.lastAttackTime = 0;
         this.attackDamage = 100;
+        this.attackTarget = null;
 
         this.healRadius = 350;
         this.healDelayTime = 1000;
         this.lastHealTime = 0;
         this.healValue = 100;
+        this.healManaValue = 50;
 
         this.world = null;
         this.isAllyWithPlayer = true;
@@ -41,26 +43,51 @@ class TurretCore {
     }
 
     attack() {
-        let closestEnemy = Helper.Distance.getClosestChampionInRange({
-            rootPosition: this.position,
-            champions: this.world.champions,
-            inRange: this.attackRadius,
-            allyWithPlayer: !this.isAllyWithPlayer,
-            excludes: [],
-        });
-
-        if (closestEnemy) {
+        // allready have target
+        if (this.attackTarget) {
+            // red line
             stroke("red");
             line(
                 this.position.x,
                 this.position.y,
-                closestEnemy.position.x,
-                closestEnemy.position.y
+                this.attackTarget.position.x,
+                this.attackTarget.position.y
             );
 
+            // attack
             if (this.isReadyToNextAttack()) {
-                closestEnemy.loseHealth(this.attackDamage);
+                this.attackTarget.loseHealth(this.attackDamage);
                 this.lastAttackTime = millis();
+            }
+
+            // check out of range
+            let isInRange = Helper.Collide.circleCircle(
+                this.position.x,
+                this.position.y,
+                this.attackRadius,
+                this.attackTarget.position.x,
+                this.attackTarget.position.y,
+                0
+            );
+            if (!isInRange) {
+                this.attackTarget = null;
+            }
+        }
+
+        // do not have target
+        else {
+            // find closest champion
+            let closestEnemy = Helper.Distance.getClosestChampionInRange({
+                rootPosition: this.position,
+                champions: this.world.champions,
+                inRange: this.attackRadius,
+                allyWithPlayer: !this.isAllyWithPlayer,
+                excludes: [],
+            });
+
+            // save to attack that champion
+            if (closestEnemy) {
+                this.attackTarget = closestEnemy;
             }
         }
     }
@@ -77,6 +104,7 @@ class TurretCore {
         if (this.isReadyToNextHeal()) {
             for (let a of allies) {
                 a.heal(this.healValue);
+                a.addMana(this.healManaValue);
             }
             this.lastHealTime = millis();
         }
