@@ -3,7 +3,7 @@ class FoxFire extends AbilityCore {
         super(config);
 
         // override
-        this.cooldown = 1000;
+        this.cooldown = 5000;
         this.speed = 15;
 
         // custom attribute

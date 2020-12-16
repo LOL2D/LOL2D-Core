@@ -3,7 +3,7 @@ class OrbOfDeception extends AbilityCore {
         super(config);
 
         // override
-        this.cooldown = 1000;
+        this.cooldown = 3000;
         this.speed = 15;
 
         // custom attributes
