@@ -1,4 +1,6 @@
-class NotiEffectCore {
+// https://lh6.googleusercontent.com/WtyMzAZqnNs_Na_Smy_aIrb85e22H0IW4jZd4EBBw3cjzkhTgOlLh95w8bzU3wTK3SaCjoNvrJb01cWjr_yJTMiD9PiRMF0KewMKc9d824Rc_ID3MJYqIS6QgonMe463OU06s58G
+
+class CombatTextCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);

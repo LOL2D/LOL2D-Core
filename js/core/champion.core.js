@@ -41,7 +41,7 @@ class ChampionCore extends MovementObjectCore {
 
         // UI
         this.world = null;
-        this.notiEffects = [];
+        this.combatTexts = [];
 
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
@@ -77,11 +77,11 @@ class ChampionCore extends MovementObjectCore {
         this.healthBar.show();
 
         // show notification effects
-        for (let i = this.notiEffects.length - 1; i >= 0; i--) {
-            this.notiEffects[i].run();
+        for (let i = this.combatTexts.length - 1; i >= 0; i--) {
+            this.combatTexts[i].run();
 
-            if (this.notiEffects[i].isFinished()) {
-                this.notiEffects.splice(i, 1);
+            if (this.combatTexts[i].isFinished()) {
+                this.combatTexts.splice(i, 1);
             }
         }
     }
@@ -137,8 +137,8 @@ class ChampionCore extends MovementObjectCore {
     heal(value) {
         this.health += value;
 
-        this.notiEffects.push(
-            new NotiEffectCore({
+        this.combatTexts.push(
+            new CombatTextCore({
                 text: "+ " + value,
                 color: "green",
                 position: this.position, // reference to this position
@@ -161,8 +161,8 @@ class ChampionCore extends MovementObjectCore {
         fill("red");
         circle(this.position.x, this.position.y, this.radius * 2.5);
 
-        this.notiEffects.push(
-            new NotiEffectCore({
+        this.combatTexts.push(
+            new CombatTextCore({
                 text: "- " + value,
                 color: "red",
                 position: this.position, // reference to this position
@@ -174,8 +174,8 @@ class ChampionCore extends MovementObjectCore {
     addMana(value) {
         this.mana += value;
 
-        this.notiEffects.push(
-            new NotiEffectCore({
+        this.combatTexts.push(
+            new CombatTextCore({
                 text: "+ " + value,
                 color: "lightblue",
                 position: this.position, // reference to healthbar's position
@@ -187,8 +187,8 @@ class ChampionCore extends MovementObjectCore {
     loseMana(value) {
         this.mana -= value;
 
-        this.notiEffects.push(
-            new NotiEffectCore({
+        this.combatTexts.push(
+            new CombatTextCore({
                 text: "- " + value,
                 color: "lightblue",
                 position: this.position, // reference to healthbar's position

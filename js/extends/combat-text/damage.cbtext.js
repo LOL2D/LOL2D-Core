@@ -1,4 +1,4 @@
-class DamageNotiEffect extends NotiEffectCore {
+class DamageCombatText extends CombatTextCore {
     constructor(config = {}) {
         super(config);
     }
