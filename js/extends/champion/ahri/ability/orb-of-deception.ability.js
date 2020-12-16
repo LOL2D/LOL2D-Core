@@ -4,7 +4,6 @@ class OrbOfDeception extends AbilityCore {
 
         // override
         this.cooldown = 3000;
-        this.speed = 15;
 
         // custom attributes
         this.castTime = 250;
@@ -12,6 +11,7 @@ class OrbOfDeception extends AbilityCore {
         this.width = 50;
         this.cost = 65; // Mana
         this.damage = 40;
+        this.speed = 15;
     }
 
     // override
