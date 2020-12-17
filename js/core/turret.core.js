@@ -38,7 +38,7 @@ class TurretCore {
 
         noFill();
         stroke("#555");
-        strokeWeight(1);
+        strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.attackRadius * 2);
     }
 
@@ -46,7 +46,7 @@ class TurretCore {
         // allready have target
         if (this.attackTarget) {
             // red line
-            stroke("red");
+            stroke("#f005");
             line(
                 this.position.x,
                 this.position.y,
@@ -56,7 +56,15 @@ class TurretCore {
 
             // attack
             if (this.isReadyToNextAttack()) {
-                this.attackTarget.loseHealth(this.attackDamage, this);
+                this.world.addNewSpellObjects(
+                    new BulletTurretObject({
+                        targetChamp: this.attackTarget,
+                        targetMove: this.attackTarget.position,
+                        position: this.position.copy(),
+                        damage: this.attackDamage
+                    })
+                );
+
                 this.lastAttackTime = millis();
             }
 

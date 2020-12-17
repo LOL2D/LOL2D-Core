@@ -15,6 +15,7 @@ function setup() {
     cursor(globalassets.cursor.normal);
 
     world = new WorldCore({
+        size: 2000,
         championsClassName: {
             player: Ahri,
             allies: [Ahri, Ahri, Ahri, Ahri],

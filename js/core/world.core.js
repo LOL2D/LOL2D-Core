@@ -6,6 +6,8 @@ class WorldCore {
             enemies: [],
         };
 
+        this.size = 500;
+
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
 
@@ -27,8 +29,8 @@ class WorldCore {
 
         // ----- setup value -----
         this.groundMap = new GroundMapCore({
-            width: 2000,
-            height: 2000,
+            width: this.size,
+            height: this.size,
         });
         this.terrainMap = new TerrainMapCore({
             map: TERRAIN_MAP.SUMMORNER_RIFT,

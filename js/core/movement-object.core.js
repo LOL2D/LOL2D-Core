@@ -13,6 +13,7 @@ class MovementObjectCore {
         this.isShowPositionTracking = false;
         this.positionTracks = [];
         this.positionTracksLength = 10;
+        this.positionTracksWeight = null;
         this.positionTrackColor = "#7772";
 
         Helper.Other.setValueFromConfig(this, config);
@@ -46,7 +47,7 @@ class MovementObjectCore {
         // show positionTracks
         if (this.positionTracks.length > 2) {
             stroke(this.positionTrackColor);
-            strokeWeight(this.radius * 2);
+            strokeWeight(this.positionTrackWeight || this.radius * 2);
             noFill();
             beginShape();
             for (let t of this.positionTracks) {

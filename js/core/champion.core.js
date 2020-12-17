@@ -201,7 +201,7 @@ class ChampionCore extends MovementObjectCore {
         this.health = health;
         this.mana = mana;
         this.position.set(position.x, position.y);
-        this.targetMove.set(position.x, position.y);
+        this.targetMove = position.copy();
         this.killedBy = null;
     }
 

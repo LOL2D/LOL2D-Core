@@ -5,7 +5,6 @@ class AbilityObjectCore extends MovementObjectCore {
         // default value
         this.owner = null;
         this.isStarted = false;
-        this.finished = false; // flag
         this.effectRadius = 0;
         this.isShowEffectRadius = false;
 
@@ -22,9 +21,8 @@ class AbilityObjectCore extends MovementObjectCore {
         this.isShowEffectRadius && this.showEffectRadius();
         this.show();
 
-        if (this.checkFinished() || this.finished) {
+        if (this.checkFinished()) {
             this.onFinished();
-            this.finished = true;
         }
     }
 
