@@ -128,6 +128,7 @@ class WorldCore {
         this.groundMap.drawGrid(this.camera);
 
         this.terrainMap.show();
+        this.terrainMap.effect(this.champions);
 
         for (let turret of this.turrets) {
             turret.run();

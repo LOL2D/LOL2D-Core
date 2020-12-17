@@ -3,7 +3,7 @@ const TERRAIN_MAP = {
         {
             name: "abc",
             position: { x: 500, y: 500 },
-            paths: [
+            shapeVertices: [
                 { x: -75, y: 150 },
                 { x: 135, y: 90 },
                 { x: 150, y: -30 },
@@ -16,7 +16,7 @@ const TERRAIN_MAP = {
         {
             name: "abc",
             position: { x: 750, y: 900 },
-            paths: [
+            shapeVertices: [
                 { x: -75, y: 150 },
                 { x: 20, y: 90 },
                 { x: 150, y: -30 },
@@ -29,7 +29,7 @@ const TERRAIN_MAP = {
         {
             name: "abc",
             position: { x: 1400, y: 200 },
-            paths: [
+            shapeVertices: [
                 { x: -75, y: 150 },
                 { x: 135, y: 90 },
                 { x: 30, y: -30 },
@@ -42,7 +42,7 @@ const TERRAIN_MAP = {
         {
             name: "abc",
             position: { x: 250, y: 1400 },
-            paths: [
+            shapeVertices: [
                 { x: -75, y: 150 },
                 { x: 135, y: 90 },
                 { x: 150, y: -30 },
@@ -55,7 +55,7 @@ const TERRAIN_MAP = {
         {
             name: "abc",
             position: { x: 1200, y: 500 },
-            paths: [
+            shapeVertices: [
                 { x: -75, y: 150 },
                 { x: 135, y: 90 },
                 { x: 150, y: -30 },

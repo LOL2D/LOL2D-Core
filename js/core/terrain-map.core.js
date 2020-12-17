@@ -6,13 +6,19 @@ class TerrainMapCore {
 
         Helper.Other.setValueFromConfig(this, config);
 
-        for (let tp of this.map) {
+        for (let t of this.map) {
             this.terrains.push(
                 new TerrainCore({
-                    position: createVector(tp.position.x, tp.position.y),
-                    paths: tp.paths,
+                    position: createVector(t.position.x, t.position.y),
+                    shapeVertices: t.shapeVertices,
                 })
             );
+        }
+    }
+
+    effect(champions) {
+        for (let ter of this.terrains) {
+            ter.effect(champions);
         }
     }
 
