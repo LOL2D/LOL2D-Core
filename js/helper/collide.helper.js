@@ -62,8 +62,8 @@ const CollideHelper = {
 
     // http://www.jeffreythompson.org/collision-detection/line-circle.php
     lineCircle(x1, y1, x2, y2, cx, cy, r) {
-        let inside1 = pointCircle(x1, y1, cx, cy, r);
-        let inside2 = pointCircle(x2, y2, cx, cy, r);
+        let inside1 = this.pointCircle(x1, y1, cx, cy, r);
+        let inside2 = this.pointCircle(x2, y2, cx, cy, r);
         if (inside1 || inside2) return true;
         let distX = x1 - x2;
         let distY = y1 - y2;
@@ -71,7 +71,7 @@ const CollideHelper = {
         let dot = ((cx - x1) * (x2 - x1) + (cy - y1) * (y2 - y1)) / pow(len, 2);
         let closestX = x1 + dot * (x2 - x1);
         let closestY = y1 + dot * (y2 - y1);
-        let onSegment = linePoint(x1, y1, x2, y2, closestX, closestY);
+        let onSegment = this.linePoint(x1, y1, x2, y2, closestX, closestY);
         if (!onSegment) return false;
         distX = closestX - cx;
         distY = closestY - cy;
@@ -92,11 +92,12 @@ const CollideHelper = {
 
     // http://www.jeffreythompson.org/collision-detection/line-rect.php
     lineRect(x1, y1, x2, y2, rx, ry, rw, rh) {
-        let left = lineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);
-        let right = lineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
-        let top = lineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry);
-        let bottom = lineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);
-        return left || right || top || bottom;
+        return (
+            this.lineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh) ||
+            this.lineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh) ||
+            this.lineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry) ||
+            this.lineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh)
+        );
     },
 
     // http://www.jeffreythompson.org/collision-detection/poly-point.php
@@ -126,9 +127,9 @@ const CollideHelper = {
             if (next == vertices.length) next = 0;
             let vc = vertices[current];
             let vn = vertices[next];
-            if (lineCircle(vc.x, vc.y, vn.x, vn.y, cx, cy, r)) return true;
+            if (this.lineCircle(vc.x, vc.y, vn.x, vn.y, cx, cy, r)) return true;
         }
-        return polygonPoint(vertices, cx, cy);
+        return this.polyPoint(vertices, cx, cy);
     },
 
     // http://www.jeffreythompson.org/collision-detection/poly-rect.php
@@ -139,8 +140,8 @@ const CollideHelper = {
             if (next == vertices.length) next = 0;
             let vc = vertices[current];
             let vn = vertices[next];
-            if (lineRect(vc.x, vc.y, vn.x, vn.y, rx, ry, rw, rh)) {
-                return isCheckInside ? polygonPoint(vertices, rx, ry) : true;
+            if (this.lineRect(vc.x, vc.y, vn.x, vn.y, rx, ry, rw, rh)) {
+                return isCheckInside ? this.polyPoint(vertices, rx, ry) : true;
             }
         }
 
@@ -157,7 +158,7 @@ const CollideHelper = {
             let y3 = vertices[current].y;
             let x4 = vertices[next].x;
             let y4 = vertices[next].y;
-            if (lineLine(x1, y1, x2, y2, x3, y3, x4, y4)) {
+            if (this.lineLine(x1, y1, x2, y2, x3, y3, x4, y4)) {
                 return true;
             }
         }
@@ -167,15 +168,15 @@ const CollideHelper = {
     },
 
     // http://www.jeffreythompson.org/collision-detection/poly-poly.php
-    polyPoly(p1, p2) {
+    polyPoly(poly1, poly2) {
         let next = 0;
-        for (let current = 0; current < p1.length; current++) {
+        for (let current = 0; current < poly1.length; current++) {
             next = current + 1;
-            if (next == p1.length) next = 0;
-            let vc = p1[current];
-            let vn = p1[next];
-            if (polyLine(p2, vc.x, vc.y, vn.x, vn.y)) return true;
-            if (polyPoint(p1, p2[0].x, p2[0].y)) return true;
+            if (next == poly1.length) next = 0;
+            let vc = poly1[current];
+            let vn = poly1[next];
+            if (this.polyLine(poly2, vc.x, vc.y, vn.x, vn.y)) return true;
+            if (this.polyPoint(poly1, poly2[0].x, poly2[0].y)) return true;
         }
 
         return false;
