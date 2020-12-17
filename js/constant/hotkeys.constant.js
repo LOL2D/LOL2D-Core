@@ -8,6 +8,8 @@ const ESCAPE = 27;
 
 const DEFAULT_HOTKEYS = {
     // -------- primary --------
+    basicAttack: 65, // A
+
     // chiêu thức
     CastSpell1: 81, // Q
     CastSpell2: 87, // W

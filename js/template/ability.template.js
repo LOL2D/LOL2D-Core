@@ -33,8 +33,5 @@ class AbilityName extends AbilityCore {
     // override
     onFinished() {}
 
-    // override
-    isAvailable() {}
-
     // other functions here
 }

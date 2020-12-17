@@ -1,8 +1,9 @@
 const COLOR = {
     ABILITY: {
         INDICATOR: {
-            BORDER: "#5577bb55",
-            FILL: "#5577bb22",
+            BORDER: "#4AECF2ee",
+            RECTFILL: "#4AECF211",
+            CIRCLEFILL: "#4AECF233",
         },
     },
     HEALTHBAR: {

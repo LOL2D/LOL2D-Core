@@ -33,5 +33,5 @@ class AbilityObjectName extends AbilityObjectCore {
     // override
     checkFinished() {}
 
-    // // other functions here
+    // other functions here
 }

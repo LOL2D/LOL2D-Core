@@ -4,13 +4,13 @@ class FoxFire extends AbilityCore {
 
         // override
         this.cooldown = 5000;
-        this.speed = 15;
+        this.cost = 65; // Mana
 
         // custom attribute
         this.castTime = 250;
-        this.effectRadius = 350;
-        this.cost = 65; // Mana
+        this.effectRadius = 200;
         this.damage = 40;
+        this.speed = 10;
 
         this.foxFireCount = 3;
         this.foxFireRotateRadius = this.owner.radius;
@@ -21,8 +21,20 @@ class FoxFire extends AbilityCore {
     // override
     showIndicator() {
         stroke(COLOR.ABILITY.INDICATOR.BORDER);
-        fill(COLOR.ABILITY.INDICATOR.FILL);
         strokeWeight(3);
+        fill("white"); // turn on fill to use Gradient below
+
+        Helper.Color.createRadialGradient(
+            p5.instance,
+            this.owner.position.x,
+            this.owner.position.y,
+            max(0, this.effectRadius - 100),
+            this.effectRadius,
+            [
+                { stop: 0, color: "#1111" },
+                { stop: 1, color: COLOR.ABILITY.INDICATOR.CIRCLEFILL },
+            ]
+        );
 
         circle(
             this.owner.position.x,
@@ -54,17 +66,12 @@ class FoxFire extends AbilityCore {
     }
 
     // override
-    onStarted() {
-        // this.speedTemp = this.owner.speed;
-        // this.owner.speed += 2;
-        this.owner.loseMana(this.cost);
-    }
+    onStarted() {}
 
     // override
-    onFinished() {
-        // this.owner.speed = this.speedTemp;
-    }
+    onFinished() {}
 
+    // other functions here
     isReadyToNextEffect() {
         return millis() - this.lastEffectTime > this.nextEffectDelay;
     }

@@ -9,7 +9,7 @@ class CameraCore {
         this.scaleTo = 1;
         this.scaleLerp = 0.07;
         this.borderSize = 25;
-        this.borderSpeed = 20;
+        this.borderSpeed = 30;
 
         Helper.Other.setValueFromConfig(this, config);
     }

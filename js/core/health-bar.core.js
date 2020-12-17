@@ -3,8 +3,8 @@ class HealthBarCore {
         this.champion = null;
 
         this.distanceFromChamp = 20;
-        this.width = 150;
-        this.height = 20;
+        this.width = 125;
+        this.height = 17;
         this.manaHeight = 5;
         this.healthManaGap = 1;
         this.borderWidth = 3;

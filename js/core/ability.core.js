@@ -4,6 +4,7 @@ class AbilityCore {
         this.owner = null;
         this.lastCastSpell = 0;
         this.cooldown = 0;
+        this.cost = 0;
 
         Helper.Other.setValueFromConfig(this, config);
     }
@@ -12,6 +13,7 @@ class AbilityCore {
 
     castSpell(destination) {
         this.lastCastSpell = millis();
+        this.cost > 0 && this.owner.loseMana(this.cost);
         this.onStarted();
     }
 
@@ -19,7 +21,7 @@ class AbilityCore {
 
     onFinished() {}
 
-    isAvailable() {
+    isCoolDownFinished() {
         return (
             !this.lastCastSpell || millis() - this.lastCastSpell > this.cooldown
         );

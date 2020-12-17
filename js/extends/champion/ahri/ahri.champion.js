@@ -2,11 +2,14 @@ class Ahri extends ChampionCore {
     constructor(config = {}) {
         super(config);
 
-        this.avatarCirclePath = "asset/image/champion/ahri/Ahri.avatar.circle.png";
+        this.avatarCirclePath =
+            "asset/image/champion/ahri/Ahri.avatar.circle.png";
 
         this.maxHealth = 500;
 
         this.abilities = {
+            basicAttack: new AhriBasicAttack({ owner: this }),
+
             spell1: new OrbOfDeception({ owner: this }),
             spell2: new FoxFire({ owner: this }),
             spell3: null,

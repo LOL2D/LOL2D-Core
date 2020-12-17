@@ -18,6 +18,7 @@ class TurretCore {
         this.healValue = 100;
         this.healManaValue = 180;
 
+        this.sightRadius = 500;
         this.world = null;
         this.isAllyWithPlayer = true;
 

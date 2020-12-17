@@ -8,6 +8,7 @@ class InputCore {
         this.world = config.world;
 
         this.mousePos = createVector(0, 0);
+        this.enemyAtMouse = null;
         this.showIndicatorId = null;
 
         this.targetMoveSize = 10;
@@ -18,10 +19,29 @@ class InputCore {
     run() {
         this.mousePos = this.world.getMousePosition();
 
+        // basic attack
+        this.enemyAtMouse = this.getEnemyAtMouse();
+        if (this.enemyAtMouse) {
+            cursor(globalassets.cursor.fight);
+
+            // hightlight target
+            stroke("red");
+            strokeWeight(3);
+            circle(
+                this.enemyAtMouse.position.x,
+                this.enemyAtMouse.position.y,
+                this.enemyAtMouse.radius * 2.5
+            );
+        } else {
+            cursor(globalassets.cursor.normal);
+        }
+
+        // show indicator
         if (this.showIndicatorId) {
             this.world.player.showIndicator(this.showIndicatorId);
         }
 
+        // show target move
         if (this.world.player.targetMove) {
             fill("green");
             noStroke();
@@ -40,12 +60,17 @@ class InputCore {
         );
     }
 
+    // --------------- events ---------------
     keyDown(_keyCode) {}
 
     keyPressed(_keyCode) {
         const { hotkeys } = this;
 
         switch (_keyCode) {
+            case hotkeys.basicAttack:
+                this.showIndicatorId = "basicAttack";
+                break;
+
             case hotkeys.CastSpell1:
                 this.showIndicatorId = "spell1";
                 break;
@@ -84,16 +109,26 @@ class InputCore {
     }
 
     mouseIsPressed() {
-        if (mouseButton == RIGHT) {
+        if (mouseButton == RIGHT && !this.enemyAtMouse) {
             this.targetMoveSize = this.targetMoveClickSize;
             this.world.player.moveTo(this.mousePos.x, this.mousePos.y);
         }
     }
 
     mousePressed() {
-        if (this.showIndicatorId) {
-            // cancel cast spell on mouse clicked
-            this.showIndicatorId = null;
+        if (mouseButton == RIGHT) {
+            if (this.enemyAtMouse) {
+                this.basicAttackChampion(this.enemyAtMouse);
+            }
+
+            if (this.showIndicatorId) {
+                // cancel cast spell on mouse clicked
+                this.showIndicatorId = null;
+            }
+        }
+
+        if (mouseButton == LEFT) {
+            this.keyReleased();
         }
     }
 
@@ -105,5 +140,47 @@ class InputCore {
         } else {
             if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
         }
+    }
+
+    // --------------- helpers ---------------
+    basicAttackChampion(champ) {
+        let distance = p5.Vector.dist(
+            this.world.player.position,
+            champ.position
+        );
+
+        if (distance > this.world.player.basicAttackRadius) {
+            // move closer
+            let vecRange = Helper.Vector.getVectorWithRange(
+                champ.position,
+                this.world.player.position,
+                this.world.player.basicAttackRadius
+            );
+            this.world.player.targetMove = vecRange.to;
+        } else {
+            // stop move to attack
+            this.world.player.targetMove = null;
+            this.world.player.basicAttack(champ.position.copy());
+        }
+    }
+
+    getEnemyAtMouse() {
+        for (let champ of this.world.champions) {
+            if (!champ.isAllyWithPlayer) {
+                let isHover = Helper.Collide.pointCircle(
+                    this.mousePos.x,
+                    this.mousePos.y,
+                    champ.position.x,
+                    champ.position.y,
+                    champ.radius
+                );
+
+                if (isHover) {
+                    return champ;
+                }
+            }
+        }
+
+        return null;
     }
 }

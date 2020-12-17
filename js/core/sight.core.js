@@ -2,8 +2,13 @@
 class SightCore {
     constructor(config = {}) {
         this.overlay = createGraphics(windowWidth, windowHeight);
-        this.outOfViewColor = "#000";
+        this.outOfViewColor = "#000c";
         this.world = null;
+
+        this.colorStops = [
+            { stop: 0, color: "#fff" },
+            { stop: 1, color: "#0001" },
+        ];
 
         Helper.Other.setValueFromConfig(this, config);
     }
@@ -15,7 +20,7 @@ class SightCore {
 
         // start erase overlay color in sight-area
         this.overlay.erase();
-        this.overlay.fill(255);
+        this.overlay.noStroke();
         this.drawSights();
         this.overlay.noErase();
 
@@ -31,13 +36,63 @@ class SightCore {
                     champ.position.x,
                     champ.position.y
                 );
-                this.overlay.ellipse(
+
+                let r = champ.sightRadius * this.world.camera.scale;
+                let innerR = max(0, r - 100 * this.world.camera.scale);
+                Helper.Color.createRadialGradient(
+                    this.overlay,
                     pos.x,
                     pos.y,
-                    750 * this.world.camera.scale
+                    innerR,
+                    r,
+                    this.colorStops
                 );
+                this.overlay.ellipse(pos.x, pos.y, r * 2);
             }
         }
+
+        // turret sight
+        for (let turret of this.world.turrets) {
+            if (turret.isAllyWithPlayer) {
+                const pos = this.world.camera.worldToCanvas(
+                    turret.position.x,
+                    turret.position.y
+                );
+
+                let r = turret.sightRadius * this.world.camera.scale;
+                let innerR = max(0, r - 100 * this.world.camera.scale);
+                Helper.Color.createRadialGradient(
+                    this.overlay,
+                    pos.x,
+                    pos.y,
+                    innerR,
+                    r,
+                    this.colorStops
+                );
+                this.overlay.ellipse(pos.x, pos.y, r * 2);
+            }
+        }
+    }
+
+    isChampionInSight(champion) {
+        // is ally
+        if (champion.isAllyWithPlayer) {
+            return true;
+        }
+
+        // is enemy
+        // find all allies in this enemy sightRange
+        let alliesInRange = Helper.Distance.getChampionsInRange({
+            rootPosition: champion.position,
+            champions: this.world.champions,
+            inRange: champion.sightRadius,
+            addChampRadiusToRange: true,
+            allyWithPlayer: true,
+            excludes: [champion],
+        });
+
+        // if there is/are ally => return true
+        return alliesInRange.length > 0;
     }
 
     resize(w, h) {

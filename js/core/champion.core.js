@@ -6,7 +6,8 @@ class ChampionCore extends MovementObjectCore {
 
         // override
         this.fillColor = "#0000";
-        this.radius = 40;
+        this.radius = 30;
+        this.speed = 2;
 
         // abilities
         this.crowdControls = [];
@@ -16,6 +17,8 @@ class ChampionCore extends MovementObjectCore {
             abilities: ALLOWED,
         };
         this.abilities = {
+            basicAttack: null,
+
             spell1: null,
             spell2: null,
             spell3: null,
@@ -26,6 +29,7 @@ class ChampionCore extends MovementObjectCore {
         };
 
         // base statistic
+        this.sightRadius = 300;
         this.maxHealth = 1000;
         this.maxMana = 1000;
         this.fakeHealth = 0;
@@ -38,6 +42,8 @@ class ChampionCore extends MovementObjectCore {
         this.level = 0;
         this.health = this.maxHealth;
         this.mana = this.maxMana;
+        this.basicAttackDamage = 90;
+        this.basicAttackRadius = 250;
 
         // UI
         this.world = null;
@@ -102,6 +108,10 @@ class ChampionCore extends MovementObjectCore {
         this.endCrowdControls();
     }
 
+    basicAttack(destination) {
+        this.castSpell("basicAttack", destination);
+    }
+
     showIndicator(abilityKey) {
         if (this.canSpell(abilityKey))
             this.abilities[abilityKey].showIndicator();
@@ -117,7 +127,7 @@ class ChampionCore extends MovementObjectCore {
         return (
             this.status.abilities == ALLOWED &&
             this.abilities[abilityKey] &&
-            this.abilities[abilityKey].isAvailable() &&
+            this.abilities[abilityKey].isCoolDownFinished() &&
             this.mana >= this.abilities[abilityKey].cost
         );
     }

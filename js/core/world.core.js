@@ -141,10 +141,23 @@ class WorldCore {
         for (let ai of this.listAI) {
             ai.run();
         }
+
+        // champions
         for (let champ of this.champions) {
-            champ.run();
+            champ.update();
+            champ.move();
+
+            if (this.sight.isChampionInSight(champ)) {
+                champ.show();
+            }
 
             if (champ.isDead()) {
+                // heal for killer
+                if (champ.killedBy && champ.killedBy.owner) {
+                    champ.killedBy.owner.heal(200);
+                    champ.killedBy.owner.addMana(200);
+                }
+
                 // spawn at base
                 champ.spawn({
                     position: champ.isAllyWithPlayer

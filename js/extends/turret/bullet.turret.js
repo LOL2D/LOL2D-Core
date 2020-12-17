@@ -36,7 +36,7 @@ class BulletTurretObject extends AbilityObjectCore {
         );
 
         if (isTouchedTarget) {
-            this.targetChamp.loseHealth(this.damage);
+            this.targetChamp.loseHealth(this.damage, this);
             this.touchedTarget = true;
         }
     }

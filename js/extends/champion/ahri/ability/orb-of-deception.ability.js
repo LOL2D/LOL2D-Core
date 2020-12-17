@@ -4,14 +4,12 @@ class OrbOfDeception extends AbilityCore {
 
         // override
         this.cooldown = 3000;
+        this.cost = 65; // Mana
 
         // custom attributes
-        this.castTime = 250;
-        this.effectRadius = 400;
-        this.width = 50;
-        this.cost = 65; // Mana
+        this.effectRadius = 300;
+        this.width = 30;
         this.damage = 40;
-        this.speed = 15;
     }
 
     // override
@@ -23,7 +21,7 @@ class OrbOfDeception extends AbilityCore {
         );
 
         stroke(COLOR.ABILITY.INDICATOR.BORDER);
-        fill(COLOR.ABILITY.INDICATOR.FILL);
+        fill(COLOR.ABILITY.INDICATOR.RECTFILL);
         strokeWeight(3);
 
         Helper.UI.rectFromVectorRange(vec, this.width);
@@ -44,7 +42,6 @@ class OrbOfDeception extends AbilityCore {
             owner: this.owner,
             damage: this.damage,
             targetMove: target,
-            speed: this.speed,
             radius: this.width / 2,
         });
 
@@ -52,13 +49,8 @@ class OrbOfDeception extends AbilityCore {
     }
 
     // override
-    onStarted() {
-        this.speedTemp = this.owner.speed;
-        this.owner.loseMana(this.cost);
-    }
+    onStarted() {}
 
     // override
-    onFinished() {
-        this.owner.speed = this.speedTemp;
-    }
+    onFinished() {}
 }

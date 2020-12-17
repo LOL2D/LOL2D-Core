@@ -1,7 +1,7 @@
 // live preview: https://editor.p5js.org/HoangTran0410/sketches/7Dlqz7z77
 
 let overlay;
-let overlayColor = "#000b";
+let overlayColor = "#000e";
 let groundColor = "#1af";
 let champColor = "blue";
 let fovRadius = 250;
@@ -52,6 +52,7 @@ function drawUseErase() {
 
     // magic here
     fovUsingErase(mouseX, mouseY, fovRadius);
+    fovUsingErase(width / 2, height / 2, fovRadius);
 
     // show overlay on top of ground
     image(overlay, 0, 0);
@@ -65,6 +66,8 @@ function drawUseErase() {
 function fovUsingErase(x, y, d) {
     overlay.erase();
     overlay.fill(255);
+  
+    radialGradient(x, y, d / 2 - 50, d / 2, "#FFF", "#0001");
     overlay.ellipse(x, y, d);
     overlay.noErase();
 }
@@ -82,6 +85,7 @@ function drawUseBlendMode() {
 
     // magic here
     fovUsingBlendMode(mouseX, mouseY, fovRadius);
+    fovUsingBlendMode(width / 2, height / 2, fovRadius);
 
     // show overlay on top of ground
     image(overlay, 0, 0);
@@ -94,11 +98,19 @@ function drawUseBlendMode() {
 
 function fovUsingBlendMode(x, y, d) {
     overlay.blendMode(REMOVE);
-    overlay.fill(255);
+    //overlay.fill(255);
+    radialGradient(x, y, d / 2 - 50, d / 2, "#FFF", "#0001");
     overlay.ellipse(x, y, d);
 }
 
 // -------------- HELPER ---------------
+function radialGradient(x, y, r1, r2, c1, c2) {
+    let grd = overlay.drawingContext.createRadialGradient(x, y, r1, x, y, r2);
+    grd.addColorStop(0, c1);
+    grd.addColorStop(1, c2);
+    overlay.drawingContext.fillStyle = grd;
+}
+
 function drawThings() {
     stroke(30);
     strokeWeight(2);

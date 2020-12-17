@@ -6,8 +6,8 @@ class FoxFireObject extends AbilityObjectCore {
         // override
         this.effectRadius = this.effectRadius - this.owner.radius * 2;
         this.targetMove = null;
-        this.radius = 15;
-        this.speed = 4;
+        this.radius = 10;
+        this.speed = 3;
         this.fillColor = "#058DFF";
         this.positionTrackColor = "#058DFF55";
 
@@ -15,8 +15,8 @@ class FoxFireObject extends AbilityObjectCore {
         this.startedTime = millis();
         this.lifeSpan = 5000;
         this.delayTime = 1000;
-        this.toTargetSpeed = 15;
-        this.rotateSpeed = 4;
+        this.toTargetSpeed = 10;
+        this.rotateSpeed = 2;
         this.targetChampion = null;
         this.unreadyColor = "#F002";
         this.readyColor = "#00F";
@@ -61,7 +61,15 @@ class FoxFireObject extends AbilityObjectCore {
                 }
             }
         } else {
-            if (this.overlap(this.targetChampion)) {
+            let touched = Helper.Collide.pointCircle(
+                this.position.x,
+                this.position.y,
+                this.targetChampion.position.x,
+                this.targetChampion.position.y,
+                this.targetChampion.radius
+            );
+
+            if (touched) {
                 this.targetChampion.loseHealth(this.damage, this);
                 this.touchedTarget = true;
             }
@@ -90,6 +98,7 @@ class FoxFireObject extends AbilityObjectCore {
         return endOfLife || this.touchedTarget;
     }
 
+    // other functions here
     isReadyToEffect() {
         return (
             this.isDelayTimeFinished() && this.abilityRef.isReadyToNextEffect()

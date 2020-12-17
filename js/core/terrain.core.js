@@ -25,8 +25,8 @@ class TerrainCore {
             );
 
             if (isCollide) {
-                fill("#9909");
-                circle(champ.position.x, champ.position.y, champ.radius * 2.5);
+                // fill("#9909");
+                // circle(champ.position.x, champ.position.y, champ.radius * 2.5);
             }
         }
     }

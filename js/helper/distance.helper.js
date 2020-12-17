@@ -18,7 +18,7 @@ const DistanceHelper = {
         const {
             rootPosition,
             champions = [],
-            inRange = 0,
+            inRange = Infinity,
             addChampRadiusToRange = false,
             allyWithPlayer = null,
             excludes = [],

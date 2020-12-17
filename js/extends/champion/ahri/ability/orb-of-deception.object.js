@@ -7,6 +7,7 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         this.fillColor = "#77f";
         this.isShowPositionTracking = true;
         this.positionTrackColor = "#77F5";
+        this.speed = 9;
 
         // custom attribute
         this.STATE = {
@@ -15,8 +16,8 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         };
         this.state = this.STATE.FORWARD;
         this.effectedChampions = []; // list of  champions effected
-        this.maxSpeedBackward = 20;
-        this.increaseSpeedBackward = 0.2;
+        this.maxSpeedBackward = 10;
+        this.increaseSpeedBackward = 0.15;
     }
 
     // override
@@ -59,7 +60,7 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
         return (
             this.state == this.STATE.BACKWARD &&
             p5.Vector.dist(this.position, this.owner.position) <
-                this.owner.radius
+                this.radius
         );
     }
 }
