@@ -37,7 +37,7 @@ class TurretCore {
         strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.radius * 2);
 
-        noFill();
+        fill(Helper.Color.applyColorAlpha(this.fillColor, 20));
         stroke("#555");
         strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.attackRadius * 2);
@@ -62,7 +62,7 @@ class TurretCore {
                         targetChamp: this.attackTarget,
                         targetMove: this.attackTarget.position,
                         position: this.position.copy(),
-                        damage: this.attackDamage
+                        damage: this.attackDamage,
                     })
                 );
 
