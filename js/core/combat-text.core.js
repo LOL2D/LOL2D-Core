@@ -12,6 +12,7 @@ class CombatTextCore {
         this.text = "noti";
         this.color = "red";
         this.alpha = 255;
+        this.colorAlpha = "red";
 
         this.lifeSpan = 700;
         this.startTime = millis();
@@ -28,7 +29,7 @@ class CombatTextCore {
         strokeWeight(2);
         stroke(this.colorAlpha);
         fill(this.colorAlpha);
-        textSize(this.textSize);
+        //textSize(this.textSize); // làm fps giảm
         text(
             this.text,
             this.position.x + this.movedVector.x,
@@ -44,7 +45,7 @@ class CombatTextCore {
         //this.velocity.mult(this.friction);
         this.alpha = map(lifeTime, 0, this.lifeSpan, 255, 10);
         this.colorAlpha = Helper.Color.applyColorAlpha(this.color, this.alpha);
-        this.textSize = map(lifeTime, 0, this.lifeSpan, 25, 10);
+        //this.textSize = map(lifeTime, 0, this.lifeSpan, 25, 10);
     }
 
     isFinished() {

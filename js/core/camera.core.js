@@ -5,7 +5,7 @@ class CameraCore {
         this.target = null;
         this.isFollow = true;
         this.followLerp = 0.1;
-        this.scale = 0.1;
+        this.scale = 1;
         this.scaleTo = 1;
         this.scaleLerp = 0.07;
         this.borderSize = 25;

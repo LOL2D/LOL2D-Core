@@ -35,9 +35,6 @@ function draw() {
 
 function mousePressed() {
     useBlendMode = !useBlendMode;
-
-    // reset blend mode
-    overlay.blendMode(BLEND);
 }
 
 // ---------------- ERASE -----------------
@@ -101,6 +98,7 @@ function fovUsingBlendMode(x, y, d) {
     //overlay.fill(255);
     radialGradient(x, y, d / 2 - 50, d / 2, "#FFF", "#0001");
     overlay.ellipse(x, y, d);
+    overlay.blendMode(BLEND);
 }
 
 // -------------- HELPER ---------------

@@ -8,7 +8,7 @@ function setup() {
     createCanvas(400, 400);
 
     colorStops = [
-        { stop: 0, color: "#1111" },
+        { stop: 0, color: "#4AECF211" },
         //{stop: 0.5, color: "#1119"},
         { stop: 1, color: "#4AECF233" },
     ];
@@ -16,6 +16,9 @@ function setup() {
 
 function draw() {
     background(30);
+  
+    // things
+    circle(150, 100, 100)
   
     // NOTE, do not use noFill before create Gradient
     //noFill();
