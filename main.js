@@ -1,12 +1,15 @@
 let world;
 let input;
+let stats;
 
 function preload() {
     loadAssets();
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    let cnv = createCanvas(windowWidth, windowHeight);
+    cnv.id("game-canvas");
+
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
     pixelDensity(1);
@@ -26,9 +29,15 @@ function setup() {
     input = new InputCore({
         world: world,
     });
+
+    stats = new Stats();
+    stats.showPanel(0);
+    document.body.appendChild(stats.dom);
 }
 
 function draw() {
+    stats.begin();
+
     background(30);
 
     // run world
@@ -44,7 +53,9 @@ function draw() {
     });
 
     // show fps
-    Helper.UI.showFPS();
+    //Helper.UI.showFPS();
+
+    stats.end();
 }
 
 // ----------- p5js input -----------
