@@ -13,7 +13,6 @@ class TerrainMapCore {
         // setup
         this.convertDataToTerrain();
         this.initQuadtree();
-        // this.update();
     }
 
     convertDataToTerrain() {
@@ -36,7 +35,7 @@ class TerrainMapCore {
             y: 0,
             w: this.width,
             h: this.height,
-        });
+        }, 2);
     }
 
     effect(champions) {
@@ -49,9 +48,12 @@ class TerrainMapCore {
         this.quadtree.clear();
 
         for (let t of this.terrains) {
-            for (let r of t.rects) {
-                this.quadtree.insert(r);
-            }
+            let bound = t.getBoundary();
+
+            this.quadtree.insert({
+                ...bound,
+                ref: t, // reference to terrain
+            });
         }
 
         this.drawQuadtree(this.quadtree);
@@ -63,15 +65,15 @@ class TerrainMapCore {
         }
     }
 
-    getTerrainsInView(champion) {
-        let rects = this.quadtree.retrieve({
+    getTerrainsInSight(champion) {
+        let data = this.quadtree.retrieve({
             x: champion.position.x - champion.sightRadius,
             y: champion.position.y - champion.sightRadius,
             w: champion.sightRadius * 2,
             h: champion.sightRadius * 2,
         });
 
-        return rects;
+        return data;
     }
 
     drawQuadtree(node) {

@@ -29,7 +29,7 @@ class ChampionCore extends MovementObjectCore {
         };
 
         // base statistic
-        this.sightRadius = 300;
+        this.sightRadius = 500;
         this.maxHealth = 1000;
         this.maxMana = 1000;
         this.fakeHealth = 0;

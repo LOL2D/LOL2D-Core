@@ -2,7 +2,7 @@ class TerrainCore {
     constructor(config = {}) {
         this.position = createVector(0, 0);
         this.fillColor = "#555";
-        this.strokeColor = "#999";
+        this.strokeColor = "#0000";
         this.strokeWeight = 3;
         this.rects = [];
 
@@ -14,25 +14,63 @@ class TerrainCore {
         }
     }
 
-    effect(champions) {
-        // for (let champ of champions) {
-        //     let isCollide = Helper.Collide.polyCircle(
-        //         this.vertices,
-        //         champ.position.x,
-        //         champ.position.y,
-        //         champ.radius
-        //     );
-        //     if (isCollide) {
-        //         // fill("#9909");
-        //         // circle(champ.position.x, champ.position.y, champ.radius * 2.5);
-        //     }
-        // }
+    collideChampion(champion) {
+        for (let r of this.rects) {
+            let SATrect = new SAT.Box(new SAT.Vector(r.x, r.y), r.w, r.h);
+
+            let SATcircle = new SAT.Circle(
+                new SAT.Vector(champion.position.x, champion.position.y),
+                champion.radius
+            );
+
+            let response = new SAT.Response();
+
+            let collided = SAT.testPolygonCircle(
+                SATrect.toPolygon(),
+                SATcircle,
+                response
+            );
+
+            if (collided) {
+                champion.position.x += response.overlapV.x;
+                champion.position.y += response.overlapV.y;
+            }
+        }
     }
 
-    show() {
+    getBoundary() {
+        let left = Infinity;
+        let bottom = -Infinity;
+        let top = Infinity;
+        let right = -Infinity;
+
+        for (let r of this.rects) {
+            if (r.x < left) {
+                left = r.x;
+            }
+            if (r.x + r.w > right) {
+                right = r.x + r.w;
+            }
+            if (r.y < top) {
+                top = r.y;
+            }
+            if (r.y + r.h > bottom) {
+                bottom = r.y + r.h;
+            }
+        }
+
+        return {
+            x: left,
+            y: top,
+            w: right - left,
+            h: bottom - top,
+        };
+    }
+
+    show(fillColor) {
         strokeWeight(this.strokeWeight);
         stroke(this.strokeColor);
-        fill(this.fillColor);
+        fill(fillColor || this.fillColor);
 
         for (let r of this.rects) {
             rect(r.x, r.y, r.w, r.h);

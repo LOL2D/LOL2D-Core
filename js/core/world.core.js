@@ -132,13 +132,22 @@ class WorldCore {
 
         this.terrainMap.update();
         this.terrainMap.show();
-        // this.terrainMap.effect(this.champions);
 
-        let rects = this.terrainMap.getTerrainsInView(this.player);
-        for (let r of rects) {
-            fill("white");
-            noStroke();
-            rect(r.x, r.y, r.w, r.h);
+        let data = this.terrainMap.getTerrainsInSight(this.player);
+        for (let t of data) {
+            t.ref.show("white");
+        }
+        for (let t of data) {
+            if (t.ref.collideChampion(this.player)) {
+                console.log('collided')
+
+                fill("red");
+                circle(
+                    this.player.position.x,
+                    this.player.position.y,
+                    this.player.radius * 3
+                );
+            }
         }
 
         for (let turret of this.turrets) {
