@@ -11,6 +11,7 @@ class WorldCore {
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
 
+        // console.log(this.terrainMapData);
         // setup
         this.setup();
     }
@@ -33,7 +34,9 @@ class WorldCore {
             height: this.size,
         });
         this.terrainMap = new TerrainMapCore({
-            map: TERRAIN_MAP.SUMMORNER_RIFT,
+            data: this.terrainMapData,
+            width: this.size,
+            height: this.size,
         });
         this.camera = new CameraCore();
         this.sight = new SightCore({ world: this });
@@ -127,8 +130,16 @@ class WorldCore {
         this.groundMap.drawEdge();
         this.groundMap.drawGrid(this.camera);
 
+        this.terrainMap.update();
         this.terrainMap.show();
-        this.terrainMap.effect(this.champions);
+        // this.terrainMap.effect(this.champions);
+
+        let rects = this.terrainMap.getTerrainsInView(this.player);
+        for (let r of rects) {
+            fill("white");
+            noStroke();
+            rect(r.x, r.y, r.w, r.h);
+        }
 
         for (let turret of this.turrets) {
             turret.run();

@@ -136,7 +136,7 @@ class InputCore {
         const { camera } = this.world;
 
         if (event.delta > 0) {
-            if (camera.scaleTo > 0.5) camera.scaleTo -= camera.scaleTo / 10;
+            if (camera.scaleTo > 0.1) camera.scaleTo -= camera.scaleTo / 10;
         } else {
             if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
         }

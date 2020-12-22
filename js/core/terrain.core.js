@@ -4,31 +4,29 @@ class TerrainCore {
         this.fillColor = "#555";
         this.strokeColor = "#999";
         this.strokeWeight = 3;
-        this.shapeVertices = [];
+        this.rects = [];
 
         Helper.Other.setValueFromConfig(this, config);
 
-        // calculate real vertices base on vertices and shape vertices
-        this.vertices = this.shapeVertices.map((v) => ({
-            x: v.x + this.position.x,
-            y: v.y + this.position.y,
-        }));
+        for (let r of this.rects) {
+            r.x += this.position.x;
+            r.y += this.position.y;
+        }
     }
 
     effect(champions) {
-        for (let champ of champions) {
-            let isCollide = Helper.Collide.polyCircle(
-                this.vertices,
-                champ.position.x,
-                champ.position.y,
-                champ.radius
-            );
-
-            if (isCollide) {
-                // fill("#9909");
-                // circle(champ.position.x, champ.position.y, champ.radius * 2.5);
-            }
-        }
+        // for (let champ of champions) {
+        //     let isCollide = Helper.Collide.polyCircle(
+        //         this.vertices,
+        //         champ.position.x,
+        //         champ.position.y,
+        //         champ.radius
+        //     );
+        //     if (isCollide) {
+        //         // fill("#9909");
+        //         // circle(champ.position.x, champ.position.y, champ.radius * 2.5);
+        //     }
+        // }
     }
 
     show() {
@@ -36,10 +34,8 @@ class TerrainCore {
         stroke(this.strokeColor);
         fill(this.fillColor);
 
-        beginShape();
-        for (let p of this.vertices) {
-            vertex(p.x, p.y);
+        for (let r of this.rects) {
+            rect(r.x, r.y, r.w, r.h);
         }
-        endShape(CLOSE);
     }
 }

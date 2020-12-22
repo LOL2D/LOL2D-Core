@@ -7,7 +7,7 @@ class ChampionCore extends MovementObjectCore {
         // override
         this.fillColor = "#0000";
         this.radius = 30;
-        this.speed = 2;
+        this.speed = 5;
 
         // abilities
         this.crowdControls = [];

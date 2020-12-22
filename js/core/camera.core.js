@@ -42,11 +42,6 @@ class CameraCore {
         }
     }
 
-    // TODO your code below here
-    toWorldCoordinate() {}
-
-    toCanvasCoordinate() {}
-
     endState() {
         pop();
     }

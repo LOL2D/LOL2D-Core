@@ -6,6 +6,7 @@ let globalassets = {
         ally: "asset/image/cursor/link.cur",
         enemy: "asset/image/cursor/unavailable.cur",
     },
+    terrainMap: null,
 };
 
 const assetPaths = [
@@ -24,4 +25,9 @@ function loadAssets() {
     for (let path of assetPaths) {
         globalassets[path] = loadImage(path);
     }
+}
+
+function loadMap(mapName) {
+    let path = "asset/map/" + mapName + ".json";
+    globalassets[mapName] = loadJSON(path);
 }
