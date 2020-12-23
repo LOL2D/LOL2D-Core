@@ -8,7 +8,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight).id("game-canvas");
+    createCanvas(windowWidth, windowHeight).position(0, 0);
 
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
