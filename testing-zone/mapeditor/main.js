@@ -4,31 +4,35 @@ const MODE = {
 };
 
 let mode = MODE.EDITPOLYGON;
-let camera = {
-    x: 0,
-    y: 0,
-    scale: 1,
-    xTo: 0,
-    yTo: 0,
-    scaleTo: 1,
-};
 
 // map edit
 // map contains list of terrains, terrain contains list of polygons
-let map = [
-    {
-        name: "abc",
-        position: [100, 100],
-        polygon: [],
-        polygons: [],
-    },
-];
-let terrainSelected, terrainHovered;
+let mapData = {
+    terrainSelected: null,
+    terrainHovered: null,
+    pointSelected: null,
+    pointHovered: null,
 
-// poly edit
-let polygon = [];
-let listDecompPoly = [];
-let pointSelected, pointHovered;
+    camera: {
+        x: 0,
+        y: 0,
+        scale: 1,
+        xTo: 0,
+        yTo: 0,
+        scaleTo: 1,
+    },
+
+    dragDeltaMouse: [0, 0],
+
+    terrains: [
+        {
+            name: "abc",
+            position: [100, 100],
+            polygon: [],
+            polygons: [],
+        },
+    ],
+};
 
 function setup() {
     createCanvas(windowWidth, windowHeight).position(0, 0);
@@ -37,98 +41,153 @@ function setup() {
 function draw() {
     background(30);
 
-    updateCamera(camera);
+    updateCamera(mapData.camera);
 
-    beginStateCamera(camera);
+    beginStateCamera(mapData.camera);
+
+    // style
+    textSize(14 / mapData.camera.scale);
+    strokeWeight(1 / mapData.camera.scale);
 
     // draw grid
-    textSize(14 / camera.scale);
-    strokeWeight(1 / camera.scale);
-    drawGrid(camera);
+    drawGrid(mapData.camera);
 
     // draw polygons
-    strokeWeight(3 / camera.scale);
-    drawPolygon(polygon);
-    drawPolygonsColor(listDecompPoly);
+    strokeWeight(3 / mapData.camera.scale);
+    drawMap(mapData);
 
-    if (polygon.length > 3) listDecompPoly = decompPolygon(polygon);
+    // terrain selected
+    if (mapData.terrainSelected) {
+        let m = canvasToWorld([mouseX, mouseY], mapData.camera);
+        mapData.terrainSelected.position[0] = m[0] + mapData.dragDeltaMouse[0];
+        mapData.terrainSelected.position[1] = m[1] + mapData.dragDeltaMouse[1];
 
-    // move selected
-    if (pointSelected) {
-        let m = canvasToWorld([mouseX, mouseY], camera);
-        pointSelected[0] = m[0];
-        pointSelected[1] = m[1];
-
-        let t = `[${~~m[0]},${~~m[1]}]`;
+        let p = mapData.terrainSelected.position;
+        let t = `[${~~p[0]},${~~p[1]}]`;
         stroke("#555");
-        fill("white");
+        fill("yellow");
         text(t, m[0], m[1]);
     }
 
-    // hight light hovered
-    if (pointHovered) {
-        noFill();
-        stroke("yellow");
-        circle(pointHovered[0], pointHovered[1], 10);
+    // terrain hovered
+    if (mapData.terrainHovered) {
+        fill("#fff5");
+        stroke("white");
+
+        circle(
+            mapData.terrainHovered.position[0],
+            mapData.terrainHovered.position[1],
+            100
+        );
+    }
+
+    // point selected
+    if (mapData.terrainSelected) {
+        if (mapData.pointSelected) {
+            let m = canvasToWorld([mouseX, mouseY], mapData.camera);
+            mapData.pointSelected[0] = m[0] + mapData.dragDeltaMouse[0];
+            mapData.pointSelected[1] = m[1] + mapData.dragDeltaMouse[1];
+
+            let t = `[${~~m[0]},${~~m[1]}]`;
+            stroke("#555");
+            fill("yellow");
+            text(t, m[0], m[1]);
+        }
+
+        // hight light hovered
+        if (mapData.pointHovered) {
+            noFill();
+            stroke("yellow");
+            circle(mapData.pointHovered[0], mapData.pointHovered[1], 10);
+        }
     }
 
     endStateCamera();
 
     fill("white");
-    text(~camera.x + "," + ~camera.y, 10, 10);
+    text(~mapData.camera.x + "," + ~mapData.camera.y, 10, 10);
 }
 
 function mouseDragged() {
-    if (!pointSelected) {
-        camera.xTo -= movedX / camera.scale;
-        camera.yTo -= movedY / camera.scale;
+    if (!mapData.terrainSelected && !mapData.pointSelected) {
+        mapData.camera.xTo -= movedX / mapData.camera.scale;
+        mapData.camera.yTo -= movedY / mapData.camera.scale;
     }
 }
 
 function mouseMoved() {
-    pointHovered = null;
+    mapData.pointHovered = null;
+    mapData.terrainHovered = null;
 
-    let m = canvasToWorld([mouseX, mouseY], camera);
+    let m = canvasToWorld([mouseX, mouseY], mapData.camera);
 
-    for (let p of polygon) {
-        if (dist(m[0], m[1], p[0], p[1]) < 10) {
-            pointHovered = p;
-            break;
-        }
+    // check hover terrain
+    mapData.terrainHovered = getHoveredTerrain(m, mapData.terrains);
+
+    // check hover points in terrain
+    if (mapData.terrainSelected) {
+        mapData.pointHovered = getHoveredPoint(
+            m,
+            mapData.terrainSelected.polygon
+        );
     }
 }
 
 function mousePressed() {
-    if (pointHovered) {
-        pointSelected = pointHovered;
+    let m = canvasToWorld([mouseX, mouseY], mapData.camera);
+
+    if (mapData.terrainHovered) {
+        mapData.terrainSelected = mapData.terrainHovered;
+        mapData.dragDeltaMouse = [
+            mapData.terrainSelected.position[0] - m[0],
+            mapData.terrainSelected.position[1] - m[1],
+        ];
+    }
+
+    if (mapData.pointHovered) {
+        mapData.pointSelected = mapData.pointHovered;
+        mapData.dragDeltaMouse = [
+            mapData.pointSelected.position[0] - m[0],
+            mapData.pointSelected.position[1] - m[1],
+        ];
     }
 }
 
 function mouseReleased() {
-    pointSelected = null;
+    mapData.pointSelected = null;
+    mapData.terrainSelected = null;
 }
 
 function mouseWheel(event) {
     if (event.delta > 0) {
-        if (camera.scaleTo > 0.01) camera.scaleTo -= camera.scaleTo / 5;
+        if (mapData.camera.scaleTo > 0.01) {
+            mapData.camera.scaleTo -= mapData.camera.scaleTo / 5;
+            mapData.camera.xTo;
+        }
     } else {
-        if (camera.scaleTo < 10) camera.scaleTo += camera.scaleTo / 5;
+        if (mapData.camera.scaleTo < 10) {
+            mapData.camera.scaleTo += mapData.camera.scaleTo / 5;
+        }
     }
 }
 
 function keyPressed() {
     if (key == "a") {
-        let m = canvasToWorld([mouseX, mouseY], camera);
-        addPointToPoly(polygon, m[0], m[1]);
+        if (mapData.terrainSelected) {
+            let m = canvasToWorld([mouseX, mouseY], mapData.camera);
+            addPointToPoly(mapData.terrainSelected.polygon, m[0], m[1]);
+        }
     }
     if (key == "c") {
-        listDecompPoly = [];
-        polygon = [];
+        if (mapData.terrainSelected) {
+            mapData.terrainSelected.polygon = [];
+            mapData.terrainSelected.polygons = [];
+        }
     }
     if (key == "d") {
-        if (pointHovered) {
-            deletePointFromPolygon(polygon, pointHovered);
-            pointHovered = null;
+        if (mapData.pointHovered) {
+            deletePointFromPolygon(polygon, mapData.pointHovered);
+            mapData.pointHovered = null;
         }
     }
 }
@@ -137,8 +196,50 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
+// ==================== util ===================
+function getHoveredTerrain(m, terrains) {
+    for (let terrain of terrains) {
+        if (dist(m[0], m[1], terrain.position[0], terrain.position[1]) < 50) {
+            return terrain;
+        }
+    }
+
+    return null;
+}
+
+function getHoveredPoint(m, polygon) {
+    for (let p of polygon) {
+        if (dist(m[0], m[1], p[0], p[1]) < 10) {
+            return p;
+        }
+    }
+
+    return null;
+}
+
 // ===================== map ====================
-function drawMap(mapData) {}
+function drawMap(_mapData) {
+    for (let terrain of _mapData.terrains) {
+        // position
+        fill("red");
+        circle(terrain.position[0], terrain.position[1], 20);
+
+        // polygon
+        drawPolygon(terrain.polygon);
+
+        // polygons decomp
+        if (
+            _mapData.terrainHovered == terrain ||
+            _mapData.terrainSelected == terrain
+        ) {
+            drawPolygonsColor(terrain.polygons);
+
+            // decomp polygon
+            if (terrain.polygon.length > 3)
+                terrain.polygons = decompPolygon(terrain.polygon);
+        }
+    }
+}
 
 // ====================== camera ======================
 function updateCamera(cam) {
