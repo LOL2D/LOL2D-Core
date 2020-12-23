@@ -1,126 +1,280 @@
-let originalPoly = [];
-let convexPolygons = [];
-let img;
-let gui;
-
-let colors = ["#f005", "#ff05", "#fff5", "#0f05", "#0ff5", "#00f5"];
-
-let GUI = {
-    minEdgeLength: 50,
-    drawMode: "keyboard",
-    decompPoly,
-    clearPoly,
-    exportData,
+const MODE = {
+    EDITMAP: "map",
+    EDITPOLYGON: "poly",
 };
 
-function preload() {
-    img = loadImage("./asset/bird.png");
-}
+let mode = MODE.EDITPOLYGON;
+let camera = {
+    x: 0,
+    y: 0,
+    scale: 1,
+    xTo: 0,
+    yTo: 0,
+    scaleTo: 1,
+};
+
+// map edit
+// map contains list of terrains, terrain contains list of polygons
+let map = [
+    {
+        name: "abc",
+        position: [100, 100],
+        polygon: [],
+        polygons: [],
+    },
+];
+let terrainSelected, terrainHovered;
+
+// poly edit
+let polygon = [];
+let listDecompPoly = [];
+let pointSelected, pointHovered;
 
 function setup() {
-    createCanvas(800, 600);
-    textAlign(CENTER, CENTER);
-    strokeCap(ROUND);
-
-    gui = new dat.GUI();
-
-    gui.add(GUI, "minEdgeLength").min(20).max(200).step(1);
-    gui.add(GUI, "drawMode", { mouse: "mouse", keyboard: "keyboard" });
-
-    gui.add(GUI, "decompPoly").name("Decompoly");
-    gui.add(GUI, "clearPoly").name("Clear");
-    gui.add(GUI, "exportData");
-    // gui.add(window, )
+    createCanvas(windowWidth, windowHeight).position(0, 0);
 }
 
 function draw() {
     background(30);
 
-    image(img, 0, 0);
+    updateCamera(camera);
 
-    drawPoly(originalPoly);
+    beginStateCamera(camera);
 
-    drawMultiplePoly(convexPolygons, colors);
+    // draw grid
+    textSize(14 / camera.scale);
+    strokeWeight(1 / camera.scale);
+    drawGrid(camera);
 
-    if (GUI.drawMode == "keyboard" && originalPoly.length) {
-        let last = originalPoly[originalPoly.length - 1];
+    // draw polygons
+    strokeWeight(3 / camera.scale);
+    drawPolygon(polygon, camera);
+    drawPolygonsColor(listDecompPoly, camera);
 
-        stroke("#fff9");
-        strokeWeight(2);
-        line(mouseX, mouseY, last[0], last[1]);
+    if (polygon.length > 3) listDecompPoly = decompPolygon(polygon);
+
+    // move selected
+    if (pointSelected) {
+        let m = canvasToWorld([mouseX, mouseY], camera);
+        pointSelected[0] = m[0];
+        pointSelected[1] = m[1];
     }
+
+    // hight light hovered
+    if (pointHovered) {
+        noFill();
+        stroke("yellow");
+        circle(pointHovered[0], pointHovered[1], 10);
+    }
+
+    endStateCamera();
+
+    fill("white");
+    text(~camera.x + "," + ~camera.y, 10, 10);
 }
 
 function mouseDragged() {
-    if (mouseButton == LEFT && GUI.drawMode == "mouse") makePoly();
+    if (!pointSelected) {
+        camera.xTo -= movedX / camera.scale;
+        camera.yTo -= movedY / camera.scale;
+    }
 }
 
-function keyPressed() {
-    if (GUI.drawMode == "keyboard") {
-        if (key == "a") {
-            originalPoly.push([mouseX, mouseY]);
-        } else if (key == "u") {
-            originalPoly.pop();
+function mouseMoved() {
+    pointHovered = null;
+
+    let m = canvasToWorld([mouseX, mouseY], camera);
+
+    for (let p of polygon) {
+        if (dist(m[0], m[1], p[0], p[1]) < 10) {
+            pointHovered = p;
+            break;
         }
     }
 }
 
-function makePoly() {
-    let last = originalPoly[originalPoly.length - 1];
-
-    if (!last || dist(mouseX, mouseY, last[0], last[1]) > GUI.minEdgeLength) {
-        originalPoly.push([mouseX, mouseY]);
+function mousePressed() {
+    if (pointHovered) {
+        pointSelected = pointHovered;
     }
 }
 
-function drawPoly(poly, fillColor = "#0000") {
+function mouseReleased() {
+    pointSelected = null;
+}
+
+function mouseWheel(event) {
+    if (event.delta > 0) {
+        if (camera.scaleTo > 0.01) camera.scaleTo -= camera.scaleTo / 5;
+    } else {
+        if (camera.scaleTo < 10) camera.scaleTo += camera.scaleTo / 5;
+    }
+}
+
+function keyPressed() {
+    if (key == "a") {
+        let m = canvasToWorld([mouseX, mouseY], camera);
+        addPointToPoly(polygon, m[0], m[1]);
+    }
+    if (key == "c") {
+        listDecompPoly = [];
+        polygon = [];
+    }
+    if (key == "d") {
+        if (pointHovered) {
+            deletePointFromPolygon(polygon, pointHovered);
+            pointHovered = null;
+        }
+    }
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
+// ===================== map ====================
+function drawMap(mapData) {}
+
+// ====================== camera ======================
+function updateCamera(cam) {
+    cam.x = lerp(cam.x, cam.xTo, 0.2);
+    cam.y = lerp(cam.y, cam.yTo, 0.2);
+    cam.scale = lerp(cam.scale, cam.scaleTo, 0.2);
+}
+
+function canvasToWorld(pos, cam) {
+    return [
+        (pos[0] - width * 0.5) / cam.scale + cam.x,
+        (pos[1] - height * 0.5) / cam.scale + cam.y,
+    ];
+}
+
+function beginStateCamera(cam) {
+    push();
+    translate(width * 0.5, height * 0.5);
+    scale(cam.scale);
+    translate(-cam.x, -cam.y);
+}
+
+function endStateCamera() {
+    pop();
+}
+
+// ===================== grid ========================
+function drawGrid(cam) {
+    let topleft = canvasToWorld([0, 0], cam);
+    let bottomright = canvasToWorld([width, height], cam);
+
+    let left = topleft[0];
+    let top = topleft[1];
+    let right = bottomright[0];
+    let bottom = bottomright[1];
+
+    // center line
     stroke("white");
-    strokeWeight(3);
+    line(0, top, 0, bottom);
+    line(left, 0, right, 0);
+
+    // calculate grid size
+    let gridSize = 50;
+    while (gridSize * cam.scale < 100) {
+        gridSize *= 2;
+    }
+    while (gridSize * cam.scale > 200) {
+        gridSize = gridSize / 2;
+    }
+
+    // draw grid
+    stroke("#5559");
+    fill("white");
+    let i;
+
+    for (i = 0; i > left; i -= gridSize) {
+        line(i, top, i, bottom);
+        text(i, i, 0);
+    }
+
+    for (i = 0; i < right; i += gridSize) {
+        line(i, top, i, bottom);
+        text(i, i, 0);
+    }
+
+    for (i = 0; i > top; i -= gridSize) {
+        line(left, i, right, i);
+        text(i, 0, i);
+    }
+
+    for (i = 0; i < bottom; i += gridSize) {
+        line(left, i, right, i);
+        text(i, 0, i);
+    }
+}
+
+// ======================= poly ========================
+function addPointToPoly(poly, x, y) {
+    poly.push([x, y]);
+}
+
+function deletePointFromPolygon(poly, point) {
+    poly.splice(poly.indexOf(point), 1);
+}
+
+function drawPolygon(poly, isDrawIndex = true, fillColor = "#0000") {
+    stroke("white");
     fill(fillColor);
+
+    // shape
     beginShape();
     for (let p of poly) {
         vertex(p[0], p[1]);
     }
-    // endShape(mouseIsPressed ? OPEN : CLOSE);
     endShape(CLOSE);
 
+    // points
     noStroke();
     fill("red");
     for (let p of poly) {
         circle(p[0], p[1], 10);
     }
-}
 
-function drawMultiplePoly(listPoly, listColors) {
-    let colorIndex = 0;
-    for (let poly of listPoly) {
-        drawPoly(poly, listColors[colorIndex]);
-
-        colorIndex++;
-        if (colorIndex >= listColors.length) {
-            colorIndex = 0;
+    // index
+    if (isDrawIndex) {
+        noStroke();
+        fill("white");
+        let index = 0;
+        for (let p of poly) {
+            text(index, p[0], p[1] - 10);
+            index++;
         }
     }
 }
 
-// ======================= gui ===================
-function decompPoly() {
-    if (originalPoly.length < 3) return;
+function drawPolygonsColor(listPolygons, listColors) {
+    let c = listColors || [
+        "#f005",
+        "#ff05",
+        "#fff5",
+        "#0f05",
+        "#0ff5",
+        "#00f5",
+    ];
+
+    let colorIndex = 1;
+    for (let poly of listPolygons) {
+        drawPolygon(poly, false, c[colorIndex]);
+        colorIndex++;
+
+        if (colorIndex >= c.length) colorIndex = 0;
+    }
+}
+
+// =============== decomp polygon ================
+function decompPolygon(poly) {
+    if (poly.length < 3) return;
 
     // Make sure the polygon has counter-clockwise winding. Skip this step if you know it's already counter-clockwise.
-    decomp.makeCCW(originalPoly);
+    decomp.makeCCW(poly);
 
     // Decompose into convex polygons, using the faster algorithm
-    convexPolygons = decomp.quickDecomp(originalPoly);
-
-    console.log(convexPolygons);
-}
-
-function clearPoly() {
-    originalPoly = [];
-    convexPolygons = [];
-}
-
-function exportData() {
-    window.prompt("Data:", JSON.stringify(convexPolygons));
+    return decomp.quickDecomp(poly);
 }
