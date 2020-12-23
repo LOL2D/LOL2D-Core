@@ -2,40 +2,48 @@ class TerrainCore {
     constructor(config = {}) {
         this.position = createVector(0, 0);
         this.fillColor = "#555";
-        this.strokeColor = "#0000";
+        this.strokeColor = "#fff6";
         this.strokeWeight = 3;
-        this.rects = [];
+        this.polygons = [];
 
         Helper.Other.setValueFromConfig(this, config);
 
-        for (let r of this.rects) {
-            r.x += this.position.x;
-            r.y += this.position.y;
+        for (let poly of this.polygons) {
+            for (let p of poly) {
+                p[0] += this.position.x;
+                p[1] += this.position.y;
+            }
         }
     }
 
     collideChampion(champion) {
-        for (let r of this.rects) {
-            let SATrect = new SAT.Box(new SAT.Vector(r.x, r.y), r.w, r.h);
-
-            let SATcircle = new SAT.Circle(
-                new SAT.Vector(champion.position.x, champion.position.y),
-                champion.radius
-            );
-
+        for (let poly of this.polygons) {
             let response = new SAT.Response();
 
             let collided = SAT.testPolygonCircle(
-                SATrect.toPolygon(),
-                SATcircle,
+                new SAT.Polygon(
+                    new SAT.Vector(),
+                    poly.map((p) => new SAT.Vector(p[0], p[1]))
+                ),
+                champion.getSATBody(),
                 response
             );
 
             if (collided) {
+                stroke("yellow");
+                line(
+                    champion.position.x,
+                    champion.position.y,
+                    champion.position.x + response.overlapV.x,
+                    champion.position.y + response.overlapV.y
+                );
+
                 champion.position.x += response.overlapV.x;
                 champion.position.y += response.overlapV.y;
             }
         }
+
+        return false;
     }
 
     getBoundary() {
@@ -44,18 +52,12 @@ class TerrainCore {
         let top = Infinity;
         let right = -Infinity;
 
-        for (let r of this.rects) {
-            if (r.x < left) {
-                left = r.x;
-            }
-            if (r.x + r.w > right) {
-                right = r.x + r.w;
-            }
-            if (r.y < top) {
-                top = r.y;
-            }
-            if (r.y + r.h > bottom) {
-                bottom = r.y + r.h;
+        for (let poly of this.polygons) {
+            for (let p of poly) {
+                left = min(left, p[0]);
+                right = max(right, p[0]);
+                top = min(top, p[1]);
+                bottom = max(bottom, p[1]);
             }
         }
 
@@ -70,10 +72,23 @@ class TerrainCore {
     show(fillColor) {
         strokeWeight(this.strokeWeight);
         stroke(this.strokeColor);
+        // noFill();
         fill(fillColor || this.fillColor);
 
-        for (let r of this.rects) {
-            rect(r.x, r.y, r.w, r.h);
+        for (let poly of this.polygons) {
+            beginShape();
+            for (let p of poly) {
+                vertex(p[0], p[1]);
+            }
+            endShape(CLOSE);
+        }
+
+        fill("red");
+        noStroke();
+        for (let poly of this.polygons) {
+            for (let p of poly) {
+                circle(p[0], p[1], 10);
+            }
         }
     }
 }

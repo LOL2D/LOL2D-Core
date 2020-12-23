@@ -4,7 +4,7 @@ let stats;
 
 function preload() {
     loadAssets();
-    loadMap("summner-rift-22-12-2020");
+    loadMap("summoner-rift-23-12-2020");
 }
 
 function setup() {
@@ -18,7 +18,7 @@ function setup() {
     cursor(globalassets.cursor.normal);
 
     world = new WorldCore({
-        terrainMapData: globalassets["summner-rift-22-12-2020"],
+        terrainMapData: globalassets["summoner-rift-23-12-2020"],
         size: 6000,
         championsClassName: {
             player: Ahri,
@@ -68,6 +68,12 @@ function keyPressed() {
         world.camera.follow(
             world.champions[~~random(world.champions.length - 1)].position
         );
+    else if (key == "d") {
+        let m = world.camera.canvasToWorld(mouseX, mouseY);
+
+        world.player.position.set(m.x, m.y);
+        world.player.targetMove = m.copy();
+    }
 }
 function keyReleased() {
     input.keyReleased(keyCode);

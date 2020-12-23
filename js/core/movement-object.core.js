@@ -19,6 +19,13 @@ class MovementObjectCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
+    getSATBody() {
+        return new SAT.Circle(
+            new SAT.Vector(this.position.x, this.position.y),
+            this.radius
+        );
+    }
+
     show() {
         // show position track
         if (this.isShowPositionTracking) {

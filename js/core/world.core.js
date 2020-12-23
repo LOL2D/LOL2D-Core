@@ -135,18 +135,13 @@ class WorldCore {
 
         let data = this.terrainMap.getTerrainsInSight(this.player);
         for (let t of data) {
-            t.ref.show("white");
-        }
-        for (let t of data) {
-            if (t.ref.collideChampion(this.player)) {
-                console.log('collided')
+            t.ref.show();
 
-                fill("red");
-                circle(
-                    this.player.position.x,
-                    this.player.position.y,
-                    this.player.radius * 3
-                );
+            for (let p of this.champions) {
+                if (t.ref.collideChampion(p)) {
+                    // fill("red");
+                    // circle(p.position.x, p.position.y, p.radius * 3);
+                }
             }
         }
 
@@ -215,7 +210,7 @@ class WorldCore {
         // ----------- end camera -----------
 
         // draw sight overlay to screen
-        this.sight.draw();
+        // this.sight.draw();
     }
 
     addNewSpellObjects(something) {

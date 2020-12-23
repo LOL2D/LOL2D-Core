@@ -23,11 +23,16 @@ const assetPaths = [
 
 function loadAssets() {
     for (let path of assetPaths) {
-        globalassets[path] = loadImage(path);
+        loadImage(path, (data) => {
+            globalassets[path] = data;
+        });
     }
 }
 
 function loadMap(mapName) {
     let path = "asset/map/" + mapName + ".json";
-    globalassets[mapName] = loadJSON(path);
+    loadJSON(path, (json) => {
+        globalassets[mapName] = json.data;
+        console.log(json.data);
+    });
 }

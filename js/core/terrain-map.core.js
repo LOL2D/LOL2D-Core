@@ -5,7 +5,7 @@ class TerrainMapCore {
         this.height = 1000;
 
         this.terrains = [];
-        this.data = {};
+        this.data = [];
         this.quadtree = null;
 
         Helper.Other.setValueFromConfig(this, config);
@@ -16,26 +16,26 @@ class TerrainMapCore {
     }
 
     convertDataToTerrain() {
-        for (let t in this.data) {
+        for (let t of this.data) {
             this.terrains.push(
                 new TerrainCore({
-                    position: createVector(
-                        this.data[t].position.x,
-                        this.data[t].position.y
-                    ),
-                    rects: this.data[t].rects,
+                    position: { x: t.position[0], y: t.position[1] },
+                    polygons: t.polygons,
                 })
             );
         }
     }
 
     initQuadtree() {
-        this.quadtree = new Quadtree({
-            x: 0,
-            y: 0,
-            w: this.width,
-            h: this.height,
-        }, 2);
+        this.quadtree = new Quadtree(
+            {
+                x: 0,
+                y: 0,
+                w: this.width,
+                h: this.height,
+            },
+            2
+        );
     }
 
     effect(champions) {
@@ -49,6 +49,11 @@ class TerrainMapCore {
 
         for (let t of this.terrains) {
             let bound = t.getBoundary();
+
+            fill("#ff02");
+            rect(bound.x, bound.y, bound.w, bound.h);
+            fill("white");
+            text("Boundary", bound.x, bound.y);
 
             this.quadtree.insert({
                 ...bound,
