@@ -48,8 +48,8 @@ function draw() {
 
     // draw polygons
     strokeWeight(3 / camera.scale);
-    drawPolygon(polygon, camera);
-    drawPolygonsColor(listDecompPoly, camera);
+    drawPolygon(polygon);
+    drawPolygonsColor(listDecompPoly);
 
     if (polygon.length > 3) listDecompPoly = decompPolygon(polygon);
 
@@ -58,6 +58,11 @@ function draw() {
         let m = canvasToWorld([mouseX, mouseY], camera);
         pointSelected[0] = m[0];
         pointSelected[1] = m[1];
+
+        let t = `[${~~m[0]},${~~m[1]}]`;
+        stroke("#555");
+        fill("white");
+        text(t, m[0], m[1]);
     }
 
     // hight light hovered
@@ -219,7 +224,12 @@ function deletePointFromPolygon(poly, point) {
     poly.splice(poly.indexOf(point), 1);
 }
 
-function drawPolygon(poly, isDrawIndex = true, fillColor = "#0000") {
+function drawPolygon(
+    poly,
+    isDrawIndex = true,
+    fillColor = "#0000",
+    dotColor = "red"
+) {
     stroke("white");
     fill(fillColor);
 
@@ -232,7 +242,7 @@ function drawPolygon(poly, isDrawIndex = true, fillColor = "#0000") {
 
     // points
     noStroke();
-    fill("red");
+    fill(dotColor);
     for (let p of poly) {
         circle(p[0], p[1], 10);
     }
@@ -251,15 +261,15 @@ function drawPolygon(poly, isDrawIndex = true, fillColor = "#0000") {
 
 function drawPolygonsColor(listPolygons, listColors) {
     let c = listColors || [
+        "#0f05",
+        "#00f5",
         "#f005",
         "#ff05",
         "#fff5",
-        "#0f05",
         "#0ff5",
-        "#00f5",
     ];
 
-    let colorIndex = 1;
+    let colorIndex = 0;
     for (let poly of listPolygons) {
         drawPolygon(poly, false, c[colorIndex]);
         colorIndex++;
