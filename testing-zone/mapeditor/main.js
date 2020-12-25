@@ -5,6 +5,8 @@ const MODE = {
 
 let mode = MODE.EDITPOLYGON;
 let connectedToFirebase = false;
+let username = "";
+let onlines = [];
 
 // map edit
 let editor = {
@@ -42,7 +44,7 @@ function setup() {
     textFont("monospace");
     strokeCap(ROUND);
 
-    connectFirebase();
+    askName();
 }
 
 function draw() {
@@ -298,48 +300,29 @@ function showDummy(_isShowDummy) {
         polygons: "[]",
     },
  */
-function deleteTerrainFirebase(terrain) {
-    removeDataFirebase("terrains/", terrain.id);
-}
-function addTerrainFirebase(terrain) {
-    updateDataFirebase("terrains/", terrain, (error) => {
-        Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: "Lỗi khi lưu polygon mới vào firebase. " + error,
-        });
-    });
-}
-function updateTerrainFirebase(terrain) {
-    // chuyển về int
-    let positionData = terrain.position.map((value) => ~~value);
-    let polygonData = terrain.polygon.map((point) => [~~point[0], ~~point[1]]);
-    let polygonsData = terrain.polygons.map((poly) => {
-        let result = [];
-        for (let point of poly) {
-            result.push([~~point[0], ~~point[1]]);
+function askName() {
+    Swal.fire({
+        title: "Tên của bạn",
+        text: "Điền tên của bạn để mọi người thấy được công việc bạn đang làm",
+        input: "text",
+        inputValue: localStorage.getItem("lol-mapeditor-2-username"),
+        showCancelButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+    }).then((resultName) => {
+        if (resultName.isConfirmed && resultName.value != "") {
+            localStorage.setItem("lol-mapeditor-2-username", resultName.value);
+
+            // thêm số ngẫu nhiên để tránh trùng tên
+            username = resultName.value + (Math.random() * 10000).toFixed(0);
+
+            connectFirebase(username);
+        } else {
+            askName();
         }
-        return result;
-    });
-
-    // chuyển về json
-    let data = {
-        id: terrain.id,
-        position: JSON.stringify(positionData),
-        polygon: JSON.stringify(polygonData),
-        polygons: JSON.stringify(polygonsData),
-    };
-
-    // update
-    updateDataFirebase("terrains/", data, (error) => {
-        Swal.fire({
-            icon: "error",
-            title: "Lỗi lưu",
-            text: "Có lỗi khi lưu dữ liệu terrain vào firebase. " + error,
-        });
     });
 }
-function connectFirebase() {
+function connectFirebase(_username) {
     Swal.fire({
         icon: "info",
         title: "Đang lấy dữ liệu..",
@@ -355,7 +338,21 @@ function connectFirebase() {
 
     initFireBase();
 
+    // connect with username
+    updateDataFirebase("history/" + _username, "join " + getFormattedDate());
+    updateDataFirebase("onlines/" + _username, getFormattedDate());
+    window.addEventListener("beforeunload", function (e) {
+        updateDataFirebase(
+            "history/" + _username,
+            "left " + getFormattedDate()
+        );
+        removeDataFirebase("onlines/", _username);
+    });
+
     // listen events
+    listenToFireBase("onlines/", (data) => {
+        onlines = data;
+    });
     listenToFireBase("terrains/", (data) => {
         // hide loading
         if (!connectedToFirebase) {
@@ -387,6 +384,47 @@ function connectFirebase() {
                 }
             }
         }
+    });
+}
+function deleteTerrainFirebase(terrain) {
+    removeDataFirebase("terrains/", terrain.id);
+}
+function addTerrainFirebase(terrain) {
+    updateDataFirebase("terrains/" + terrain.id, terrain, (error) => {
+        Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Lỗi khi lưu polygon mới vào firebase. " + error,
+        });
+    });
+}
+function updateTerrainFirebase(terrain) {
+    // chuyển về int
+    let positionData = terrain.position.map((value) => ~~value);
+    let polygonData = terrain.polygon.map((point) => [~~point[0], ~~point[1]]);
+    let polygonsData = terrain.polygons.map((poly) => {
+        let result = [];
+        for (let point of poly) {
+            result.push([~~point[0], ~~point[1]]);
+        }
+        return result;
+    });
+
+    // chuyển về json
+    let data = {
+        id: terrain.id,
+        position: JSON.stringify(positionData),
+        polygon: JSON.stringify(polygonData),
+        polygons: JSON.stringify(polygonsData),
+    };
+
+    // update
+    updateDataFirebase("terrains/" + data.id, data, (error) => {
+        Swal.fire({
+            icon: "error",
+            title: "Lỗi lưu",
+            text: "Có lỗi khi lưu dữ liệu terrain vào firebase. " + error,
+        });
     });
 }
 
@@ -455,10 +493,32 @@ function huongdan() {
                 <li>A: (add) thêm đỉnh vào terrain đang chọn tại vị trí con trỏ</li>
                 <li>D: (delete) xóa đỉnh (của terrain đang chọn) tại vị trí con trỏ</li>
                 <li>C: (clear) xóa hết đỉnh của terrain đang chọn</li>
-                <li></li>
+            </ul>
+
+            Dummy: 
+            <ul>
+                <li>Chức năng hiện dummy sẽ hiển thị 1 người chơi (ahri) ở giữa màn hình </li>
+                <li>Với kích thước 60px (kích thước trong lol2d)</li>
+                <li>Giúp so sánh kích thước giữa terrain và người chơi tốt hơn</li>
             </ul>
         </div>
     `,
+    });
+}
+function showOnline() {
+    let data = "";
+
+    for (let user in onlines) {
+        if (user != username) {
+            data += `<p><b>${user}</b> vào lúc ${onlines[user]}</p>`;
+        } else {
+            data += `<p><b>${user}</b>(Bạn) vào lúc ${onlines[user]}</p>`;
+        }
+    }
+
+    Swal.fire({
+        title: "Những người đang online",
+        html: data,
     });
 }
 
@@ -657,7 +717,20 @@ function getHoveredPoint(m, terrain) {
 
     return null;
 }
-
 function deleteTerrain(terrain, listTerrains) {
     listTerrains.splice(listTerrains.indexOf(terrain), 1);
+}
+
+function getFormattedDate() {
+    var date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    var str = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+
+    return str;
 }

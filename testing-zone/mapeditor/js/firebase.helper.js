@@ -36,7 +36,7 @@ function removeDataFirebase(ref, id) {
 function updateDataFirebase(ref, data, onFailed) {
     firebase
         .database()
-        .ref(ref + data.id)
+        .ref(ref)
         .set(data, (error) => {
             if (error) onFailed && onFailed(error);
         });
