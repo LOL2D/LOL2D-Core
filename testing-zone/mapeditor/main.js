@@ -387,6 +387,7 @@ function connectFirebase(_username) {
     });
 }
 function deleteTerrainFirebase(terrain) {
+    console.log(terrain);
     removeDataFirebase("terrains/", terrain.id);
 }
 function addTerrainFirebase(terrain) {
@@ -453,7 +454,8 @@ function deleteSelectedTerrain() {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteTerrainFirebase(editor.terrainSelected);
-                deleteTerrain(editor.terrainSelected, editor.terrains);
+                editor.terrainSelected = null;
+                // deleteTerrain(editor.terrainSelected, editor.terrains); // không cần xóa nữa, firebase sẽ đồng bộ
             }
         });
     } else {
