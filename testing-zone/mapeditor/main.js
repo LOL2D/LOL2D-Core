@@ -8,6 +8,9 @@ let connectedToFirebase = false;
 
 // map edit
 let editor = {
+    dummy: { img: null, r: 60 },
+    isShowDummy: false,
+
     terrainDragged: null,
     terrainSelected: null,
     terrainHovered: null,
@@ -15,6 +18,7 @@ let editor = {
     pointHovered: null,
 
     mouse: [0, 0],
+    dragDeltaMouse: [0, 0],
 
     camera: {
         x: 0,
@@ -25,13 +29,16 @@ let editor = {
         scaleTo: 1,
     },
 
-    dragDeltaMouse: [0, 0],
-
     terrains: [],
 };
 
+function preload() {
+    editor.dummy.img = loadImage("./asset/dummy.png");
+}
+
 function setup() {
     createCanvas(800, 600).parent("canvasWrapper");
+    imageMode(CENTER);
     textFont("monospace");
     strokeCap(ROUND);
 
@@ -193,6 +200,7 @@ function keyPressed() {
 
 // ===================== map ====================
 function drawMap(_editor) {
+    // show terrains
     for (let terrain of _editor.terrains) {
         // flag
         let isHovered = _editor.terrainHovered == terrain;
@@ -217,6 +225,17 @@ function drawMap(_editor) {
         if (isSelected && terrain.polygon.length > 3) {
             terrain.polygons = decompPolygon(terrain.polygon);
         }
+    }
+
+    // show dummy
+    if (editor.isShowDummy) {
+        image(
+            editor.dummy.img,
+            editor.camera.x,
+            editor.camera.y,
+            editor.dummy.r,
+            editor.dummy.r
+        );
     }
 
     // terrain dragged
@@ -265,6 +284,9 @@ function drawMap(_editor) {
             circle(realPosHover[0], realPosHover[1], 10);
         }
     }
+}
+function showDummy(_isShowDummy) {
+    editor.isShowDummy = _isShowDummy;
 }
 
 // =============== firebase ================
