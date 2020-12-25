@@ -289,13 +289,26 @@ function addTerrainFirebase(terrain) {
     });
 }
 function updateTerrainFirebase(terrain) {
+    // chuyển về int
+    let positionData = terrain.position.map((value) => ~~value);
+    let polygonData = terrain.polygon.map((point) => [~~point[0], ~~point[1]]);
+    let polygonsData = terrain.polygons.map((poly) => {
+        let result = [];
+        for (let point of poly) {
+            result.push([~~point[0], ~~point[1]]);
+        }
+        return result;
+    });
+
+    // chuyển về json
     let data = {
         id: terrain.id,
-        position: JSON.stringify(terrain.position),
-        polygon: JSON.stringify(terrain.polygon),
-        polygons: JSON.stringify(terrain.polygons),
+        position: JSON.stringify(positionData),
+        polygon: JSON.stringify(polygonData),
+        polygons: JSON.stringify(polygonsData),
     };
 
+    // update
     updateDataFirebase("terrains/", data, (error) => {
         Swal.fire({
             icon: "error",
@@ -342,7 +355,6 @@ function connectFirebase() {
             });
         }
         editor.terrains = terrainArr;
-        console.log("terrains: ", terrainArr);
 
         // re select terrain
         if (editor.terrainSelected) {
@@ -380,6 +392,7 @@ function deleteSelectedTerrain() {
             cancelButtonText: "Hủy",
         }).then((result) => {
             if (result.isConfirmed) {
+                deleteTerrainFirebase(editor.terrainSelected);
                 deleteTerrain(editor.terrainSelected, editor.terrains);
             }
         });
