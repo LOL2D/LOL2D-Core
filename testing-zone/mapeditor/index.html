@@ -4,46 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MapEditor - LOL2D</title>
 
-    <style>
-        * {
-            font-family: 'Courier New', Courier, monospace;
-        }
+    <link rel="stylesheet" href="css/style.css">
 
-        html,
-        body {
-            height: 100%;
-            background: #333;
-        }
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase.js"></script>
 
-        body {
-            margin: 0;
-            display: flex;
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
 
-            /* This centers our sketch horizontally. */
-            justify-content: center;
-
-            /* This centers our sketch vertically. */
-            align-items: center;
-        }
-
-        button {
-            border: none;
-            background: #444;
-            color: #999;
-            padding: 5px 10px;
-        }
-
-        button:hover {
-            background: #888;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
-
+    <!-- sweet alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+    <!-- other libs -->
     <script src="../../lib/p5.min.js"></script>
     <script src="../../lib/SAT.js"></script>
     <script src="lib/dat.gui.min.js"></script>
@@ -53,6 +28,7 @@
 <body>
     <div>
         <div id="canvasWrapper"></div>
+        <button onclick="resetEditorCamera()">Reset camera</button>
         <button onclick="addTerrain()">Thêm polygon</button>
         <button onclick="deleteSelectedTerrain()">Xóa polygon</button>
         <button style="float: right" onclick="huongdan()">
@@ -60,6 +36,7 @@
         </button>
     </div>
 
+    <script src="js/firebase.helper.js"></script>
     <script src="main.js"></script>
 </body>
 

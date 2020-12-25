@@ -1,0 +1,33 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+html,
+body {
+    height: 100%;
+    background: #333;
+}
+
+body {
+    margin: 0;
+    display: flex;
+
+    /* This centers our sketch horizontally. */
+    justify-content: center;
+
+    /* This centers our sketch vertically. */
+    align-items: center;
+}
+
+button {
+    border: none;
+    background: #444;
+    color: #999;
+    padding: 5px 10px;
+}
+
+button:hover {
+    background: #888;
+    color: white;
+    cursor: pointer;
+}

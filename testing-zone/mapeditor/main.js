@@ -4,6 +4,7 @@ const MODE = {
 };
 
 let mode = MODE.EDITPOLYGON;
+let connectedToFirebase = false;
 
 // map edit
 let editor = {
@@ -26,35 +27,15 @@ let editor = {
 
     dragDeltaMouse: [0, 0],
 
-    terrains: [
-        {
-            name: "abc",
-            position: [100, 100],
-            polygon: [
-                [-50, -50],
-                [50, -50],
-                [50, 50],
-                [-50, 50],
-            ],
-            polygons: [],
-        },
-        {
-            name: "bcd",
-            position: [200, 100],
-            polygon: [
-                [-50, -50],
-                [50, -50],
-                [50, 50],
-                [-50, 50],
-            ],
-            polygons: [],
-        },
-    ],
+    terrains: [],
 };
 
 function setup() {
     createCanvas(800, 600).parent("canvasWrapper");
     textFont("monospace");
+    strokeCap(ROUND);
+
+    connectFirebase();
 }
 
 function draw() {
@@ -79,8 +60,8 @@ function draw() {
 
     endStateCamera();
 
-    fill("white");
-    text(~editor.camera.x + "," + ~editor.camera.y, 10, 10);
+    fill("#fff9");
+    text(~~editor.camera.x + "," + ~~editor.camera.y, 10, 10);
 }
 
 function mouseDragged() {
@@ -136,6 +117,12 @@ function mousePressed() {
 }
 
 function mouseReleased() {
+    // TODO sync to firebase here
+    if (editor.terrainSelected) {
+        // console.log("updating firebase " + editor.terrainSelected.id);
+        updateTerrainFirebase(editor.terrainSelected);
+    }
+
     editor.pointSelected = null;
     editor.terrainDragged = null;
 }
@@ -155,26 +142,51 @@ function mouseWheel(event) {
 function keyPressed() {
     if (key == "a") {
         if (editor.terrainSelected) {
-            editor.mouse[0] -= editor.terrainSelected.position[0];
-            editor.mouse[1] -= editor.terrainSelected.position[1];
+            // calculate position to add
+            let pos = [
+                editor.mouse[0] - editor.terrainSelected.position[0],
+                editor.mouse[1] - editor.terrainSelected.position[1],
+            ];
 
-            addPointToPoly(
-                editor.terrainSelected.polygon,
-                editor.mouse[0],
-                editor.mouse[1]
+            // add point to that position
+            addPointToPoly(editor.terrainSelected.polygon, pos[0], pos[1]);
+
+            // decomp polygons
+            editor.terrainSelected.polygons = decompPolygon(
+                editor.terrainSelected.polygon
             );
+
+            // save to firebase
+            updateTerrainFirebase(editor.terrainSelected);
         }
     }
     if (key == "c") {
         if (editor.terrainSelected) {
+            // delete all points
             editor.terrainSelected.polygon = [];
             editor.terrainSelected.polygons = [];
+
+            // save to firebase
+            updateTerrainFirebase(editor.terrainSelected);
         }
     }
     if (key == "d") {
         if (editor.pointHovered) {
-            deletePointFromPolygon(polygon, editor.pointHovered);
+            // delete point
+            deletePointFromPolygon(
+                editor.terrainSelected.polygon,
+                editor.pointHovered
+            );
+
+            // decomp polygons
+            editor.terrainSelected.polygons = decompPolygon(
+                editor.terrainSelected.polygon
+            );
+
             editor.pointHovered = null;
+
+            // save to firebase
+            updateTerrainFirebase(editor.terrainSelected);
         }
     }
 }
@@ -194,16 +206,16 @@ function drawMap(_editor) {
         }
 
         // polygon
-        drawTerrain(terrain.polygon, terrain.position);
+        drawTerrain(terrain.polygon, terrain.position, isSelected, isSelected);
 
         // polygons
         if (isHovered || isSelected) {
             drawTerrainColor(terrain.polygons, terrain.position, isSelected);
+        }
 
-            // decomp polygon
-            if (terrain.polygon.length > 3) {
-                terrain.polygons = decompPolygon(terrain.polygon);
-            }
+        // decomp polygon
+        if (isSelected && terrain.polygon.length > 3) {
+            terrain.polygons = decompPolygon(terrain.polygon);
         }
     }
 
@@ -255,21 +267,108 @@ function drawMap(_editor) {
     }
 }
 
-// =============== UI ===================
-function addTerrain() {
-    editor.terrains.push({
-        name: "abc",
-        position: [editor.camera.x, editor.camera.y],
-        polygon: [
-            [-50, -50],
-            [50, -50],
-            [50, 50],
-            [-50, 50],
-        ],
-        polygons: [],
+// =============== firebase ================
+/*
+    {
+        id: "0",
+        position: "[100, 100]",
+        polygon: "[[-50, -50], [50, -50], [50, 50], [-50, 50]]",
+        polygons: "[]",
+    },
+ */
+function deleteTerrainFirebase(terrain) {
+    removeDataFirebase("terrains/", terrain.id);
+}
+function addTerrainFirebase(terrain) {
+    updateDataFirebase("terrains/", terrain, (error) => {
+        Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Lỗi khi lưu polygon mới vào firebase. " + error,
+        });
+    });
+}
+function updateTerrainFirebase(terrain) {
+    let data = {
+        id: terrain.id,
+        position: JSON.stringify(terrain.position),
+        polygon: JSON.stringify(terrain.polygon),
+        polygons: JSON.stringify(terrain.polygons),
+    };
+
+    updateDataFirebase("terrains/", data, (error) => {
+        Swal.fire({
+            icon: "error",
+            title: "Lỗi lưu",
+            text: "Có lỗi khi lưu dữ liệu terrain vào firebase. " + error,
+        });
+    });
+}
+function connectFirebase() {
+    Swal.fire({
+        icon: "info",
+        title: "Đang lấy dữ liệu..",
+        text: "Đang lấy dữ liệu từ firebase",
+        width: "100%",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    initFireBase();
+
+    // listen events
+    listenToFireBase("terrains/", (data) => {
+        // hide loading
+        if (!connectedToFirebase) {
+            console.log("connected");
+
+            connectedToFirebase = true;
+            Swal.hideLoading();
+            Swal.close();
+        }
+
+        // get terrains data
+        let terrainArr = [];
+        for (let key in data) {
+            terrainArr.push({
+                id: data[key].id,
+                position: JSON.parse(data[key].position),
+                polygon: JSON.parse(data[key].polygon),
+                polygons: JSON.parse(data[key].polygons),
+            });
+        }
+        editor.terrains = terrainArr;
+        console.log("terrains: ", terrainArr);
+
+        // re select terrain
+        if (editor.terrainSelected) {
+            for (let terrain of editor.terrains) {
+                if (editor.terrainSelected.id == terrain.id) {
+                    editor.terrainSelected = terrain;
+                    break;
+                }
+            }
+        }
     });
 }
 
+// =============== UI ===================
+function addTerrain() {
+    let newTerrain = {
+        id: generateNewKeyFirebase("terrains/"),
+        position: `[${editor.camera.x}, ${editor.camera.y}]`,
+        polygon: "[[-50, -50],[50, -50],[50, 50],[-50, 50]]",
+        polygons: "[]",
+    };
+    editor.terrains.push(newTerrain);
+    editor.terrainSelected = newTerrain;
+
+    addTerrainFirebase(newTerrain);
+}
 function deleteSelectedTerrain() {
     if (editor.terrainSelected) {
         Swal.fire({
@@ -291,6 +390,10 @@ function deleteSelectedTerrain() {
             text: "Chưa chọn polygon nào để xóa.",
         });
     }
+}
+function exportMapData() {}
+function resetEditorCamera() {
+    resetCamera(editor.camera);
 }
 function huongdan() {
     Swal.fire({
@@ -325,6 +428,11 @@ function huongdan() {
 }
 
 // ====================== camera ======================
+function resetCamera(cam) {
+    cam.xTo = 0;
+    cam.yTo = 0;
+    cam.scaleTo = 1;
+}
 function updateCamera(cam) {
     cam.x = lerp(cam.x, cam.xTo, 0.2);
     cam.y = lerp(cam.y, cam.yTo, 0.2);
@@ -357,7 +465,7 @@ function drawGrid(cam) {
     let bottom = bottomright[1];
 
     // center line
-    stroke("white");
+    stroke("#fff9");
     line(0, top, 0, bottom);
     line(left, 0, right, 0);
 
@@ -407,9 +515,10 @@ function drawTerrain(
     poly,
     offset = [0, 0],
     isDrawDots = false,
+    isDrawIndex = false,
     fillColor = "#0000"
 ) {
-    stroke("white");
+    stroke("#fff9");
     fill(fillColor);
 
     // shape
@@ -421,16 +530,17 @@ function drawTerrain(
 
     // points
     if (isDrawDots) {
-        // points
         noStroke();
         fill("#f009");
         for (let p of poly) {
             circle(p[0] + offset[0], p[1] + offset[1], 10);
         }
+    }
 
-        // index
+    // index
+    if (isDrawIndex) {
         noStroke();
-        fill("white");
+        fill("#fff9");
         let index = 0;
         for (let p of poly) {
             text(index, p[0] + offset[0], p[1] + offset[1] - 10);
@@ -443,7 +553,7 @@ function drawTerrainColor(listPolygons, offset, hightlight) {
 
     let colorIndex = 0;
     for (let poly of listPolygons) {
-        drawTerrain(poly, offset, hightlight, c[colorIndex]);
+        drawTerrain(poly, offset, hightlight, false, c[colorIndex]);
         colorIndex++;
 
         if (colorIndex >= c.length) colorIndex = 0;
@@ -464,17 +574,33 @@ function decompPolygon(poly) {
 // ==================== util ===================
 function getHoveredTerrain(m, terrains) {
     for (let terrain of terrains) {
-        let SATvertices = terrain.polygon.map(
-            (point) =>
-                new SAT.Vector(
-                    point[0] + terrain.position[0],
-                    point[1] + terrain.position[1]
-                )
-        );
+        // not decomp yet
+        if (terrain.polygons.length == 0) {
+            let SATvertices = terrain.polygon.map(
+                (point) =>
+                    new SAT.Vector(
+                        point[0] + terrain.position[0],
+                        point[1] + terrain.position[1]
+                    )
+            );
 
-        let collided = isMouseInPoly(m, SATvertices);
+            if (isMouseInPoly(m, SATvertices)) return terrain;
+        }
 
-        if (collided) return terrain;
+        // decomped
+        else {
+            for (let poly of terrain.polygons) {
+                let SATvertices = poly.map(
+                    (point) =>
+                        new SAT.Vector(
+                            point[0] + terrain.position[0],
+                            point[1] + terrain.position[1]
+                        )
+                );
+
+                if (isMouseInPoly(m, SATvertices)) return terrain;
+            }
+        }
     }
 
     return null;
