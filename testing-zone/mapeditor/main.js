@@ -169,16 +169,6 @@ function keyPressed() {
             updateTerrainFirebase(editor.terrainSelected);
         }
     }
-    if (key == "c") {
-        if (editor.terrainSelected) {
-            // delete all points
-            editor.terrainSelected.polygon = [];
-            editor.terrainSelected.polygons = [];
-
-            // save to firebase
-            updateTerrainFirebase(editor.terrainSelected);
-        }
-    }
     if (key == "d") {
         if (editor.pointHovered) {
             // delete point
@@ -339,12 +329,12 @@ function connectFirebase(_username) {
     initFireBase();
 
     // connect with username
-    updateDataFirebase("history/" + _username, "join " + getFormattedDate());
+    updateDataFirebase("history/" + "join:" + _username, getFormattedDate());
     updateDataFirebase("onlines/" + _username, getFormattedDate());
     window.addEventListener("beforeunload", function (e) {
         updateDataFirebase(
-            "history/" + _username,
-            "left " + getFormattedDate()
+            "history/" + "left:" + _username,
+            getFormattedDate()
         );
         removeDataFirebase("onlines/", _username);
     });
