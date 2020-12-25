@@ -509,8 +509,10 @@ function huongdan() {
 }
 function showOnline() {
     let data = "";
+    let count = 0;
 
     for (let user in onlines) {
+        count++;
         if (user != username) {
             data += `<p><b>${user}</b> vào lúc ${onlines[user]}</p>`;
         } else {
@@ -519,7 +521,7 @@ function showOnline() {
     }
 
     Swal.fire({
-        title: "Những người đang online",
+        title: count + " người đang online",
         html: data,
     });
 }
