@@ -6,6 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: #333;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+
+            /* This centers our sketch horizontally. */
+            justify-content: center;
+
+            /* This centers our sketch vertically. */
+            align-items: center;
+        }
+
+        button {
+            border: none;
+            background: #444;
+            color: #999;
+            padding: 5px 10px;
+        }
+
+        button:hover {
+            background: #888;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script src="../../lib/p5.min.js"></script>
     <script src="../../lib/SAT.js"></script>
     <script src="lib/dat.gui.min.js"></script>
@@ -13,6 +51,15 @@
 </head>
 
 <body>
+    <div>
+        <div id="canvasWrapper"></div>
+        <button onclick="addTerrain()">Thêm polygon</button>
+        <button onclick="deleteSelectedTerrain()">Xóa polygon</button>
+        <button style="float: right" onclick="huongdan()">
+            Hướng dẫn
+        </button>
+    </div>
+
     <script src="main.js"></script>
 </body>
 
