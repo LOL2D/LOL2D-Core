@@ -1,14 +1,8 @@
-const MODE = {
-    EDITMAP: "map",
-    EDITPOLYGON: "poly",
-};
-
-let mode = MODE.EDITPOLYGON;
 let connectedToFirebase = false;
 let username = "";
 let onlines = [];
 
-// map edit
+// map editor
 let editor = {
     dummy: { img: null, r: 60 },
     isShowDummy: false,
