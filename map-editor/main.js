@@ -299,20 +299,20 @@ function showDummy(_isShowDummy) {
     },
  */
 function askName() {
+    let localUserName = localStorage.getItem("lol-mapeditor-2-username");
+
     Swal.fire({
         title: "Tên của bạn",
         text: "Điền tên của bạn để mọi người thấy được công việc bạn đang làm",
         input: "text",
-        inputValue: localStorage.getItem("lol-mapeditor-2-username"),
+        inputValue: localUserName,
         showCancelButton: false,
         allowOutsideClick: false,
         allowEscapeKey: false,
     }).then((resultName) => {
         if (resultName.isConfirmed && resultName.value != "") {
-            localStorage.setItem("lol-mapeditor-2-username", resultName.value);
-
-            // thêm số ngẫu nhiên để tránh trùng tên
-            username = resultName.value + (Math.random() * 10000).toFixed(0);
+            username = resultName.value;
+            localStorage.setItem("lol-mapeditor-2-username", username);
 
             connectFirebase(username);
         } else {
@@ -337,10 +337,11 @@ function connectFirebase(_username) {
     initFireBase();
 
     // connect with username
-    addDataFirebase("history/" + "join:" + _username, getFormattedDate());
     addDataFirebase("onlines/" + _username, getFormattedDate());
+
+    addDataFirebase("history/" + getFormattedDate(), "join:" + _username);
     window.addEventListener("beforeunload", function (e) {
-        addDataFirebase("history/" + "left:" + _username, getFormattedDate());
+        addDataFirebase("history/" + getFormattedDate(), "left:" + _username);
         removeDataFirebase("onlines/", _username);
     });
 
@@ -782,7 +783,7 @@ function getFormattedDate() {
     let minute = date.getMinutes();
     let second = date.getSeconds();
 
-    var str = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+    var str = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
 
     return str;
 }
