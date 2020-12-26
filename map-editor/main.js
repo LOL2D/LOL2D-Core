@@ -514,7 +514,27 @@ function cloneSelectedTerrain() {
     }
 }
 function exportMapData() {
-    console.log(editor.terrains);
+    let polygonsData = [];
+    for (let terrain of editor.terrains) {
+        for (let poly of terrain.polygons) {
+            let polyData = [];
+            for (let point of poly) {
+                polyData.push([
+                    point[0] + terrain.position[0],
+                    point[1] + terrain.position[1],
+                ]);
+            }
+            polygonsData.push(polyData);
+        }
+    }
+    // console.log(JSON.stringify(polygonsData));
+
+    Swal.fire({
+        title: "Export map data",
+        input: "textarea",
+        inputLabel: "Dữ liệu json",
+        inputValue: `{"data": ${JSON.stringify(polygonsData)}}`,
+    });
 }
 function resetEditorCamera() {
     resetCamera(editor.camera);
