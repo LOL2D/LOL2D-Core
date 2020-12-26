@@ -34,7 +34,7 @@ class WorldCore {
             height: this.size,
         });
         this.terrainMap = new TerrainMapCore({
-            data: this.terrainMapData,
+            polygons: this.terrainMapData,
             width: this.size,
             height: this.size,
         });
@@ -133,17 +133,7 @@ class WorldCore {
         this.terrainMap.update();
         this.terrainMap.show();
 
-        let data = this.terrainMap.getTerrainsInSight(this.player);
-        for (let t of data) {
-            t.ref.show();
-
-            for (let p of this.champions) {
-                if (t.ref.collideChampion(p)) {
-                    // fill("red");
-                    // circle(p.position.x, p.position.y, p.radius * 3);
-                }
-            }
-        }
+        for (let champ of this.champions) this.terrainMap.effect(champ);
 
         for (let turret of this.turrets) {
             turret.run();

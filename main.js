@@ -4,12 +4,14 @@ let stats;
 
 function preload() {
     loadAssets();
-    loadMap("summoner-rift-23-12-2020");
+    loadMap("summoner-rift");
 }
 
 function setup() {
     createCanvas(windowWidth, windowHeight).position(0, 0);
 
+    strokeJoin(ROUND);
+    strokeCap(ROUND);
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
     pixelDensity(1);
@@ -18,8 +20,8 @@ function setup() {
     cursor(globalassets.cursor.normal);
 
     world = new WorldCore({
-        terrainMapData: globalassets["summoner-rift-23-12-2020"],
-        size: 6000,
+        terrainMapData: globalassets["summoner-rift"],
+        size: 6400,
         championsClassName: {
             player: Ahri,
             allies: [Ahri, Ahri, Ahri, Ahri],

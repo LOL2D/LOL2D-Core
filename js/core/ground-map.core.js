@@ -7,7 +7,7 @@ class GroundMapCore {
         this.edgeColor = [200, 100];
         this.edgeWeight = 3;
         this.grid = true;
-        this.gridSize = 300;
+        this.gridSize = 200;
         this.gridColor = [130, 50];
         this.gridWeight = 3;
 

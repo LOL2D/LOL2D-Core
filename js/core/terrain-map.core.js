@@ -4,29 +4,12 @@ class TerrainMapCore {
         this.width = 1000;
         this.height = 1000;
 
-        this.terrains = [];
-        this.data = [];
+        this.polygons = [];
         this.quadtree = null;
 
         Helper.Other.setValueFromConfig(this, config);
 
         // setup
-        this.convertDataToTerrain();
-        this.initQuadtree();
-    }
-
-    convertDataToTerrain() {
-        for (let t of this.data) {
-            this.terrains.push(
-                new TerrainCore({
-                    position: { x: t.position[0], y: t.position[1] },
-                    polygons: t.polygons,
-                })
-            );
-        }
-    }
-
-    initQuadtree() {
         this.quadtree = new Quadtree(
             {
                 x: 0,
@@ -34,30 +17,49 @@ class TerrainMapCore {
                 w: this.width,
                 h: this.height,
             },
-            2
+            10
         );
     }
 
-    effect(champions) {
-        for (let ter of this.terrains) {
-            ter.effect(champions);
+    effect(champion) {
+        let data = this.getTerrainsInSight(champion);
+
+        for (let item of data) {
+            let poly = item.ref;
+
+            fill("white");
+            beginShape();
+            for (let p of poly) {
+                vertex(p[0], p[1]);
+            }
+            endShape(CLOSE);
+
+            let response = new SAT.Response();
+
+            let collided = SAT.testPolygonCircle(
+                new SAT.Polygon(
+                    new SAT.Vector(),
+                    poly.map((p) => new SAT.Vector(p[0], p[1]))
+                ),
+                champion.getSATBody(),
+                response
+            );
+
+            if (collided) {
+                champion.position.x += response.overlapV.x;
+                champion.position.y += response.overlapV.y;
+            }
         }
     }
 
     update() {
         this.quadtree.clear();
 
-        for (let t of this.terrains) {
-            let bound = t.getBoundary();
-
-            fill("#ff02");
-            rect(bound.x, bound.y, bound.w, bound.h);
-            fill("white");
-            text("Boundary", bound.x, bound.y);
-
+        for (let poly of this.polygons) {
+            let bound = this.getBoundaryOfPolygon(poly);
             this.quadtree.insert({
                 ...bound,
-                ref: t, // reference to terrain
+                ref: poly, // reference to terrain
             });
         }
 
@@ -65,17 +67,54 @@ class TerrainMapCore {
     }
 
     show() {
-        for (let t of this.terrains) {
-            t.show();
+        strokeWeight(3);
+        stroke("#fff6");
+        fill("#555");
+
+        for (let poly of this.polygons) {
+            beginShape();
+            for (let p of poly) {
+                vertex(p[0], p[1]);
+            }
+            endShape(CLOSE);
         }
+
+        // fill("red");
+        // noStroke();
+        // for (let poly of this.polygons) {
+        //     for (let p of poly) {
+        //         circle(p[0], p[1], 10);
+        //     }
+        // }
+    }
+
+    getBoundaryOfPolygon(polygon) {
+        let left = Infinity;
+        let bottom = -Infinity;
+        let top = Infinity;
+        let right = -Infinity;
+
+        for (let p of polygon) {
+            left = min(left, p[0]);
+            right = max(right, p[0]);
+            top = min(top, p[1]);
+            bottom = max(bottom, p[1]);
+        }
+
+        return {
+            x: left,
+            y: top,
+            w: right - left,
+            h: bottom - top,
+        };
     }
 
     getTerrainsInSight(champion) {
         let data = this.quadtree.retrieve({
             x: champion.position.x - champion.sightRadius,
             y: champion.position.y - champion.sightRadius,
-            w: champion.sightRadius * 2,
-            h: champion.sightRadius * 2,
+            w: 1000,
+            h: 1000,
         });
 
         return data;
