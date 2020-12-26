@@ -33,13 +33,17 @@ function removeDataFirebase(ref, id) {
         .remove();
 }
 
-function updateDataFirebase(ref, data, onFailed) {
+function addDataFirebase(ref, data, onFailed) {
     firebase
         .database()
         .ref(ref)
         .set(data, (error) => {
             if (error) onFailed && onFailed(error);
         });
+}
+
+function updateDataFirebase(ref, data) {
+    firebase.database().ref(ref).update(data);
 }
 
 function generateNewKeyFirebase(ref) {

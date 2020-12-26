@@ -28,20 +28,30 @@
 <body>
     <div>
         <div id="canvasWrapper"></div>
-        <button onclick="resetEditorCamera()">Reset camera</button>
-        <button onclick="addTerrain()">Thêm polygon</button>
-        <button onclick="deleteSelectedTerrain()">Xóa polygon</button>
 
-        <label class="container">Hiện dummy
-            <input type="checkbox" onchange="showDummy(this.checked)">
-            <span class="checkmark"></span>
-        </label>
+        <div>
+            <div>
+                <button onclick="resetEditorCamera()">Reset camera</button>
+                <button onclick="addTerrain()">Thêm poly</button>
+                <button onclick="deleteSelectedTerrain()">Xóa poly</button>
+                <button onclick="rotateSelectedTerrain()">Xoay poly</button>
+                <button onclick="cloneSelectedTerrain()">Clone poly</button>
 
-        <div style="float: right">
-            <button onclick="showOnline()">Ai đang online?</button>
-            <button onclick="huongdan()">
-                Hướng dẫn
-            </button>
+                <label class="container">Hiện dummy
+                    <input type="checkbox" onchange="showDummy(this.checked)">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <hr>
+
+            <div>
+                <button onclick="exportMapData()">Export...</button>
+                <button onclick="showOnline()">Online?</button>
+                <button onclick="huongdan()">
+                    Hướng dẫn
+                </button>
+            </div>
         </div>
     </div>
 

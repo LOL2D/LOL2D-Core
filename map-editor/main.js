@@ -73,14 +73,18 @@ function draw() {
     text(~~editor.camera.x + "," + ~~editor.camera.y, 10, 10);
 }
 
-function mouseDragged() {
+function mouseDragged(e) {
+    if (!isMouseInCanvas(e)) return;
+
     if (!editor.terrainDragged && !editor.pointSelected) {
         editor.camera.xTo -= movedX / editor.camera.scale;
         editor.camera.yTo -= movedY / editor.camera.scale;
     }
 }
 
-function mouseMoved() {
+function mouseMoved(e) {
+    if (!isMouseInCanvas(e)) return;
+
     editor.pointHovered = null;
     editor.terrainHovered = null;
 
@@ -96,7 +100,9 @@ function mouseMoved() {
     }
 }
 
-function mousePressed() {
+function mousePressed(e) {
+    if (!isMouseInCanvas(e)) return;
+
     if (editor.terrainSelected) {
         if (editor.pointHovered) {
             editor.pointSelected = editor.pointHovered;
@@ -125,10 +131,10 @@ function mousePressed() {
     }
 }
 
-function mouseReleased() {
-    // TODO sync to firebase here
+function mouseReleased(e) {
+    if (!isMouseInCanvas(e)) return;
+
     if (editor.terrainSelected) {
-        // console.log("updating firebase " + editor.terrainSelected.id);
         updateTerrainFirebase(editor.terrainSelected);
     }
 
@@ -136,8 +142,10 @@ function mouseReleased() {
     editor.terrainDragged = null;
 }
 
-function mouseWheel(event) {
-    if (event.delta > 0) {
+function mouseWheel(e) {
+    if (!isMouseInCanvas(e)) return;
+
+    if (e.delta > 0) {
         if (editor.camera.scaleTo > 0.01) {
             editor.camera.scaleTo -= editor.camera.scaleTo / 5;
         }
@@ -329,13 +337,10 @@ function connectFirebase(_username) {
     initFireBase();
 
     // connect with username
-    updateDataFirebase("history/" + "join:" + _username, getFormattedDate());
-    updateDataFirebase("onlines/" + _username, getFormattedDate());
+    addDataFirebase("history/" + "join:" + _username, getFormattedDate());
+    addDataFirebase("onlines/" + _username, getFormattedDate());
     window.addEventListener("beforeunload", function (e) {
-        updateDataFirebase(
-            "history/" + "left:" + _username,
-            getFormattedDate()
-        );
+        addDataFirebase("history/" + "left:" + _username, getFormattedDate());
         removeDataFirebase("onlines/", _username);
     });
 
@@ -381,7 +386,7 @@ function deleteTerrainFirebase(terrain) {
     removeDataFirebase("terrains/", terrain.id);
 }
 function addTerrainFirebase(terrain) {
-    updateDataFirebase("terrains/" + terrain.id, terrain, (error) => {
+    addDataFirebase("terrains/" + terrain.id, terrain, (error) => {
         Swal.fire({
             icon: "error",
             title: "Lỗi",
@@ -410,13 +415,7 @@ function updateTerrainFirebase(terrain) {
     };
 
     // update
-    updateDataFirebase("terrains/" + data.id, data, (error) => {
-        Swal.fire({
-            icon: "error",
-            title: "Lỗi lưu",
-            text: "Có lỗi khi lưu dữ liệu terrain vào firebase. " + error,
-        });
-    });
+    updateDataFirebase("terrains/" + data.id, data);
 }
 
 // =============== UI ===================
@@ -456,7 +455,66 @@ function deleteSelectedTerrain() {
         });
     }
 }
-function exportMapData() {}
+function rotateSelectedTerrain() {
+    if (editor.terrainSelected) {
+        Swal.fire({
+            icon: "warning",
+            title: "Xoay polygon",
+            text: "Nhập vào góc muốn xoay (0-360, chiều kim đồng hồ)",
+            input: "number",
+            inputLabel: "Góc",
+            showCancelButton: true,
+            confirmButtonText: "Xoay",
+            cancelButtonText: "Hủy",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                for (let point of editor.terrainSelected.polygon) {
+                    let vec = createVector(point[0], point[1]);
+                    vec.rotate(radians(result.value));
+
+                    point[0] = round(vec.x);
+                    point[1] = round(vec.y);
+                }
+
+                updateTerrainFirebase(editor.terrainSelected);
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: "info",
+            title: "Lỗi",
+            text: "Chưa chọn polygon nào để xoay.",
+        });
+    }
+}
+function cloneSelectedTerrain() {
+    if (editor.terrainSelected) {
+        // clone
+        let newTerrain = JSON.parse(JSON.stringify(editor.terrainSelected));
+
+        // modify
+        newTerrain.id = generateNewKeyFirebase("terrains/");
+        newTerrain.position = JSON.stringify([
+            round(editor.camera.x),
+            round(editor.camera.y),
+        ]);
+        newTerrain.polygon = JSON.stringify(newTerrain.polygon);
+        newTerrain.polygons = JSON.stringify(newTerrain.polygons);
+
+        addTerrainFirebase(newTerrain);
+
+        console.log(newTerrain);
+    } else {
+        Swal.fire({
+            icon: "info",
+            title: "Lỗi",
+            text: "Chưa chọn polygon nào để clone.",
+        });
+    }
+}
+function exportMapData() {
+    console.log(editor.terrains);
+}
 function resetEditorCamera() {
     resetCamera(editor.camera);
 }
@@ -727,4 +785,11 @@ function getFormattedDate() {
     var str = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
 
     return str;
+}
+
+function isMouseInCanvas(event) {
+    return (
+        event.target.id == "defaultCanvas0" &&
+        !(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height)
+    );
 }
