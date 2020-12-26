@@ -13,6 +13,8 @@ let editor = {
     dummy: { img: null, r: 60 },
     isShowDummy: false,
 
+    terrainCopied: null,
+
     terrainDragged: null,
     terrainSelected: null,
     terrainHovered: null,
@@ -39,7 +41,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(800, 600).parent("canvasWrapper");
+    createCanvas(1000, 600).parent("canvasWrapper");
     imageMode(CENTER);
     textFont("monospace");
     strokeCap(ROUND);
@@ -421,16 +423,39 @@ function updateTerrainFirebase(terrain) {
 
 // =============== UI ===================
 function addTerrain() {
-    let newTerrain = {
-        id: generateNewKeyFirebase("terrains/"),
-        position: `[${editor.camera.x}, ${editor.camera.y}]`,
-        polygon: "[[-50, -50],[50, -50],[50, 50],[-50, 50]]",
-        polygons: "[]",
-    };
-    editor.terrains.push(newTerrain);
-    editor.terrainSelected = newTerrain;
+    Swal.fire({
+        icon: "info",
+        title: "Thêm polygon",
+        text: "Bạn muốn tạo Polygon có mấy đỉnh",
+        input: "number",
+        inputValue: 4,
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let count = result.value;
+            let angle = TWO_PI / count;
+            let radius = 50;
 
-    addTerrainFirebase(newTerrain);
+            // https://p5js.org/examples/form-regular-polygon.html
+            let polygon = [];
+            for (let a = 0; a < TWO_PI; a += angle) {
+                let sx = cos(a) * radius;
+                let sy = sin(a) * radius;
+                polygon.push([~~sx, ~~sy]);
+            }
+
+            let newTerrain = {
+                id: generateNewKeyFirebase("terrains/"),
+                position: `[${editor.camera.x}, ${editor.camera.y}]`,
+                polygon: JSON.stringify(polygon), //"[[-50, -50],[50, -50],[50, 50],[-50, 50]]",
+                polygons: "[]",
+            };
+            // editor.terrains.push(newTerrain); // khong can
+            editor.terrainSelected = newTerrain;
+
+            addTerrainFirebase(newTerrain);
+        }
+    });
 }
 function deleteSelectedTerrain() {
     if (editor.terrainSelected) {
@@ -513,7 +538,7 @@ function cloneSelectedTerrain() {
         });
     }
 }
-function exportMapData() {
+function exportMapDataMinified() {
     let polygonsData = [];
     for (let terrain of editor.terrains) {
         for (let poly of terrain.polygons) {
@@ -536,6 +561,14 @@ function exportMapData() {
         inputValue: `{"data": ${JSON.stringify(polygonsData)}}`,
     });
 }
+function exportMapDataFull() {
+    Swal.fire({
+        title: "Export map data",
+        input: "textarea",
+        inputLabel: "Dữ liệu json",
+        inputValue: `{"data": ${JSON.stringify(editor.terrains)}}`,
+    });
+}
 function resetEditorCamera() {
     resetCamera(editor.camera);
 }
@@ -546,27 +579,31 @@ function huongdan() {
         html: `
         <div style="text-align: left">
             Map có nhiều vật thể có hình polygon (gọi là <b>terrain</b>) <br/>
-            Mỗi terrain(polygon) được tạo từ nhiều <b>đỉnh</b> <br/>
+            Mỗi terrain(polygon) được tạo từ nhiều <b>đỉnh</b> <br/><br/>
 
-            <ul>
-                <li>Click chuột vào 1 terrain để bắt đầu chỉnh sửa nó </li>
-                <li>
-                    Terrain đang được chọn cho phép:
-                    <ul>   
-                        <li>di chuyển vị trí (kéo thả phần bên trong terrain)</li>
-                        <li>di chuyển các đỉnh (kéo thả đỉnh)</li>
-                    </ul>
-                </li>
+            <b>Click chuột</b> vào 1 polygon để bắt đầu chỉnh sửa nó.<br/>
+            <b>Sử dụng chuột</b> với polygon được chọn:
+            <ul>   
+                <li>di chuyển vị trí (kéo thả phần bên trong terrain)</li>
+                <li>di chuyển các đỉnh (kéo thả đỉnh)</li>
             </ul>
 
-            Phím tắt:
+            <b>Phím tắt</b> với polygon được chọn:
             <ul>
                 <li>A: (add) thêm đỉnh vào terrain đang chọn tại vị trí con trỏ</li>
                 <li>D: (delete) xóa đỉnh (của terrain đang chọn) tại vị trí con trỏ</li>
-                <li>C: (clear) xóa hết đỉnh của terrain đang chọn</li>
             </ul>
 
-            Dummy: 
+            <b>Các nút chức năng:</b>
+            <ul>
+                <li><b>Reset camera</b>: Đưa camera về trạng thái ban đầu (vị trí 0,0 thu phóng 1)</li>
+                <li><b>Thêm poly</b>: Thêm 1 polygon tại giữa màn hình (mặc định có 4 đỉnh hình vuông)</li>
+                <li><b>Xóa poly</b>: Xóa polygon đang chọn (không thể undo)</li>
+                <li><b>Xoay poly</b>: Xoay polygon đang chọn 1 góc (sẽ hiện khung cho phép nhập góc)</li>
+                <li><b>Clone poly</b>: Nhân bản (copy+paste) polygon đang chọn, và đặt polygon mới vào giữa màn hình</li>
+            </ul>
+
+            <b>Dummy: </b>
             <ul>
                 <li>Chức năng hiện dummy sẽ hiển thị 1 người chơi (ahri) ở giữa màn hình </li>
                 <li>Với kích thước 60px (kích thước trong lol2d)</li>

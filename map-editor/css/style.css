@@ -1,11 +1,12 @@
 * {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: monospace;
+    font-size: 17px;
 }
 
 html,
 body {
     height: 100%;
-    background: #333;
+    background: #111;
 }
 
 body {
@@ -22,7 +23,7 @@ body {
 button {
     border: none;
     background: #444;
-    color: #999;
+    color: #bbb;
     padding: 5px 10px;
 }
 
