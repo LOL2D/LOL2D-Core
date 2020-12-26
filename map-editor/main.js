@@ -44,8 +44,8 @@ let editor = {
 };
 
 function preload() {
-    editor.dummy.img = loadImage("./asset/dummy.png");
-    editor.realMapImg = loadImage("./asset/full.jpg");
+    editor.dummy.img = loadImage("asset/dummy.png");
+    editor.realMapImg = loadImage("asset/full.jpg");
 }
 
 function setup() {
