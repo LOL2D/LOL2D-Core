@@ -13,7 +13,14 @@ let editor = {
     dummy: { img: null, r: 60 },
     isShowDummy: false,
 
-    terrainCopied: null,
+    isShowRealmap: false,
+    isShowMinimap: false,
+    realMapImg: null,
+
+    minimap: null,
+    minimapSize: [300, 300],
+
+    mapSize: [6400, 6400],
 
     terrainDragged: null,
     terrainSelected: null,
@@ -38,6 +45,7 @@ let editor = {
 
 function preload() {
     editor.dummy.img = loadImage("./asset/dummy.png");
+    editor.realMapImg = loadImage("./asset/full.jpg");
 }
 
 function setup() {
@@ -46,6 +54,12 @@ function setup() {
     textFont("monospace");
     strokeCap(ROUND);
 
+    editor.minimap = createGraphics(
+        editor.minimapSize[0],
+        editor.minimapSize[0]
+    );
+
+    resetEditorCamera();
     askName();
 }
 
@@ -57,6 +71,9 @@ function draw() {
 
     // mouse
     editor.mouse = canvasToWorld([mouseX, mouseY], editor.camera);
+
+    // real map
+    drawRealMap();
 
     // style
     textSize(14 / editor.camera.scale);
@@ -70,6 +87,8 @@ function draw() {
     drawMap(editor);
 
     endStateCamera();
+
+    drawMinimap();
 
     fill("#fff9");
     text(~~editor.camera.x + "," + ~~editor.camera.y, 10, 10);
@@ -200,6 +219,62 @@ function keyPressed() {
     }
 }
 
+// =================== real map ================
+function setShowRealMap(value) {
+    editor.isShowRealmap = value;
+}
+function setShowMinimap(value) {
+    editor.isShowMinimap = value;
+}
+function drawMinimap() {
+    if (editor.isShowMinimap) {
+        let size = editor.minimapSize;
+
+        editor.minimap.background(10);
+
+        editor.minimap.push();
+        editor.minimap.translate(size[0] * 0.5, size[1] * 0.5);
+        editor.minimap.scale(editor.camera.scale);
+        editor.minimap.translate(-editor.camera.x, -editor.camera.y);
+
+        editor.minimap.image(
+            editor.realMapImg,
+            0,
+            0,
+            editor.mapSize[0],
+            editor.mapSize[1]
+        );
+
+        editor.minimap.pop();
+
+        image(editor.minimap, width - size[0] / 2, height - size[1] / 2);
+
+        stroke("blue");
+        noFill();
+        rect(
+            width / 2 - size[0] / 2,
+            height / 2 - size[1] / 2,
+            size[0],
+            size[1]
+        );
+    }
+}
+function drawRealMap() {
+    if (editor.isShowRealmap) {
+        image(
+            editor.realMapImg,
+            editor.mapSize[0] / 2,
+            editor.mapSize[1] / 2,
+            editor.mapSize[0],
+            editor.mapSize[1]
+        );
+
+        // fill("#3335");
+        // noStroke();
+        // rect(0, 0, editor.mapSize[0], editor.mapSize[1]);
+    }
+}
+
 // ===================== map ====================
 function drawMap(_editor) {
     // show terrains
@@ -287,7 +362,7 @@ function drawMap(_editor) {
         }
     }
 }
-function showDummy(_isShowDummy) {
+function setShowDummy(_isShowDummy) {
     editor.isShowDummy = _isShowDummy;
 }
 
@@ -570,7 +645,10 @@ function exportMapDataFull() {
     });
 }
 function resetEditorCamera() {
-    resetCamera(editor.camera);
+    editor.camera.xTo = editor.mapSize[0] / 2;
+    editor.camera.yTo = editor.mapSize[1] / 2;
+    editor.camera.scaleTo =
+        height / (editor.mapSize[0] + editor.mapSize[0] / 10);
 }
 function huongdan() {
     Swal.fire({
@@ -578,36 +656,38 @@ function huongdan() {
         width: "100%",
         html: `
         <div style="text-align: left">
-            Map có nhiều vật thể có hình polygon (gọi là <b>terrain</b>) <br/>
-            Mỗi terrain(polygon) được tạo từ nhiều <b>đỉnh</b> <br/><br/>
+            Map có nhiều vật thể có hình polygon (gọi là <u>terrain</u>) <br/>
+            Mỗi terrain(polygon) được tạo từ nhiều <u>đỉnh</u> <br/><br/>
 
-            <b>Click chuột</b> vào 1 polygon để bắt đầu chỉnh sửa nó.<br/>
-            <b>Sử dụng chuột</b> với polygon được chọn:
+            <u>Click chuột</u> vào 1 polygon để bắt đầu chỉnh sửa nó.<br/>
+            <u>Sử dụng chuột</u> với polygon được chọn:
             <ul>   
                 <li>di chuyển vị trí (kéo thả phần bên trong terrain)</li>
                 <li>di chuyển các đỉnh (kéo thả đỉnh)</li>
             </ul>
 
-            <b>Phím tắt</b> với polygon được chọn:
+            <u>Phím tắt</u> với polygon được chọn:
             <ul>
                 <li>A: (add) thêm đỉnh vào terrain đang chọn tại vị trí con trỏ</li>
                 <li>D: (delete) xóa đỉnh (của terrain đang chọn) tại vị trí con trỏ</li>
             </ul>
 
-            <b>Các nút chức năng:</b>
+            <u>Các nút chức năng:</u>
             <ul>
-                <li><b>Reset camera</b>: Đưa camera về trạng thái ban đầu (vị trí 0,0 thu phóng 1)</li>
-                <li><b>Thêm poly</b>: Thêm 1 polygon tại giữa màn hình (mặc định có 4 đỉnh hình vuông)</li>
-                <li><b>Xóa poly</b>: Xóa polygon đang chọn (không thể undo)</li>
-                <li><b>Xoay poly</b>: Xoay polygon đang chọn 1 góc (sẽ hiện khung cho phép nhập góc)</li>
-                <li><b>Clone poly</b>: Nhân bản (copy+paste) polygon đang chọn, và đặt polygon mới vào giữa màn hình</li>
+                <li><u>Reset camera</u>: Đưa camera về trạng thái ban đầu (vị trí 0,0 thu phóng 1)</li>
+                <li><u>Thêm poly</u>: Thêm 1 polygon tại giữa màn hình (mặc định có 4 đỉnh hình vuông)</li>
+                <li><u>Xóa poly</u>: Xóa polygon đang chọn (không thể undo)</li>
+                <li><u>Xoay poly</u>: Xoay polygon đang chọn 1 góc (sẽ hiện khung cho phép nhập góc)</li>
+                <li><u>Nhân bản poly</u>: Tạo 1 bản sao (copy+paste) của polygon đang chọn, và đặt vào giữa màn hình</li>
+                <li><u>Minimap</u>: Hiển thị bản đồ nhỏ hiển thị map thật của lmht bên phải</li>
+                <li><u>Map thật</u>: Hiển thị map thật lmht bên dưới nền</li>
             </ul>
 
-            <b>Dummy: </b>
+            <u>Dummy: </u>
             <ul>
-                <li>Chức năng hiện dummy sẽ hiển thị 1 người chơi (ahri) ở giữa màn hình </li>
+                <li>Chức năng hiện dummy sẽ hiển thị 1 tướng (ahri) ở giữa màn hình </li>
                 <li>Với kích thước 60px (kích thước trong lol2d)</li>
-                <li>Giúp so sánh kích thước giữa terrain và người chơi tốt hơn</li>
+                <li>Giúp so sánh kích thước giữa môi trường và tướng tốt hơn</li>
             </ul>
         </div>
     `,
@@ -620,9 +700,9 @@ function showOnline() {
     for (let user in onlines) {
         count++;
         if (user != username) {
-            data += `<p><b>${user}</b> vào lúc ${onlines[user]}</p>`;
+            data += `<p><u>${user}</u> vào lúc ${onlines[user]}</p>`;
         } else {
-            data += `<p><b>${user}</b>(Bạn) vào lúc ${onlines[user]}</p>`;
+            data += `<p><u>${user}</u>(Bạn) vào lúc ${onlines[user]}</p>`;
         }
     }
 
@@ -633,11 +713,6 @@ function showOnline() {
 }
 
 // ====================== camera ======================
-function resetCamera(cam) {
-    cam.xTo = 0;
-    cam.yTo = 0;
-    cam.scaleTo = 1;
-}
 function updateCamera(cam) {
     cam.x = lerp(cam.x, cam.xTo, 0.2);
     cam.y = lerp(cam.y, cam.yTo, 0.2);

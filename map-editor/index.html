@@ -31,14 +31,22 @@
 
         <div>
             <div>
-                <button onclick="resetEditorCamera()">Reset camera</button> | 
+                <button onclick="resetEditorCamera()">Reset camera</button> |
                 <button onclick="addTerrain()">Thêm poly</button>
                 <button onclick="deleteSelectedTerrain()">Xóa poly</button>
                 <button onclick="rotateSelectedTerrain()">Xoay poly</button>
-                <button onclick="cloneSelectedTerrain()">Clone poly</button> | 
+                <button onclick="cloneSelectedTerrain()">Nhân bản poly</button> |
 
-                <label class="container">Hiện dummy
-                    <input type="checkbox" onchange="showDummy(this.checked)">
+                <label class="container">Dummy
+                    <input type="checkbox" onchange="setShowDummy(this.checked)">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Minimap
+                    <input type="checkbox" onchange="setShowMinimap(this.checked)">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Map thật
+                    <input type="checkbox" onchange="setShowRealMap(this.checked)">
                     <span class="checkmark"></span>
                 </label>
             </div>
