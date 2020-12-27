@@ -4,66 +4,63 @@ class TerrainMapCore {
         this.width = 1000;
         this.height = 1000;
 
-        this.polygons = [];
-        this.quadtree = null;
+        this.data = []; // to save json data
+        this.polygons = []; // to save polygons data (after process json data)
 
         Helper.Other.setValueFromConfig(this, config);
 
-        // setup
-        this.setupQuadtree();
+        // process data
+        this.processData();
     }
-    setupQuadtree() {
-        this.quadtree = new Quadtree(
-            {
-                x: 0,
-                y: 0,
-                w: this.width,
-                h: this.height,
-            },
-            10
-        );
-        // this.quadtree.clear();
 
-        for (let poly of this.polygons) {
-            let bound = this.getBoundaryOfPolygon(poly);
-            this.quadtree.insert({
-                ...bound,
-                ref: poly, // reference to terrain
+    processData() {
+        for (let poly of this.data) {
+            this.polygons.push({
+                path: poly.map((point) => ({ x: point[0], y: point[1] })),
+                bound: Helper.Boundary.polygon(poly),
             });
         }
-
-        this.drawQuadtree(this.quadtree);
     }
 
     effect(champion) {
-        let data = this.getTerrainsInSight(champion);
+        let data = this.getTerrainsNearChampion(champion);
 
-        for (let item of data) {
-            let poly = item.ref;
+        let response = new SAT.Response();
+        let collided = false;
 
-            // fill("white");
-            // beginShape();
-            // for (let p of poly) {
-            //     vertex(p[0], p[1]);
-            // }
-            // endShape(CLOSE);
+        for (let poly of data) {
+            // hight light
+            fill("#fff9");
+            beginShape();
+            for (let p of poly.path) {
+                vertex(p.x, p.y);
+            }
+            endShape(CLOSE);
 
-            let response = new SAT.Response();
+            fill("#ff52");
+            rect(poly.bound.x, poly.bound.y, poly.bound.w, poly.bound.h);
+            // end hight light
 
-            let collided = SAT.testPolygonCircle(
+            response.clear();
+
+            let SATcollided = SAT.testPolygonCircle(
                 new SAT.Polygon(
                     new SAT.Vector(),
-                    poly.map((p) => new SAT.Vector(p[0], p[1]))
+                    poly.path.map((p) => new SAT.Vector(p.x, p.y))
                 ),
                 champion.getSATBody(),
                 response
             );
 
-            if (collided) {
+            if (SATcollided) {
                 champion.position.x += response.overlapV.x;
                 champion.position.y += response.overlapV.y;
+
+                collided = true;
             }
         }
+
+        return collided;
     }
 
     show(camera) {
@@ -73,49 +70,34 @@ class TerrainMapCore {
         stroke("#fff6");
         fill("#555");
 
-        for (let polyData of data) {
+        for (let poly of data) {
             beginShape();
-            for (let p of polyData.ref) {
-                vertex(p[0], p[1]);
+            for (let p of poly.path) {
+                vertex(p.x, p.y);
             }
             endShape(CLOSE);
         }
-
-        // fill("red");
-        // noStroke();
-        // for (let poly of this.polygons) {
-        //     for (let p of poly) {
-        //         circle(p[0], p[1], 10);
-        //     }
-        // }
     }
 
-    getBoundaryOfPolygon(polygon) {
-        let left = Infinity;
-        let bottom = -Infinity;
-        let top = Infinity;
-        let right = -Infinity;
+    getTerrainsInRectagleRange({ x, y, w, h }) {
+        let result = [];
+        for (let poly of this.polygons) {
+            let { x: x2, y: y2, w: w2, h: h2 } = poly.bound;
+            let intersect = Helper.Collide.rectRect(x, y, w, h, x2, y2, w2, h2);
 
-        for (let p of polygon) {
-            left = min(left, p[0]);
-            right = max(right, p[0]);
-            top = min(top, p[1]);
-            bottom = max(bottom, p[1]);
+            if (intersect) {
+                result.push(poly);
+            }
         }
 
-        return {
-            x: left,
-            y: top,
-            w: right - left,
-            h: bottom - top,
-        };
+        return result;
     }
 
     getTerrainsInView(camera) {
         let topleft = camera.canvasToWorld(0, 0);
         let bottomright = camera.canvasToWorld(width, height);
 
-        let data = this.quadtree.retrieve({
+        let data = this.getTerrainsInRectagleRange({
             x: topleft.x,
             y: topleft.y,
             w: bottomright.x - topleft.x,
@@ -125,32 +107,21 @@ class TerrainMapCore {
         return data;
     }
 
-    getTerrainsInSight(champion) {
-        let data = this.quadtree.retrieve({
-            x: champion.position.x - champion.sightRadius,
-            y: champion.position.y - champion.sightRadius,
-            w: champion.sightRadius,
-            h: champion.sightRadius,
-        });
+    getTerrainsNearChampion(champion) {
+        let bound = {
+            x: champion.position.x - champion.radius - champion.speed / 2,
+            y: champion.position.y - champion.radius - champion.speed / 2,
+            w: champion.radius * 2 + champion.speed,
+            h: champion.radius * 2 + champion.speed,
+        };
+
+        let data = this.getTerrainsInRectagleRange(bound);
+
+        // hight light
+        fill("#ff52");
+        rect(bound.x, bound.y, bound.w, bound.h);
+        // end hight light
 
         return data;
-    }
-
-    drawQuadtree(node) {
-        var bounds = node.bounds;
-
-        //no subnodes? draw the current node
-        if (node.nodes.length === 0) {
-            stroke("red");
-            noFill();
-            strokeWeight(1);
-            rect(bounds.x, bounds.y, bounds.w, bounds.h);
-
-            //has subnodes? drawQuadtree them!
-        } else {
-            for (var i = 0; i < node.nodes.length; i++) {
-                this.drawQuadtree(node.nodes[i]);
-            }
-        }
     }
 }

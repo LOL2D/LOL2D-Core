@@ -34,7 +34,7 @@ class WorldCore {
             height: this.size,
         });
         this.terrainMap = new TerrainMapCore({
-            polygons: this.terrainMapData,
+            data: this.terrainMapData,
             width: this.size,
             height: this.size,
         });
@@ -42,8 +42,8 @@ class WorldCore {
         this.sight = new SightCore({ world: this });
 
         // ---- demo gameplay -----
-        this.playerBase = createVector(250, this.groundMap.height - 250);
-        this.enemyBase = createVector(this.groundMap.height - 250, 250);
+        this.playerBase = createVector(300, this.groundMap.height - 300);
+        this.enemyBase = createVector(this.groundMap.height - 300, 300);
         // ------------------------
 
         // turrets
@@ -133,7 +133,12 @@ class WorldCore {
         // this.terrainMap.update();
         this.terrainMap.show(this.camera);
 
-        for (let champ of this.champions) this.terrainMap.effect(champ);
+        for (let champ of this.champions) {
+            if (this.terrainMap.effect(champ)) {
+                // TODO this is test, remove later
+                if (champ != this.player) champ.targetMove = null;
+            }
+        }
 
         for (let turret of this.turrets) {
             turret.run();

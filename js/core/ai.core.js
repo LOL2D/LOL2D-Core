@@ -93,10 +93,8 @@ class AICore {
                 // check health
                 this.champion.health >= targetChamp.health &&
                 // check distance
-                p5.Vector.dist(
-                    this.champion.targetMove,
-                    targetChamp.position
-                ) > followRange;
+                p5.Vector.dist(this.champion.targetMove, targetChamp.position) >
+                    followRange;
 
             if (shouldFollow) {
                 this.champion.targetMove = targetChamp.position
@@ -116,13 +114,13 @@ class AICore {
         // move to turret if health is low
         if (this.mode == "defense") {
             if (this.champion.isAllyWithPlayer)
-                this.champion.targetMove.set(
+                this.champion.targetMove = createVector(
                     this.champion.radius * 2,
                     this.champion.world.groundMap.height -
                         this.champion.radius * 2
                 );
             else
-                this.champion.targetMove.set(
+                this.champion.targetMove = createVector(
                     this.champion.world.groundMap.width -
                         this.champion.radius * 2,
                     this.champion.radius * 2

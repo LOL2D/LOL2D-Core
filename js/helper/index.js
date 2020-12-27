@@ -6,4 +6,5 @@ const Helper = {
     Other: OtherHelper,
     Distance: DistanceHelper,
     Sight: SightHelper,
+    Boundary: BoundaryHelper,
 };
