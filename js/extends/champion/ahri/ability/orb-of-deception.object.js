@@ -47,10 +47,10 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
             this.speed = constrain(this.speed, 0, this.maxSpeedBackward);
         }
         // forward
-        else if (this.isArrivedTargetMove()) {
+        else if (this.isArrivedDestination()) {
             this.state = this.STATE.BACKWARD;
             this.effectedChampions = [];
-            this.targetMove = this.owner.position;
+            this.destination = this.owner.position;
             this.speed = 0;
         }
     }
@@ -59,8 +59,7 @@ class OrbOfDeceptionObject extends AbilityObjectCore {
     checkFinished() {
         return (
             this.state == this.STATE.BACKWARD &&
-            p5.Vector.dist(this.position, this.owner.position) <
-                this.radius
+            p5.Vector.dist(this.position, this.owner.position) < this.radius
         );
     }
 }

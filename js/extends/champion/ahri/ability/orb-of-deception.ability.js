@@ -41,7 +41,7 @@ class OrbOfDeception extends AbilityCore {
             position: this.owner.position.copy(),
             owner: this.owner,
             damage: this.damage,
-            targetMove: target,
+            destination: target,
             radius: this.width / 2,
         });
 

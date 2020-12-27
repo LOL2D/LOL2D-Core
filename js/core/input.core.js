@@ -11,9 +11,9 @@ class InputCore {
         this.enemyAtMouse = null;
         this.showIndicatorId = null;
 
-        this.targetMoveSize = 10;
-        this.targetMoveNormalSize = 10;
-        this.targetMoveClickSize = 40;
+        this.destinationSize = 10;
+        this.destinationNormalSize = 10;
+        this.destinationClickSize = 40;
     }
 
     run() {
@@ -41,22 +41,22 @@ class InputCore {
             this.world.player.showIndicator(this.showIndicatorId);
         }
 
-        // show target move
-        if (this.world.player.targetMove) {
+        // show destination
+        if (this.world.player.destination) {
             fill("green");
             noStroke();
             circle(
-                this.world.player.targetMove.x,
-                this.world.player.targetMove.y,
-                this.targetMoveSize
+                this.world.player.destination.x,
+                this.world.player.destination.y,
+                this.destinationSize
             );
         }
 
-        this.targetMoveSize -= 3;
-        this.targetMoveSize = constrain(
-            this.targetMoveSize,
-            this.targetMoveNormalSize,
-            this.targetMoveClickSize
+        this.destinationSize -= 3;
+        this.destinationSize = constrain(
+            this.destinationSize,
+            this.destinationNormalSize,
+            this.destinationClickSize
         );
     }
 
@@ -110,7 +110,7 @@ class InputCore {
 
     mouseIsPressed() {
         if (mouseButton == RIGHT && !this.enemyAtMouse) {
-            this.targetMoveSize = this.targetMoveClickSize;
+            this.destinationSize = this.destinationClickSize;
             this.world.player.moveTo(this.mousePos.x, this.mousePos.y);
         }
     }
@@ -156,10 +156,10 @@ class InputCore {
                 this.world.player.position,
                 this.world.player.basicAttackRadius
             );
-            this.world.player.targetMove = vecRange.to;
+            this.world.player.destination.set(vecRange.to.x, vecRange.to.y);
         } else {
             // stop move to attack
-            this.world.player.targetMove = null;
+            this.world.player.destination.removeDestination();
             this.world.player.basicAttack(champ.position.copy());
         }
     }

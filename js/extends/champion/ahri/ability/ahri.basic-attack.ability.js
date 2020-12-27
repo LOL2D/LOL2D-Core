@@ -61,7 +61,7 @@ class AhriBasicAttack extends AbilityCore {
                 new AhriBasicAttackObject({
                     owner: this.owner,
                     position: this.owner.position.copy(),
-                    targetMove: closestEnemy.position,
+                    destination: closestEnemy.position,
                     targetChampion: closestEnemy,
                 })
             );

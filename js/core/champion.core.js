@@ -52,6 +52,9 @@ class ChampionCore extends MovementObjectCore {
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
 
+        // stand still
+        this.removeDestination();
+
         // team
         const c =
             COLOR.HEALTHBAR.HEALTH[this.isAllyWithPlayer ? "ALLY" : "ENEMY"];
@@ -211,7 +214,7 @@ class ChampionCore extends MovementObjectCore {
         this.health = health;
         this.mana = mana;
         this.position.set(position.x, position.y);
-        this.targetMove = position.copy();
+        this.destination.set(position.x, position.y);
         this.killedBy = null;
     }
 

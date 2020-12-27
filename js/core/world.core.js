@@ -133,7 +133,7 @@ class WorldCore {
         for (let champ of this.champions) {
             if (this.terrainMap.effect(champ)) {
                 // TODO this is test, remove later
-                if (champ != this.player) champ.targetMove = null;
+                if (champ != this.player) champ.removeDestination();
             }
         }
 

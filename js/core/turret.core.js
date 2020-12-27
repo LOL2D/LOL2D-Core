@@ -60,7 +60,7 @@ class TurretCore {
                 this.world.addNewSpellObjects(
                     new BulletTurretObject({
                         targetChamp: this.attackTarget,
-                        targetMove: this.attackTarget.position,
+                        destination: this.attackTarget.position,
                         position: this.position.copy(),
                         damage: this.attackDamage,
                     })

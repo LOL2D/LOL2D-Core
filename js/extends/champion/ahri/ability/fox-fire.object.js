@@ -5,7 +5,6 @@ class FoxFireObject extends AbilityObjectCore {
 
         // override
         this.effectRadius = this.effectRadius - this.owner.radius * 2;
-        this.targetMove = null;
         this.radius = 10;
         this.speed = 3;
         this.fillColor = "#058DFF";
@@ -53,7 +52,7 @@ class FoxFireObject extends AbilityObjectCore {
                 });
 
                 if (closestEnemy) {
-                    this.targetMove = closestEnemy.position;
+                    this.destination = closestEnemy.position;
                     this.targetChampion = closestEnemy;
                     this.speed = this.toTargetSpeed;
                     this.isShowPositionTracking = true;

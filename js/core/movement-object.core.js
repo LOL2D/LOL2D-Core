@@ -2,7 +2,7 @@ class MovementObjectCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);
-        this.targetMove = null;
+        this.destination = createVector(0, 0);
         this.radius = 40;
         this.speed = 3;
         this.fillColor = "white";
@@ -73,14 +73,14 @@ class MovementObjectCore {
     }
 
     move() {
-        // move to targetMove
-        const { targetMove, position, speed } = this;
+        // move to destination
+        const { destination, position, speed } = this;
 
-        if (!this.isArrivedTargetMove()) {
-            let direction = p5.Vector.sub(targetMove, position);
+        if (this.isArrivedDestination()) {
+            this.position.set(destination.x, destination.y);
+        } else {
+            let direction = p5.Vector.sub(destination, position);
             this.position.add(direction.setMag(speed));
-        } else if (targetMove != null) {
-            this.position.set(targetMove.x, targetMove.y);
         }
 
         // bound position
@@ -88,31 +88,30 @@ class MovementObjectCore {
         this.position.set(bounded.x, bounded.y);
     }
 
-    isArrivedTargetMove() {
-        const { targetMove, position, speed } = this;
-        return !targetMove || p5.Vector.dist(position, targetMove) <= speed;
+    isArrivedDestination() {
+        const { destination, position, speed } = this;
+        return !destination || p5.Vector.dist(position, destination) <= speed;
     }
 
     moveTo(x, y) {
         let bounded = this.applyBound(x, y);
+        this.destination.set(bounded.x, bounded.y);
+    }
 
-        if (this.targetMove) {
-            this.targetMove.set(bounded.x, bounded.y);
-        } else {
-            this.targetMove = bounded;
-        }
+    removeDestination() {
+        this.destination.set(this.position.x, this.position.y);
     }
 
     applyBound(x, y) {
         if (this.bound) {
             const { top, bottom, left, right } = this.bound;
 
-            return createVector(
-                constrain(x, left + this.radius, right - this.radius),
-                constrain(y, top + this.radius, bottom - this.radius)
-            );
+            return {
+                x: constrain(x, left + this.radius, right - this.radius),
+                y: constrain(y, top + this.radius, bottom - this.radius),
+            };
         }
 
-        return createVector(x, y);
+        return { x, y };
     }
 }

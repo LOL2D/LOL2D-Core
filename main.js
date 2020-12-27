@@ -74,7 +74,7 @@ function keyPressed() {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         world.player.position.set(m.x, m.y);
-        world.player.targetMove = m.copy();
+        world.player.destination.set(m.x, m.y);
     }
 }
 function keyReleased() {

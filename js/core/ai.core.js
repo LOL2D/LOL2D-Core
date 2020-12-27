@@ -7,7 +7,7 @@ class AICore {
         Helper.Other.setValueFromConfig(this, config);
 
         // setup
-        this.champion.targetMove = this.champion.position.copy();
+        this.champion.removeDestination();
         this.mode = "attack";
     }
 
@@ -34,7 +34,7 @@ class AICore {
     autoMove() {
         // basic move
         if (this.mode == "attack") {
-            if (this.champion.isArrivedTargetMove()) {
+            if (this.champion.isArrivedDestination()) {
                 let len = random(100, 1000);
                 let newTarget = this.champion.position
                     .copy()
@@ -52,7 +52,7 @@ class AICore {
                     this.champion.world.groundMap.height - this.champion.radius
                 );
 
-                this.champion.targetMove = newTarget;
+                this.champion.destination.set(newTarget.x, newTarget.y);
             }
         }
     }
@@ -81,10 +81,10 @@ class AICore {
 
             // spell to it - add random check here to decrease power of AI :)
             if (random(1) < 0.5) {
-                const destination = targetChamp.position.copy();
+                const dest = targetChamp.position.copy();
                 const spellId = random([1, 2, 3, 4]);
 
-                this.champion.castSpell("spell" + spellId, destination);
+                this.champion.castSpell("spell" + spellId, dest);
             }
 
             // get closer to targetChamp
@@ -93,17 +93,20 @@ class AICore {
                 // check health
                 this.champion.health >= targetChamp.health &&
                 // check distance
-                p5.Vector.dist(this.champion.targetMove, targetChamp.position) >
-                    followRange;
+                p5.Vector.dist(
+                    this.champion.destination,
+                    targetChamp.position
+                ) > followRange;
 
             if (shouldFollow) {
-                this.champion.targetMove = targetChamp.position
+                let vec = targetChamp.position
                     .copy()
                     .add(
                         random(-followRange, followRange),
                         random(-followRange, followRange)
                     );
 
+                this.champion.destination.set(vec.x, vec.y);
                 // save to use in autoChangeMode
                 this.targetChamp = targetChamp;
             }
@@ -114,13 +117,13 @@ class AICore {
         // move to turret if health is low
         if (this.mode == "defense") {
             if (this.champion.isAllyWithPlayer)
-                this.champion.targetMove = createVector(
+                this.champion.destination.set(
                     this.champion.radius * 2,
                     this.champion.world.groundMap.height -
                         this.champion.radius * 2
                 );
             else
-                this.champion.targetMove = createVector(
+                this.champion.destination.set(
                     this.champion.world.groundMap.width -
                         this.champion.radius * 2,
                     this.champion.radius * 2
