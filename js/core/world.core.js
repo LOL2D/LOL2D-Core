@@ -11,7 +11,6 @@ class WorldCore {
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
 
-        // console.log(this.terrainMapData);
         // setup
         this.setup();
     }
@@ -129,8 +128,6 @@ class WorldCore {
 
         this.groundMap.drawEdge();
         this.groundMap.drawGrid(this.camera);
-
-        // this.terrainMap.update();
         this.terrainMap.show(this.camera);
 
         for (let champ of this.champions) {
@@ -205,7 +202,7 @@ class WorldCore {
         // ----------- end camera -----------
 
         // draw sight overlay to screen
-        // this.sight.draw();
+        this.sight.draw();
     }
 
     addNewSpellObjects(something) {

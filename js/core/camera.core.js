@@ -50,6 +50,18 @@ class CameraCore {
         this.target = target;
     }
 
+    getViewBoundary() {
+        let topLeftCanvas = this.canvasToWorld(0, 0);
+        let bottomRightCanvas = this.canvasToWorld(width, height);
+
+        return {
+            x: topLeftCanvas.x,
+            y: topLeftCanvas.y,
+            w: bottomRightCanvas.x - topLeftCanvas.x,
+            h: bottomRightCanvas.y - topLeftCanvas.y,
+        };
+    }
+
     canvasToWorld(canvasX, canvasY) {
         let worldX = (canvasX - width * 0.5) / this.scale + this.position.x;
         let worldY = (canvasY - height * 0.5) / this.scale + this.position.y;

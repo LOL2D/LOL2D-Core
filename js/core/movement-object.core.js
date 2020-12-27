@@ -26,6 +26,14 @@ class MovementObjectCore {
         );
     }
 
+    getBoundary() {
+        return Helper.Boundary.circle({
+            x: this.position.x,
+            y: this.position.y,
+            radius: this.radius,
+        });
+    }
+
     show() {
         // show position track
         if (this.isShowPositionTracking) {

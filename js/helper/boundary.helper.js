@@ -21,12 +21,12 @@ const BoundaryHelper = {
             h: bottom - top,
         };
     },
-    cỉrcle(circle) {
+    circle(circle) {
         return {
             x: circle.x - circle.radius,
             y: circle.y - circle.radius,
-            w: circle.radius,
-            h: circle.radius,
+            w: circle.radius * 2,
+            h: circle.radius * 2,
         };
     },
 };

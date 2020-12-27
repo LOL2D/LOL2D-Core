@@ -94,34 +94,17 @@ class TerrainMapCore {
     }
 
     getTerrainsInView(camera) {
-        let topleft = camera.canvasToWorld(0, 0);
-        let bottomright = camera.canvasToWorld(width, height);
-
-        let data = this.getTerrainsInRectagleRange({
-            x: topleft.x,
-            y: topleft.y,
-            w: bottomright.x - topleft.x,
-            h: bottomright.y - topleft.y,
-        });
-
-        return data;
+        return this.getTerrainsInRectagleRange(camera.getViewBoundary());
     }
 
     getTerrainsNearChampion(champion) {
-        let bound = {
-            x: champion.position.x - champion.radius - champion.speed / 2,
-            y: champion.position.y - champion.radius - champion.speed / 2,
-            w: champion.radius * 2 + champion.speed,
-            h: champion.radius * 2 + champion.speed,
-        };
-
-        let data = this.getTerrainsInRectagleRange(bound);
+        let bound = champion.getBoundary();
 
         // hight light
         fill("#ff52");
         rect(bound.x, bound.y, bound.w, bound.h);
         // end hight light
 
-        return data;
+        return this.getTerrainsInRectagleRange(bound);
     }
 }

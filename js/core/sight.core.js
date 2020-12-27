@@ -2,7 +2,7 @@
 class SightCore {
     constructor(config = {}) {
         this.overlay = createGraphics(windowWidth, windowHeight);
-        this.outOfViewColor = "#000c";
+        this.outOfViewColor = "#0008";
         this.world = null;
 
         this.colorStops = [
