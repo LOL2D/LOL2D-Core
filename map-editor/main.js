@@ -39,7 +39,7 @@ let editor = {
 
 function preload() {
     editor.dummy.img = loadImage("asset/dummy.png");
-    editor.realMapImg = loadImage("asset/full.jpg");
+    editor.realMapImg = loadImage("asset/full-minimap.png");
 }
 
 function setup() {
@@ -220,8 +220,11 @@ function setShowRealMap(value) {
 function setShowMinimap(value) {
     editor.isShowMinimap = value;
 }
+function changeAsset(select) {
+    editor.realMapImg = loadImage("asset/" + select.value);
+}
 function drawMinimap() {
-    if (editor.isShowMinimap) {
+    if (editor.isShowMinimap && editor.realMapImg) {
         let size = editor.minimapSize;
 
         editor.minimap.background(10);
@@ -254,7 +257,7 @@ function drawMinimap() {
     }
 }
 function drawRealMap() {
-    if (editor.isShowRealmap) {
+    if (editor.isShowRealmap && editor.realMapImg) {
         image(
             editor.realMapImg,
             editor.mapSize[0] / 2,

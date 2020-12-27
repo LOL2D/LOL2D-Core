@@ -35,30 +35,41 @@
                 <button onclick="addTerrain()">Thêm poly</button>
                 <button onclick="deleteSelectedTerrain()">Xóa poly</button>
                 <button onclick="rotateSelectedTerrain()">Xoay poly</button>
-                <button onclick="cloneSelectedTerrain()">Nhân bản poly</button> |
-
-                <label class="container">Dummy
-                    <input type="checkbox" onchange="setShowDummy(this.checked)">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Minimap
-                    <input type="checkbox" onchange="setShowMinimap(this.checked)">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Map thật
-                    <input type="checkbox" onchange="setShowRealMap(this.checked)">
-                    <span class="checkmark"></span>
-                </label>
+                <button onclick="cloneSelectedTerrain()">Nhân bản poly</button>
             </div>
 
             <hr>
 
-            <div>
-                <button onclick="exportMapDataMinified()">Export...</button>
-                <button onclick="showOnline()">Online?</button>
-                <button onclick="huongdan()">
-                    Hướng dẫn
-                </button>
+            <div style="display: flex; justify-content: space-between">
+                <span>
+                    <label class="container">Dummy
+                        <input type="checkbox" onchange="setShowDummy(this.checked)">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Minimap
+                        <input type="checkbox" onchange="setShowMinimap(this.checked)">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Map thật
+                        <input type="checkbox" onchange="setShowRealMap(this.checked)">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <select id="select-asset" onchange="changeAsset(this)">
+                        <option value="full-minimap.png">minimap</option>
+                        <option value="full.jpg">real map</option>
+                        <option value="full-2d-hextech.png">hextech map</option>
+                        <option value="full-2d.png">2d map</option>
+                    </select>
+                </span>
+
+                <span>
+                    <button onclick="huongdan()">
+                        Hướng dẫn
+                    </button>
+                    <button onclick="showOnline()">Online?</button>
+                    <button onclick="exportMapDataMinified()">Export...</button>
+                </span>
             </div>
         </div>
     </div>
