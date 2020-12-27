@@ -7,22 +7,34 @@ export default class TerrainMapCore {
         this.width = 1000;
         this.height = 1000;
 
-        this.data = []; // to save json data
+        this.jsonArray = []; // to save json data
         this.polygons = []; // to save polygons data (after process json data)
 
         Helper.Other.setValueFromConfig(this, config);
 
         // process data
-        this.processData();
+        this.polygons = this.jsonArrayToPolygon(this.jsonArray);
     }
 
-    processData() {
-        for (let poly of this.data) {
-            this.polygons.push({
-                path: poly.map((point) => ({ x: point[0], y: point[1] })),
-                bound: Helper.Boundary.polygon(poly),
+    jsonArrayToPolygon(jsonArr) {
+        let result = [];
+        for (let polyArr of jsonArr) {
+            result.push({
+                path: polyArr.map((point) => ({ x: point[0], y: point[1] })),
+                bound: Helper.Boundary.polygon(polyArr),
             });
         }
+        return result;
+    }
+
+    polygonToJsonArray(polygon) {
+        let result = [];
+
+        for (let polyData of polygon) {
+            result.push(polyData.path.map((point) => [point.x, point.y]));
+        }
+
+        return result;
     }
 
     effect(champion) {
@@ -112,6 +124,11 @@ export default class TerrainMapCore {
         }
         // end hight light
 
+        return this.getTerrainsInRectagleRange(bound);
+    }
+
+    getTerrainsInSight(champion) {
+        let bound = champion.getSightBoundary();
         return this.getTerrainsInRectagleRange(bound);
     }
 }

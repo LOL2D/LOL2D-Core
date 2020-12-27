@@ -32,48 +32,94 @@ export default class SightCore {
 
     drawSights() {
         // default sight of champion
-        for (let champ of this.world.champions) {
-            if (champ.isAllyWithPlayer) {
-                const pos = this.world.camera.worldToCanvas(
-                    champ.position.x,
-                    champ.position.y
-                );
+        // for (let champ of this.world.champions) {
+        //     if (!champ.isAllyWithPlayer) continue;
 
-                let r = champ.sightRadius * this.world.camera.scale;
-                let innerR = max(0, r - 100 * this.world.camera.scale);
-                Helper.Color.createRadialGradient(
-                    this.overlay,
-                    pos.x,
-                    pos.y,
-                    innerR,
-                    r,
-                    this.colorStops
-                );
-                this.overlay.ellipse(pos.x, pos.y, r * 2);
-            }
-        }
+        //     this.drawCircleSight(
+        //         champ.position.x,
+        //         champ.position.y,
+        //         champ.sightRadius
+        //     );
+        // }
 
         // turret sight
         for (let turret of this.world.turrets) {
-            if (turret.isAllyWithPlayer) {
-                const pos = this.world.camera.worldToCanvas(
-                    turret.position.x,
-                    turret.position.y
-                );
+            if (!turret.isAllyWithPlayer) continue;
 
-                let r = turret.sightRadius * this.world.camera.scale;
-                let innerR = max(0, r - 100 * this.world.camera.scale);
-                Helper.Color.createRadialGradient(
-                    this.overlay,
-                    pos.x,
-                    pos.y,
-                    innerR,
-                    r,
-                    this.colorStops
-                );
-                this.overlay.ellipse(pos.x, pos.y, r * 2);
-            }
+            this.drawCircleSight(
+                turret.position.x,
+                turret.position.y,
+                turret.sightRadius
+            );
         }
+
+        // ===================== visibility ========================
+        let { terrainMap } = this.world;
+
+        for (let champ of this.world.champions) {
+            if (!champ.isAllyWithPlayer) continue;
+
+            let polygonsInSight = terrainMap.getTerrainsInSight(champ);
+            polygonsInSight = terrainMap.polygonToJsonArray(polygonsInSight);
+
+            let sightBound = champ.getSightBoundary();
+            let sourcelight = [champ.position.x, champ.position.y];
+
+            // calculate visibility
+            let segments = VisibilityPolygon.convertToSegments(polygonsInSight);
+            segments = VisibilityPolygon.breakIntersections(segments);
+
+            let viewportVisibility = VisibilityPolygon.computeViewport(
+                sourcelight,
+                segments,
+                [sightBound.x, sightBound.y],
+                [sightBound.x + sightBound.w, sightBound.y + sightBound.h]
+            );
+
+            // prepare gradient color
+            this.prepareRadialGradient(
+                champ.position.x,
+                champ.position.y,
+                champ.sightRadius,
+                100
+            );
+
+            // show visibility
+            this.overlay.beginShape();
+            for (let p of viewportVisibility) {
+                const pos = this.world.camera.worldToCanvas(p[0], p[1]);
+                this.overlay.vertex(pos.x, pos.y);
+            }
+            this.overlay.endShape(CLOSE);
+        }
+    }
+
+    drawCircleSight(_x, _y, _r) {
+        const { x, y, r } = this.prepareRadialGradient(_x, _y, _r, 100);
+
+        this.overlay.ellipse(x, y, r * 2);
+    }
+
+    prepareRadialGradient(x, y, r, rRing) {
+        let pos = this.world.camera.worldToCanvas(x, y);
+        let radius = r * this.world.camera.scale;
+        let innerR = max(0, radius - rRing * this.world.camera.scale);
+
+        Helper.Color.createRadialGradient(
+            this.overlay,
+            pos.x,
+            pos.y,
+            innerR,
+            radius,
+            this.colorStops
+        );
+
+        // return to reuse
+        return {
+            x: pos.x,
+            y: pos.y,
+            r: radius,
+        };
     }
 
     isChampionInSight(champion) {

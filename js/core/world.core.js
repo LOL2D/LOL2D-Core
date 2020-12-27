@@ -41,7 +41,7 @@ export default class WorldCore {
             height: this.size,
         });
         this.terrainMap = new TerrainMapCore({
-            data: this.terrainMapData,
+            jsonArray: this.terrainMapData,
             width: this.size,
             height: this.size,
         });

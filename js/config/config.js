@@ -1,5 +1,5 @@
 const CONFIG = {
-    debugTerrainMap: true,
+    debugTerrainMap: false,
 };
 
 export default CONFIG;

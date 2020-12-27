@@ -120,6 +120,15 @@ export default class ChampionCore extends MovementObjectCore {
         this.endCrowdControls();
     }
 
+    getSightBoundary() {
+        return {
+            x: this.position.x - this.sightRadius,
+            y: this.position.y - this.sightRadius,
+            w: this.sightRadius * 2,
+            h: this.sightRadius * 2,
+        };
+    }
+
     basicAttack(destination) {
         this.castSpell("basicAttack", destination);
     }
