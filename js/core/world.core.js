@@ -130,8 +130,8 @@ class WorldCore {
         this.groundMap.drawEdge();
         this.groundMap.drawGrid(this.camera);
 
-        this.terrainMap.update();
-        this.terrainMap.show();
+        // this.terrainMap.update();
+        this.terrainMap.show(this.camera);
 
         for (let champ of this.champions) this.terrainMap.effect(champ);
 

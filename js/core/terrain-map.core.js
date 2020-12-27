@@ -10,6 +10,9 @@ class TerrainMapCore {
         Helper.Other.setValueFromConfig(this, config);
 
         // setup
+        this.setupQuadtree();
+    }
+    setupQuadtree() {
         this.quadtree = new Quadtree(
             {
                 x: 0,
@@ -19,6 +22,17 @@ class TerrainMapCore {
             },
             10
         );
+        // this.quadtree.clear();
+
+        for (let poly of this.polygons) {
+            let bound = this.getBoundaryOfPolygon(poly);
+            this.quadtree.insert({
+                ...bound,
+                ref: poly, // reference to terrain
+            });
+        }
+
+        this.drawQuadtree(this.quadtree);
     }
 
     effect(champion) {
@@ -27,12 +41,12 @@ class TerrainMapCore {
         for (let item of data) {
             let poly = item.ref;
 
-            fill("white");
-            beginShape();
-            for (let p of poly) {
-                vertex(p[0], p[1]);
-            }
-            endShape(CLOSE);
+            // fill("white");
+            // beginShape();
+            // for (let p of poly) {
+            //     vertex(p[0], p[1]);
+            // }
+            // endShape(CLOSE);
 
             let response = new SAT.Response();
 
@@ -52,28 +66,16 @@ class TerrainMapCore {
         }
     }
 
-    update() {
-        this.quadtree.clear();
+    show(camera) {
+        let data = this.getTerrainsInView(camera);
 
-        for (let poly of this.polygons) {
-            let bound = this.getBoundaryOfPolygon(poly);
-            this.quadtree.insert({
-                ...bound,
-                ref: poly, // reference to terrain
-            });
-        }
-
-        this.drawQuadtree(this.quadtree);
-    }
-
-    show() {
         strokeWeight(3);
         stroke("#fff6");
         fill("#555");
 
-        for (let poly of this.polygons) {
+        for (let polyData of data) {
             beginShape();
-            for (let p of poly) {
+            for (let p of polyData.ref) {
                 vertex(p[0], p[1]);
             }
             endShape(CLOSE);
@@ -109,12 +111,26 @@ class TerrainMapCore {
         };
     }
 
+    getTerrainsInView(camera) {
+        let topleft = camera.canvasToWorld(0, 0);
+        let bottomright = camera.canvasToWorld(width, height);
+
+        let data = this.quadtree.retrieve({
+            x: topleft.x,
+            y: topleft.y,
+            w: bottomright.x - topleft.x,
+            h: bottomright.y - topleft.y,
+        });
+
+        return data;
+    }
+
     getTerrainsInSight(champion) {
         let data = this.quadtree.retrieve({
             x: champion.position.x - champion.sightRadius,
             y: champion.position.y - champion.sightRadius,
-            w: 1000,
-            h: 1000,
+            w: champion.sightRadius,
+            h: champion.sightRadius,
         });
 
         return data;
