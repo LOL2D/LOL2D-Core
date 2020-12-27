@@ -16,7 +16,7 @@ export default class ChampionCore extends MovementObjectCore {
         // override
         this.fillColor = "#0000";
         this.radius = 30;
-        this.speed = 5;
+        this.speed = 3;
 
         // abilities
         this.crowdControls = [];
