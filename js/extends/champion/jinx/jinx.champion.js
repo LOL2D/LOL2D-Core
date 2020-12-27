@@ -1,4 +1,6 @@
-class Jinx extends ChampionCore {
+import ChampionCore from "../../../core/champion.core.js";
+
+export default class Jinx extends ChampionCore {
     constructor(config = {}) {
         super(config);
 

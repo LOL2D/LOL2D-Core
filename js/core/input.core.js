@@ -1,4 +1,7 @@
-class InputCore {
+import DEFAULT_HOTKEYS from "../constant/hotkeys.constant.js";
+import Helper from "../helper/index.js";
+
+export default class InputCore {
     constructor(config = {}) {
         this.hotkeys = {
             ...DEFAULT_HOTKEYS,

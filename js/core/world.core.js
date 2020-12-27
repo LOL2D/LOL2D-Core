@@ -1,4 +1,12 @@
-class WorldCore {
+import Helper from "../helper/index.js";
+import GroundMapCore from "./ground-map.core.js";
+import TerrainMapCore from "./terrain-map.core.js";
+import CameraCore from "./camera.core.js";
+import SightCore from "./sight.core.js";
+import TurretCore from "./turret.core.js";
+import AICore from "./ai.core.js";
+
+export default class WorldCore {
     constructor(config = {}) {
         this.championsClassName = {
             player: null,

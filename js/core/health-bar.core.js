@@ -1,4 +1,6 @@
-class HealthBarCore {
+import Helper from "../helper/index.js";
+
+export default class HealthBarCore {
     constructor(config = {}) {
         this.champion = null;
 

@@ -1,4 +1,7 @@
-class TurretCore {
+import Helper from "../helper/index.js";
+import BulletTurretObject from "../extends/turret/bullet.turret.js";
+
+export default class TurretCore {
     constructor(config = {}) {
         this.position = createVector(0, 0);
         this.radius = 50;

@@ -1,4 +1,9 @@
-class Ahri extends ChampionCore {
+import ChampionCore from "../../../core/champion.core.js";
+import AhriBasicAttack from "./ability/ahri.basic-attack.ability.js";
+import OrbOfDeception from "./ability/orb-of-deception.ability.js";
+import FoxFire from "./ability/fox-fire.ability.js";
+
+export default class Ahri extends ChampionCore {
     constructor(config = {}) {
         super(config);
 

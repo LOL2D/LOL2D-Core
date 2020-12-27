@@ -1,4 +1,7 @@
-class FoxFireObject extends AbilityObjectCore {
+import Helper from "../../../../helper/index.js";
+import AbilityObjectCore from "../../../../core/ability-object.core.js";
+
+export default class FoxFireObject extends AbilityObjectCore {
     constructor(config = {}) {
         // get value from config
         super(config);

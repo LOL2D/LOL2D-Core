@@ -51,3 +51,5 @@ const DEFAULT_HOTKEYS = {
     ToogleShop: 80, // P
     CreateChatCursor: ENTER, // Enter
 };
+
+export default DEFAULT_HOTKEYS;

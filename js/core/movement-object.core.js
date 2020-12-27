@@ -1,4 +1,6 @@
-class MovementObjectCore {
+import Helper from "../helper/index.js";
+
+export default class MovementObjectCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);

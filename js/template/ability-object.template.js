@@ -11,7 +11,11 @@
     => Nói ngắn gọn: Phải thêm hậu tố Object vào sau tên chiêu thức
 */
 
-class AbilityObjectName extends AbilityObjectCore {
+// import <Tên constant> from "path_to_helper"; // constant import đầu tiên (nếu cần)
+// import Helper from "path_to_helper"; // tiếp theo là helper (nếu cần)
+import AbilityObjectCore from "path_to_core";
+
+export default class AbilityObjectName extends AbilityObjectCore {
     constructor(config = {}) {
         // get value from config
         super(config);

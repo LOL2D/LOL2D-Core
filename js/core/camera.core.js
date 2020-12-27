@@ -1,4 +1,6 @@
-class CameraCore {
+import Helper from "../helper/index.js";
+
+export default class CameraCore {
     constructor(config = {}) {
         // default value
         this.position = createVector(0, 0);

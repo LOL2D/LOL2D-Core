@@ -12,3 +12,5 @@ const VectorHelper = {
         };
     },
 };
+
+export default VectorHelper;

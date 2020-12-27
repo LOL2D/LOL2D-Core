@@ -1,4 +1,6 @@
-class GroundMapCore {
+import Helper from "../helper/index.js";
+
+export default class GroundMapCore {
     constructor(config = {}) {
         // default value
         this.width = 1500;
@@ -34,7 +36,10 @@ class GroundMapCore {
 
     drawGrid(camera) {
         let { x: leftScreen, y: topScreen } = camera.canvasToWorld(0, 0);
-        let { x: rightScreen, y: bottomScreen } = camera.canvasToWorld(width, height);
+        let { x: rightScreen, y: bottomScreen } = camera.canvasToWorld(
+            width,
+            height
+        );
 
         let leftMap = max(leftScreen - 50, 0);
         let rightMap = min(rightScreen + 50, this.width);

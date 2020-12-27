@@ -1,4 +1,9 @@
-class AhriBasicAttack extends AbilityCore {
+import COLOR from "../../../../constant/color.constant.js";
+import Helper from "../../../../helper/index.js";
+import AbilityCore from "../../../../core/ability.core.js";
+import AhriBasicAttackObject from "./ahri.basic-attack.object.js";
+
+export default class AhriBasicAttack extends AbilityCore {
     constructor(config = {}) {
         super(config);
 

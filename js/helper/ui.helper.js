@@ -28,3 +28,5 @@ const UIHelper = {
         pop();
     },
 };
+
+export default UIHelper;

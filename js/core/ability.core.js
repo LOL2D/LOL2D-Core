@@ -1,5 +1,7 @@
+import Helper from "../helper/index.js";
+
 // https://leagueoflegends.fandom.com/wiki/Champion_ability
-class AbilityCore {
+export default class AbilityCore {
     constructor(config = {}) {
         this.owner = null;
         this.lastCastSpell = 0;

@@ -30,3 +30,5 @@ const BoundaryHelper = {
         };
     },
 };
+
+export default BoundaryHelper;

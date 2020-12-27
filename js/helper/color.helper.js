@@ -21,3 +21,5 @@ const ColorHelper = {
         canvas.drawingContext.fillStyle = g;
     },
 };
+
+export default ColorHelper;

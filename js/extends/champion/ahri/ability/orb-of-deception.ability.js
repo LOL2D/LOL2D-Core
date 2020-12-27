@@ -1,4 +1,9 @@
-class OrbOfDeception extends AbilityCore {
+import COLOR from "../../../../constant/color.constant.js";
+import Helper from "../../../../helper/index.js";
+import AbilityCore from "../../../../core/ability.core.js";
+import OrbOfDeceptionObject from "./orb-of-deception.object.js";
+
+export default class OrbOfDeception extends AbilityCore {
     constructor(config = {}) {
         super(config);
 

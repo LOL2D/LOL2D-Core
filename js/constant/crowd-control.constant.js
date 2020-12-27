@@ -10,7 +10,8 @@ const NO = 7;
 const SEENOTE = 8;
 
 const ListCrowdControls = {
-    Airborne: { // hất tung
+    Airborne: {
+        // hất tung
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -18,7 +19,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Blind: { // mù
+    Blind: {
+        // mù
         movement: ALLOWED,
         attacking: PARTIAL,
         abilities: ALLOWED,
@@ -26,7 +28,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Cripple: { // tàn tật (giảm tốc đánh)
+    Cripple: {
+        // tàn tật (giảm tốc đánh)
         movement: ALLOWED,
         attacking: REDUCED,
         abilities: ALLOWED,
@@ -34,7 +37,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Disarm: { // giải giới (không thể đánh thường)
+    Disarm: {
+        // giải giới (không thể đánh thường)
         movement: ALLOWED,
         attacking: DISABLED,
         abilities: ALLOWED,
@@ -42,7 +46,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Disrupt: { // gián đoạn (hủy kỹ năng nếu đang niệm)
+    Disrupt: {
+        // gián đoạn (hủy kỹ năng nếu đang niệm)
         movement: ALLOWED,
         attacking: ALLOWED,
         abilities: ALLOWED,
@@ -50,7 +55,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Drowsy: { // buồn ngủ (chậm dần, rồi rơi vào trạng thái sleep)
+    Drowsy: {
+        // buồn ngủ (chậm dần, rồi rơi vào trạng thái sleep)
         movement: REDUCED,
         attacking: ALLOWED,
         abilities: ALLOWED,
@@ -58,7 +64,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Sleep: { // ngủ
+    Sleep: {
+        // ngủ
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -66,7 +73,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Charm: { // mê hoặc
+    Charm: {
+        // mê hoặc
         movement: UNCONTROLLABLE,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -74,7 +82,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Flee: { // hoảng loạn
+    Flee: {
+        // hoảng loạn
         movement: UNCONTROLLABLE,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -82,7 +91,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Taunt: { // khiêu khích
+    Taunt: {
+        // khiêu khích
         movement: UNCONTROLLABLE,
         attacking: DISABLED,
         abilities: UNCONTROLLABLE,
@@ -90,7 +100,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Ground: { // sa lầy
+    Ground: {
+        // sa lầy
         movement: PARTIAL,
         attacking: ALLOWED,
         abilities: PARTIAL,
@@ -98,7 +109,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Knockdown: { // ném xuống
+    Knockdown: {
+        // ném xuống
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -106,7 +118,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Nearsight: { // giảm tầm nhìn
+    Nearsight: {
+        // giảm tầm nhìn
         movement: ALLOWED,
         attacking: PARTIAL,
         abilities: PARTIAL,
@@ -114,7 +127,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Root: { // trói chân
+    Root: {
+        // trói chân
         movement: DISABLED,
         attacking: ALLOWED,
         abilities: PARTIAL,
@@ -122,7 +136,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Silence: { // câm lặng
+    Silence: {
+        // câm lặng
         movement: ALLOWED,
         attacking: ALLOWED,
         abilities: DISABLED,
@@ -130,7 +145,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Polymorph: { // hóa thú
+    Polymorph: {
+        // hóa thú
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -138,7 +154,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Slow: { // làm chậm
+    Slow: {
+        // làm chậm
         movement: REDUCED,
         attacking: ALLOWED,
         abilities: ALLOWED,
@@ -146,7 +163,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Stasis: { // tĩnh lặng
+    Stasis: {
+        // tĩnh lặng
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -154,7 +172,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Stun: { // choáng
+    Stun: {
+        // choáng
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -162,7 +181,8 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Suspension: { // ngưng trệ (choáng + hất tung)
+    Suspension: {
+        // ngưng trệ (choáng + hất tung)
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
@@ -170,12 +190,25 @@ const ListCrowdControls = {
         disabledSummonerSpells: [],
         removal: [],
     },
-    Suppression: { // áp chế
+    Suppression: {
+        // áp chế
         movement: DISABLED,
         attacking: DISABLED,
         abilities: DISABLED,
         interruptsChannels: YES,
         disabledSummonerSpells: [],
         removal: [],
-    }
+    },
+};
+
+export {
+    ALLOWED,
+    DISABLED,
+    UNCONTROLLABLE,
+    PARTIAL,
+    REDUCED,
+    YES,
+    NO,
+    SEENOTE,
+    ListCrowdControls,
 };

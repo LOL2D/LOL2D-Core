@@ -7,7 +7,10 @@
     Ví dụ: DrMundo, Nunu, RekSai, VelKoz, MasterYi, LeeSin, KogMaw, KhaZik, KaiSa, ChoGath
 */
 
-class ChampionName extends ChampionCore {
+// import <Tên constant> from "path_to_helper"; // constant import đầu tiên (nếu cần)
+// import Helper from "path_to_helper"; // tiếp theo là helper (nếu cần)
+import ChampionCore from "path_to_core";
+export default class ChampionName extends ChampionCore {
     constructor(config = {}) {
         super(config);
 

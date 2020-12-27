@@ -191,3 +191,5 @@ const CollideHelper = {
         return area1 + area2 + area3 == areaOrig;
     },
 };
+
+export default CollideHelper;

@@ -1,6 +1,15 @@
+import COLOR from "../constant/color.constant.js";
+import { ALLOWED } from "../constant/crowd-control.constant.js";
+
+import Helper from "../helper/index.js";
+
+import MovementObjectCore from "./movement-object.core.js";
+import HealthBarCore from "./health-bar.core.js";
+import CombatTextCore from "./combat-text.core.js";
+
 // TODO https://leagueoflegends.fandom.com/wiki/On-action_effects#On-Attack
 // TODO https://leagueoflegends.fandom.com/wiki/Channel
-class ChampionCore extends MovementObjectCore {
+export default class ChampionCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 

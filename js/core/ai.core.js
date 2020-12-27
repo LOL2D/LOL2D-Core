@@ -1,4 +1,6 @@
-class AICore {
+import Helper from "../helper/index.js";
+
+export default class AICore {
     constructor(config = {}) {
         this.champion = null;
         this.world = null;

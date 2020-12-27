@@ -12,10 +12,13 @@
 
 */
 
-class AbilityName extends AbilityCore {
+// import <Tên constant> from "path_to_helper"; // constant import đầu tiên (nếu cần)
+// import Helper from "path_to_helper"; // tiếp theo là helper (nếu cần)
+import AbilityCore from "path_to_core";
+export default class AbilityName extends AbilityCore {
     constructor(config = {}) {
         super(config);
-        
+
         // override
 
         // custom attributes

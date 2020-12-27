@@ -1,4 +1,10 @@
-class FoxFire extends AbilityCore {
+import COLOR from "../../../../constant/color.constant.js";
+import Helper from "../../../../helper/index.js";
+
+import AbilityCore from "../../../../core/ability.core.js";
+import FoxFireObject from "./fox-fire.object.js";
+
+export default class FoxFire extends AbilityCore {
     constructor(config = {}) {
         super(config);
 

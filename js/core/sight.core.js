@@ -1,5 +1,7 @@
+import Helper from "../helper/index.js";
+
 // https://leagueoflegends.fandom.com/wiki/Sight
-class SightCore {
+export default class SightCore {
     constructor(config = {}) {
         this.overlay = createGraphics(windowWidth, windowHeight);
         this.outOfViewColor = "#0008";

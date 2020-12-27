@@ -1,4 +1,6 @@
-class AhriBasicAttackObject extends AbilityObjectCore {
+import AbilityObjectCore from "../../../../core/ability-object.core.js";
+
+export default class AhriBasicAttackObject extends AbilityObjectCore {
     constructor(config = {}) {
         // get value from config
         super(config);

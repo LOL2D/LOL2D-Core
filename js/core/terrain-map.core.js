@@ -1,4 +1,6 @@
-class TerrainMapCore {
+import Helper from "../helper/index.js";
+
+export default class TerrainMapCore {
     constructor(config = {}) {
         this.position = createVector(0, 0);
         this.width = 1000;

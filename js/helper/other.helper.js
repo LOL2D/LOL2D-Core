@@ -15,3 +15,5 @@ const OtherHelper = {
         );
     },
 };
+
+export default OtherHelper;

@@ -61,3 +61,5 @@ const DistanceHelper = {
         return closestChamp;
     },
 };
+
+export default DistanceHelper;

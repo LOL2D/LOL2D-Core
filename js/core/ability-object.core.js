@@ -1,4 +1,8 @@
-class AbilityObjectCore extends MovementObjectCore {
+import COLOR from "../constant/color.constant.js";
+import Helper from "../helper/index.js";
+import MovementObjectCore from "./movement-object.core.js";
+
+export default class AbilityObjectCore extends MovementObjectCore {
     constructor(config = {}) {
         super(config);
 
