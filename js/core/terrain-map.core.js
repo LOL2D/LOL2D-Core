@@ -1,3 +1,4 @@
+import CONFIG from "../config/config.js";
 import Helper from "../helper/index.js";
 
 export default class TerrainMapCore {
@@ -32,15 +33,17 @@ export default class TerrainMapCore {
 
         for (let poly of data) {
             // hight light
-            fill("#fff9");
-            beginShape();
-            for (let p of poly.path) {
-                vertex(p.x, p.y);
-            }
-            endShape(CLOSE);
+            if (CONFIG.debugTerrainMap) {
+                fill("#fff9");
+                beginShape();
+                for (let p of poly.path) {
+                    vertex(p.x, p.y);
+                }
+                endShape(CLOSE);
 
-            fill("#ff52");
-            rect(poly.bound.x, poly.bound.y, poly.bound.w, poly.bound.h);
+                fill("#ff52");
+                rect(poly.bound.x, poly.bound.y, poly.bound.w, poly.bound.h);
+            }
             // end hight light
 
             response.clear();
@@ -103,8 +106,10 @@ export default class TerrainMapCore {
         let bound = champion.getBoundary();
 
         // hight light
-        fill("#ff52");
-        rect(bound.x, bound.y, bound.w, bound.h);
+        if (CONFIG.debugTerrainMap) {
+            fill("#ff52");
+            rect(bound.x, bound.y, bound.w, bound.h);
+        }
         // end hight light
 
         return this.getTerrainsInRectagleRange(bound);
