@@ -909,7 +909,7 @@ function getFormattedDate() {
     let minute = date.getMinutes();
     let second = date.getSeconds();
 
-    var str = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
+    var str = `${year}/${month}/${day}/${hour}:${minute}:${second}`;
 
     return str;
 }
