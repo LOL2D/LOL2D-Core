@@ -91,6 +91,17 @@ export default class ChampionCore extends MovementObjectCore {
             );
         }
 
+        // destination direction
+        if (!this.isArrivedDestination()) {
+            let { from, to } = Helper.Vector.getVectorWithRange(
+                this.position,
+                this.destination,
+                this.radius
+            );
+            stroke("#ddd");
+            line(from.x, from.y, to.x, to.y);
+        }
+
         // health bar
         this.healthBar.show();
 
