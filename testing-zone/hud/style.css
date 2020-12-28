@@ -1,0 +1,47 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+/* #hud-container {
+    position: relative;
+    height: 100%;
+} */
+
+#hud-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#hud-avatar-container {
+    width: 150px;
+    height: 150px;
+
+    background-image: url("./asset/avatar.png");
+    background-size: cover;
+}
+
+#hud-ability-container {
+    width: 410px;
+    height: 150px;
+
+    background-position: -60px 0;
+    background-image: url("./asset/ability.png");
+    background-size: cover;
+}
+
+#hud-item-container {
+    width: 200px;
+    height: 150px;
+
+    background-image: url("./asset/item.png");
+    background-size: cover;
+}
