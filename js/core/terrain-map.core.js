@@ -1,4 +1,3 @@
-import CONFIG from "../config/config.js";
 import Helper from "../helper/index.js";
 
 export default class TerrainMapCore {
