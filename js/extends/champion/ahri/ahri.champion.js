@@ -8,7 +8,7 @@ export default class Ahri extends ChampionCore {
         super(config);
 
         this.avatarCirclePath =
-            "asset/image/champion/ahri/Ahri.avatar.circle.png";
+            "/asset/image/champion/ahri/Ahri.avatar.circle.png";
 
         this.maxHealth = 500;
 

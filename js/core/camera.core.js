@@ -16,12 +16,7 @@ export default class CameraCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    beginState() {
-        push();
-        translate(width * 0.5, height * 0.5);
-        scale(this.scale);
-        translate(-this.position.x, -this.position.y);
-
+    update() {
         // update scale
         this.scale = lerp(this.scale, this.scaleTo, this.scaleLerp);
 
@@ -42,6 +37,13 @@ export default class CameraCore {
             ).setMag(this.borderSpeed);
             this.position.add(vec);
         }
+    }
+
+    beginState() {
+        push();
+        translate(width * 0.5, height * 0.5);
+        scale(this.scale);
+        translate(-this.position.x, -this.position.y);
     }
 
     endState() {

@@ -15,15 +15,19 @@ export default class AbilityObjectCore extends MovementObjectCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    run() {
+    // override
+    show() {
+        super.show();
+        this.isShowEffectRadius && this.showEffectRadius();
+    }
+
+    update() {
         if (!this.isStarted) {
             this.onStarted();
             this.isStarted = true;
         }
 
         this.move();
-        this.isShowEffectRadius && this.showEffectRadius();
-        this.show();
 
         if (this.checkFinished()) {
             this.onFinished();

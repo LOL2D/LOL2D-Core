@@ -3,7 +3,6 @@ const UIHelper = {
         strokeWeight(1);
         stroke("black");
         fill("white");
-        textSize(20);
         text("FPS: " + ~~frameRate(), x, y);
     },
 

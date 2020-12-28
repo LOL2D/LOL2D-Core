@@ -144,6 +144,6 @@ export default class SightCore {
     }
 
     resize(w, h) {
-        this.overlay.resizeCanvas(w, h);
+        this.overlay.resizeCanvas(w, h, true);
     }
 }

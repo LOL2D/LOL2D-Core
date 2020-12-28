@@ -6,7 +6,7 @@ export default class MovementObjectCore {
         this.position = createVector(0, 0);
         this.destination = createVector(0, 0);
         this.radius = 40;
-        this.speed = 3;
+        this.speed = 20000;
         this.fillColor = "white";
         this.strokeColor = "black";
         this.strokeWeight = 1;
@@ -82,7 +82,9 @@ export default class MovementObjectCore {
             this.position.set(destination.x, destination.y);
         } else {
             let direction = p5.Vector.sub(destination, position);
-            this.position.add(direction.setMag(speed));
+            this.position.add(
+                direction.setMag(speed * (60 / max(frameRate(), 30)))
+            );
         }
 
         // bound position

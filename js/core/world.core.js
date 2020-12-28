@@ -5,6 +5,7 @@ import CameraCore from "./camera.core.js";
 import SightCore from "./sight.core.js";
 import TurretCore from "./turret.core.js";
 import AICore from "./ai.core.js";
+import HUDCore from "./hud.core.js";
 
 export default class WorldCore {
     constructor(config = {}) {
@@ -47,6 +48,7 @@ export default class WorldCore {
         });
         this.camera = new CameraCore();
         this.sight = new SightCore({ world: this });
+        this.hud = new HUDCore({ world: this });
 
         // ---- demo gameplay -----
         this.playerBase = createVector(300, this.groundMap.height - 300);
@@ -130,13 +132,8 @@ export default class WorldCore {
         }
     }
 
-    run(func) {
-        // ----------- begin camera -----------
-        this.camera.beginState();
-
-        this.groundMap.drawEdge();
-        this.groundMap.drawGrid(this.camera);
-        this.terrainMap.show(this.camera);
+    update() {
+        this.camera.update();
 
         for (let champ of this.champions) {
             if (this.terrainMap.effect(champ)) {
@@ -146,25 +143,16 @@ export default class WorldCore {
         }
 
         for (let turret of this.turrets) {
-            turret.run();
+            turret.update();
         }
 
-        // func is something need to execute after world's camera beginState
-        func && func();
-
-        // champions AI
         for (let ai of this.listAI) {
-            ai.run();
+            ai.update();
         }
 
-        // champions
         for (let champ of this.champions) {
             champ.update();
             champ.move();
-
-            if (this.sight.isChampionInSight(champ)) {
-                champ.show();
-            }
 
             if (champ.isDead()) {
                 // heal for killer
@@ -193,9 +181,8 @@ export default class WorldCore {
             }
         }
 
-        // ability objects
         for (let i = this.abilityObjects.length - 1; i >= 0; i--) {
-            this.abilityObjects[i].run();
+            this.abilityObjects[i].update();
 
             // effect
             this.abilityObjects[i].effectChampions(this.champions);
@@ -205,12 +192,42 @@ export default class WorldCore {
                 this.abilityObjects.splice(i, 1);
             }
         }
+    }
+
+    show(func) {
+        this.camera.beginState();
+
+        this.groundMap.drawEdge();
+        // this.groundMap.drawGrid(this.camera);
+        this.terrainMap.show(this.camera);
+
+        // func is something need to execute after world's camera beginState
+        func && func();
+
+        for (let turret of this.turrets) {
+            turret.show();
+        }
+
+        for (let champ of this.champions) {
+            if (this.sight.isChampionInSight(champ)) {
+                champ.show();
+            }
+        }
 
         this.camera.endState();
-        // ----------- end camera -----------
 
         // draw sight overlay to screen
         this.sight.draw();
+
+        // draw ability object on top layer
+        this.camera.beginState();
+        for (let ao of this.abilityObjects) {
+            ao.show();
+        }
+        this.camera.endState();
+
+        // draw hud
+        this.hud.show();
     }
 
     addNewSpellObjects(something) {

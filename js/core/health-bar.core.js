@@ -100,7 +100,6 @@ export default class HealthBarCore {
         fill(this.levelColor);
         stroke(this.levelColor);
         strokeWeight(1);
-        textSize(14);
         text(
             this.champion.level,
             topleft.x + this.height / 2,
@@ -110,7 +109,6 @@ export default class HealthBarCore {
         // name
         fill(this.nameColor);
         stroke(this.nameStroke);
-        textSize(14);
         text(this.champion.name, topleft.x + this.width / 2, topleft.y - 14);
     }
 }

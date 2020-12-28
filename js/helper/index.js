@@ -5,6 +5,7 @@ import UIHelper from "./ui.helper.js";
 import OtherHelper from "./other.helper.js";
 import DistanceHelper from "./distance.helper.js";
 import BoundaryHelper from "./boundary.helper.js";
+import FormatHelper from "./format.helper.js";
 
 const Helper = {
     Vector: VectorHelper,
@@ -14,6 +15,7 @@ const Helper = {
     Other: OtherHelper,
     Distance: DistanceHelper,
     Boundary: BoundaryHelper,
+    Format: FormatHelper,
 };
 
 export default Helper;

@@ -28,10 +28,9 @@ export default class TurretCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    run() {
+    update() {
         this.attack();
         this.heal();
-        this.show();
     }
 
     show() {

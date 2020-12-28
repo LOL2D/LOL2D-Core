@@ -19,6 +19,8 @@ function setup() {
     strokeJoin(ROUND);
     strokeCap(ROUND);
     textAlign(CENTER, CENTER);
+    textSize(17);
+    textFont("monospace");
     imageMode(CENTER);
     pixelDensity(1);
     Helper.Other.preventRightClick();
@@ -49,8 +51,9 @@ function draw() {
 
     background(30);
 
-    // run world
-    world.run(() => {
+    world.update();
+
+    world.show(() => {
         input.run();
 
         if (mouseIsPressed) {

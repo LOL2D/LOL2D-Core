@@ -10,6 +10,8 @@ export default class OrbOfDeception extends AbilityCore {
         // override
         this.cooldown = 3000;
         this.cost = 65; // Mana
+        this.imagePath =
+            "/asset/image/champion/ahri/Orb-of-Deception.ability.png";
 
         // custom attributes
         this.effectRadius = 300;

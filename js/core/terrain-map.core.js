@@ -84,7 +84,7 @@ export default class TerrainMapCore {
         let data = this.getTerrainsInView(camera);
 
         strokeWeight(3);
-        stroke("#fff6");
+        stroke("#555");
         fill("#555");
 
         for (let poly of data) {

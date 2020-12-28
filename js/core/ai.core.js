@@ -13,8 +13,7 @@ export default class AICore {
         this.mode = "attack";
     }
 
-    run() {
-        //this.autoShow();
+    update() {
         this.autoChangeMode();
         this.autoMove();
         this.autoAttack();
