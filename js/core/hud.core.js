@@ -133,7 +133,6 @@ export default class HUDCore {
                 ];
 
                 noStroke();
-                // stroke("#fff8")
                 fill("#0B548E");
 
                 beginShape();
@@ -151,7 +150,8 @@ export default class HUDCore {
 
                 // cooldown text
                 fill("white");
-                text(this.formatCd(cd), x, y);
+                noStroke();
+                text(Helper.Format.abilityCountDown(cd), x, y);
             }
         }
 
@@ -164,7 +164,9 @@ export default class HUDCore {
                 rect(b.x, b.y, b.w, b.h);
 
                 // TODO draw in camera view
+                this.world.camera.beginState();
                 ability.showIndicator();
+                this.world.camera.endState();
             }
 
             // hightlight border
