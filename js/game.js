@@ -51,7 +51,7 @@ function draw() {
 
     background(30);
 
-    world.update();
+    for (let i = 0; i < 60 / max(frameRate(), 1); i++) world.update();
 
     world.show(() => {
         input.run();
@@ -63,6 +63,9 @@ function draw() {
             input.keyDown(keyCode);
         }
     });
+
+    fill("white");
+    text((60 / max(frameRate(), 1)).toFixed(1), 20, 70);
 
     stats.end();
 }

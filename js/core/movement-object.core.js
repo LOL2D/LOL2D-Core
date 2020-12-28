@@ -82,9 +82,7 @@ export default class MovementObjectCore {
             this.position.set(destination.x, destination.y);
         } else {
             let direction = p5.Vector.sub(destination, position);
-            this.position.add(
-                direction.setMag(speed * (60 / max(frameRate(), 30)))
-            );
+            this.position.add(direction.setMag(speed));
         }
 
         // bound position
