@@ -162,7 +162,7 @@ export default class InputCore {
             this.world.player.destination.set(vecRange.to.x, vecRange.to.y);
         } else {
             // stop move to attack
-            this.world.player.destination.removeDestination();
+            this.world.player.removeDestination();
             this.world.player.basicAttack(champ.position.copy());
         }
     }
