@@ -11,7 +11,7 @@ export default class FoxFire extends AbilityCore {
         // override
         this.cooldown = 5000;
         this.cost = 65; // Mana
-        this.imagePath = "/asset/image/champion/ahri/Fox-Fire.ability.png";
+        this.imagePath = "asset/image/champion/ahri/Fox-Fire.ability.png";
 
         // custom attribute
         this.castTime = 250;

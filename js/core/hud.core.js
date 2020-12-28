@@ -13,14 +13,14 @@ export default class HUDCore {
 
         // item
         image(
-            globalassets["/asset/image/hud/item.png"],
+            globalassets["asset/image/hud/item.png"],
             width / 2 + 390,
             height - 82
         );
 
         // ability
         image(
-            globalassets["/asset/image/hud/ability.png"],
+            globalassets["asset/image/hud/ability.png"],
             width / 2,
             height - 85
         );
@@ -54,7 +54,7 @@ export default class HUDCore {
         );
 
         image(
-            globalassets["/asset/image/hud/avatar.png"],
+            globalassets["asset/image/hud/avatar.png"],
             width / 2 - 300,
             height - 80
         );

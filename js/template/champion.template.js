@@ -16,7 +16,7 @@ export default class ChampionName extends ChampionCore {
 
         // override
         // NOTE: be sure to add assetPaths to /asset/index.js first
-        this.avatarCirclePath = "/asset/path/to/image/...";
+        this.avatarCirclePath = "asset/path/to/image/...";
 
         this.abilities = {
             spell1: null, // new OrbOfDeception({ owner: this }),
