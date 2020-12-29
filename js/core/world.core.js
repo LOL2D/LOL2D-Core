@@ -140,7 +140,7 @@ export default class WorldCore {
             this.update();
             this.accumulator -= 1000 / 60;
 
-            // if (this.accumulator < 1000 / 59 - 1000 / 60) this.accumulator = 0;
+            if (this.accumulator < 1000 / 59 - 1000 / 60) this.accumulator = 0;
         }
     }
 

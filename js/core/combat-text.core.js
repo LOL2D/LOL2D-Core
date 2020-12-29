@@ -21,11 +21,6 @@ export default class CombatTextCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    run() {
-        this.update();
-        this.show();
-    }
-
     show() {
         strokeWeight(2);
         stroke(this.colorAlpha);

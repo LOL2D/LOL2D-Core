@@ -106,12 +106,13 @@ export default class ChampionCore extends MovementObjectCore {
         this.healthBar.show();
 
         // show notification effects
-        for (let i = this.combatTexts.length - 1; i >= 0; i--) {
-            this.combatTexts[i].run();
+        for (let cbt of this.combatTexts) {
+            cbt.show();
+        }
 
-            if (this.combatTexts[i].isFinished()) {
-                this.combatTexts.splice(i, 1);
-            }
+        // updateTime each frame
+        for (let key in this.abilities) {
+            if (this.abilities[key]) this.abilities[key].updateTime();
         }
     }
 
@@ -124,8 +125,13 @@ export default class ChampionCore extends MovementObjectCore {
 
         this.move();
 
-        for (let key in this.abilities) {
-            if (this.abilities[key]) this.abilities[key].update();
+        // update notification effects
+        for (let i = this.combatTexts.length - 1; i >= 0; i--) {
+            this.combatTexts[i].update();
+
+            if (this.combatTexts[i].isFinished()) {
+                this.combatTexts.splice(i, 1);
+            }
         }
     }
 

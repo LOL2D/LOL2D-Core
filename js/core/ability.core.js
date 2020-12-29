@@ -13,8 +13,8 @@ export default class AbilityCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    update() {
-        this.now += deltaTime;
+    updateTime() {
+        this.now = millis();
     }
 
     showIndicator() {}
