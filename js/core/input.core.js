@@ -28,6 +28,7 @@ export default class InputCore {
             cursor(globalassets.cursor.fight);
 
             // hightlight target
+            noFill();
             stroke("red");
             strokeWeight(3);
             circle(

@@ -50,18 +50,6 @@ export default class MovementObjectCore {
     }
 
     showPositionTrack() {
-        // add positionTracks
-        this.positionTracks.push({
-            x: this.position.x,
-            y: this.position.y,
-        });
-
-        // limit track length
-        if (this.positionTracks.length > this.positionTracksLength) {
-            this.positionTracks.shift();
-        }
-
-        // show positionTracks
         if (this.positionTracks.length > 2) {
             stroke(this.positionTrackColor);
             strokeWeight(this.positionTrackWeight || this.radius * 2);
@@ -75,6 +63,17 @@ export default class MovementObjectCore {
     }
 
     move() {
+        // add positionTracks
+        this.positionTracks.push({
+            x: this.position.x,
+            y: this.position.y,
+        });
+
+        // limit track length
+        if (this.positionTracks.length > this.positionTracksLength) {
+            this.positionTracks.shift();
+        }
+
         // move to destination
         const { destination, position, speed } = this;
 

@@ -25,10 +25,13 @@ export default class TurretCore {
         this.world = null;
         this.isAllyWithPlayer = true;
 
+        this.now = 0;
+
         Helper.Other.setValueFromConfig(this, config);
     }
 
     update() {
+        this.now = millis();
         this.attack();
         this.heal();
     }
@@ -43,12 +46,9 @@ export default class TurretCore {
         stroke("#555");
         strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.attackRadius * 2);
-    }
 
-    attack() {
-        // allready have target
+        // red line to target
         if (this.attackTarget) {
-            // red line
             stroke("#f005");
             line(
                 this.position.x,
@@ -56,7 +56,12 @@ export default class TurretCore {
                 this.attackTarget.position.x,
                 this.attackTarget.position.y
             );
+        }
+    }
 
+    attack() {
+        // allready have target
+        if (this.attackTarget) {
             // attack
             if (this.isReadyToNextAttack()) {
                 this.world.addNewSpellObjects(
@@ -68,7 +73,7 @@ export default class TurretCore {
                     })
                 );
 
-                this.lastAttackTime = millis();
+                this.lastAttackTime = this.now;
             }
 
             // check out of range
@@ -104,28 +109,29 @@ export default class TurretCore {
     }
 
     heal() {
-        let allies = Helper.Distance.getChampionsInRange({
-            rootPosition: this.position,
-            champions: this.world.champions,
-            inRange: this.attackRadius,
-            allyWithPlayer: this.isAllyWithPlayer,
-            excludes: [],
-        });
-
         if (this.isReadyToNextHeal()) {
+            let allies = Helper.Distance.getChampionsInRange({
+                rootPosition: this.position,
+                champions: this.world.champions,
+                inRange: this.attackRadius,
+                allyWithPlayer: this.isAllyWithPlayer,
+                excludes: [],
+            });
+
             for (let a of allies) {
                 a.heal(this.healValue);
                 a.addMana(this.healManaValue);
             }
-            this.lastHealTime = millis();
+
+            this.lastHealTime = this.now;
         }
     }
 
     isReadyToNextHeal() {
-        return millis() - this.lastHealTime >= this.healDelayTime;
+        return this.now - this.lastHealTime >= this.healDelayTime;
     }
 
     isReadyToNextAttack() {
-        return millis() - this.lastAttackTime >= this.attackDelayTime;
+        return this.now - this.lastAttackTime >= this.attackDelayTime;
     }
 }

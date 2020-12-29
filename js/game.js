@@ -85,15 +85,25 @@ function keyPressed() {
     input.keyPressed(keyCode);
 
     // test
-    if (key == "z")
+    if (key == "z") {
         world.camera.follow(
             world.champions[~~random(world.champions.length - 1)].position
         );
-    else if (key == "d") {
+    } else if (key == "d") {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         world.player.position.set(m.x, m.y);
         world.player.destination.set(m.x, m.y);
+    } else if (key == "t") {
+        let m = world.camera.canvasToWorld(mouseX, mouseY);
+
+        for (let champ of world.champions) {
+            if (!champ.isAllyWithPlayer) {
+                champ.position.set(m.x, m.y);
+                champ.destination.set(m.x, m.y);
+                break;
+            }
+        }
     }
 }
 function keyReleased() {

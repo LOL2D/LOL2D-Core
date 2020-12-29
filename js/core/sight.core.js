@@ -1,3 +1,4 @@
+import TERRAIN_TYPE from "../constant/terrain-map.constant.js";
 import Helper from "../helper/index.js";
 
 // https://leagueoflegends.fandom.com/wiki/Sight
@@ -59,7 +60,25 @@ export default class SightCore {
         for (let champ of this.world.champions) {
             if (!champ.isAllyWithPlayer) continue;
 
-            let polygonsInSight = terrainMap.getTerrainsInSight(champ);
+            let polygonsInSight = terrainMap.getTerrainsInSight(champ, [
+                TERRAIN_TYPE.WALL,
+                TERRAIN_TYPE.BRUSH,
+                TERRAIN_TYPE.TURRET,
+            ]);
+
+            // check if champ is in brush
+            for (let i = polygonsInSight.length - 1; i > 0; i--) {
+                if (
+                    polygonsInSight[i].type == TERRAIN_TYPE.BRUSH &&
+                    Helper.Collide.polyPoint(
+                        polygonsInSight[i].path,
+                        champ.position.x,
+                        champ.position.y
+                    )
+                )
+                    polygonsInSight.splice(i, 1);
+            }
+
             polygonsInSight = terrainMap.polygonToJsonArray(polygonsInSight);
 
             let sightBound = champ.getSightBoundary();

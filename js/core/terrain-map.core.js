@@ -1,3 +1,4 @@
+import TERRAIN_TYPE from "../constant/terrain-map.constant.js";
 import Helper from "../helper/index.js";
 
 export default class TerrainMapCore {
@@ -6,19 +7,54 @@ export default class TerrainMapCore {
         this.width = 1000;
         this.height = 1000;
 
-        this.jsonArray = []; // to save json data
+        this.jsonData = {
+            wall: [],
+            brush: [],
+            water: [],
+            turret1: [],
+            turret2: [],
+        };
+
         this.polygons = []; // to save polygons data (after process json data)
+        /*
+            structure of polygons:
+            polygons = [
+                {
+                    type: "..."
+                    path: [...],
+                    bound: {x:..., y:..., w:..., h:...},
+                }, 
+                ...
+            ]
+         */
 
         Helper.Other.setValueFromConfig(this, config);
 
         // process data
-        this.polygons = this.jsonArrayToPolygon(this.jsonArray);
+        this.polygons = this.jsonDataToPolygon(this.jsonData);
     }
 
-    jsonArrayToPolygon(jsonArr) {
+    jsonDataToPolygon(jsonData) {
+        let result = [];
+
+        let { WALL, BRUSH, WATER, TURRET } = TERRAIN_TYPE;
+
+        result.push(...this.jsonArrayToPolygon(jsonData.wall, WALL));
+        result.push(...this.jsonArrayToPolygon(jsonData.brush, BRUSH));
+        result.push(...this.jsonArrayToPolygon(jsonData.water, WATER));
+        result.push(...this.jsonArrayToPolygon(jsonData.turret1, TURRET));
+        result.push(...this.jsonArrayToPolygon(jsonData.turret2, TURRET));
+
+        console.log(result.length + " terrain polygons.");
+
+        return result;
+    }
+
+    jsonArrayToPolygon(jsonArr, type) {
         let result = [];
         for (let polyArr of jsonArr) {
             result.push({
+                type,
                 path: polyArr.map((point) => ({ x: point[0], y: point[1] })),
                 bound: Helper.Boundary.polygon(polyArr),
             });
@@ -37,7 +73,10 @@ export default class TerrainMapCore {
     }
 
     effect(champion) {
-        let data = this.getTerrainsNearChampion(champion);
+        let data = this.getTerrainsNearChampion(champion, [
+            TERRAIN_TYPE.WALL,
+            TERRAIN_TYPE.TURRET,
+        ]);
 
         let SATcollided;
         let response = new SAT.Response();
@@ -69,11 +108,32 @@ export default class TerrainMapCore {
     show(camera) {
         let data = this.getTerrainsInView(camera);
 
-        strokeWeight(5);
-        stroke("#555");
-        fill("#555");
-
         for (let poly of data) {
+            switch (poly.type) {
+                case TERRAIN_TYPE.WALL:
+                    strokeWeight(5);
+                    stroke("#555");
+                    fill("#555");
+                    break;
+
+                case TERRAIN_TYPE.BRUSH:
+                    strokeWeight(5);
+                    stroke("#107d49");
+                    fill("#10613a");
+                    break;
+
+                case TERRAIN_TYPE.WATER:
+                    noStroke();
+                    fill("#082740");
+                    break;
+
+                case TERRAIN_TYPE.TURRET:
+                    strokeWeight(4);
+                    stroke("#555");
+                    fill("#555");
+                    break;
+            }
+
             beginShape();
             for (let p of poly.path) {
                 vertex(p.x, p.y);
@@ -82,9 +142,31 @@ export default class TerrainMapCore {
         }
     }
 
-    getTerrainsInRectagleRange({ x, y, w, h }) {
+    getTerrainsInRectagleRange({ x, y, w, h }, type) {
         let result = [];
         for (let poly of this.polygons) {
+            // check type
+            if (type) {
+                // is array of types
+                if (Array.isArray(type)) {
+                    let qualified = false;
+                    for (let t of type) {
+                        if (poly.type == t) {
+                            qualified = true;
+                            break;
+                        }
+                    }
+
+                    if (!qualified) continue;
+                }
+
+                // is single type
+                else if (poly.type != type) {
+                    continue;
+                }
+            }
+
+            // get intersect terrain
             let { x: x2, y: y2, w: w2, h: h2 } = poly.bound;
             let intersect = Helper.Collide.rectRect(x, y, w, h, x2, y2, w2, h2);
 
@@ -96,16 +178,16 @@ export default class TerrainMapCore {
         return result;
     }
 
-    getTerrainsInView(camera) {
-        return this.getTerrainsInRectagleRange(camera.getViewBoundary());
+    getTerrainsInView(camera, type) {
+        return this.getTerrainsInRectagleRange(camera.getViewBoundary(), type);
     }
 
-    getTerrainsNearChampion(champion) {
-        return this.getTerrainsInRectagleRange(champion.getBoundary());
+    getTerrainsNearChampion(champion, type) {
+        return this.getTerrainsInRectagleRange(champion.getBoundary(), type);
     }
 
-    getTerrainsInSight(champion) {
+    getTerrainsInSight(champion, type) {
         let bound = champion.getSightBoundary();
-        return this.getTerrainsInRectagleRange(bound);
+        return this.getTerrainsInRectagleRange(bound, type);
     }
 }

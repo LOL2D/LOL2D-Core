@@ -36,6 +36,6 @@ function loadAssets() {
 function loadMap(mapName) {
     let path = "asset/map/" + mapName + ".json";
     loadJSON(path, (json) => {
-        globalassets[mapName] = json.data;
+        globalassets[mapName] = json;
     });
 }
