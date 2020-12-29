@@ -6,7 +6,6 @@ let globalassets = {
         ally: "asset/image/cursor/link.cur",
         enemy: "asset/image/cursor/unavailable.cur",
     },
-    terrainMap: null,
 };
 
 const assetPaths = [

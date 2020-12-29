@@ -9,6 +9,10 @@ export default class HUDCore {
     }
 
     show() {
+        this.showMainHud();
+    }
+
+    showMainHud() {
         let player = this.world.player;
 
         // item
