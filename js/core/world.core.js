@@ -199,7 +199,7 @@ export default class WorldCore {
             this.abilityObjects[i].effectChampions(this.champions);
 
             // check finish
-            if (this.abilityObjects[i].checkFinished()) {
+            if (this.abilityObjects[i].isFinished) {
                 this.abilityObjects.splice(i, 1);
             }
         }

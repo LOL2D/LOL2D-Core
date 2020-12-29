@@ -9,8 +9,8 @@ export default class FoxFire extends AbilityCore {
         super(config);
 
         // override
-        this.cooldown = 5000;
-        this.cost = 65; // Mana
+        this.cooldown = 9000;
+        this.cost = 40; // Mana
         this.imagePath = "asset/image/champion/ahri/Fox-Fire.ability.png";
 
         // custom attribute

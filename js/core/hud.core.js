@@ -37,12 +37,12 @@ export default class HUDCore {
         );
         this.showAbility(
             player.abilities.spell3,
-            width / 2 - 130,
+            width / 2 + 18,
             height - 85 - 25
         );
         this.showAbility(
             player.abilities.spell4,
-            width / 2 - 130,
+            width / 2 + 90,
             height - 85 - 25
         );
 
@@ -74,6 +74,15 @@ export default class HUDCore {
         // image
         image(globalassets[ability.imagePath], x, y, b.w, b.h);
 
+        // cost
+        fill("#fff");
+        noStroke();
+        text(
+            ability.cost,
+            b.x + b.w - textWidth(ability.cost) * 0.5,
+            b.y + GameConfig.textSize * 0.5
+        );
+
         let isHovered = Helper.Collide.pointRect(
             mouseX,
             mouseY,
@@ -87,72 +96,23 @@ export default class HUDCore {
 
         // ability cooldown
         if (cd > 0) {
-            let option = 1;
+            // background
+            noStroke();
+            fill("#2229");
+            rect(b.x, b.y, b.w, b.h);
 
-            // -------------- option 1 --------------
-            if (option == 1) {
-                // background
-                noStroke();
-                fill("#2229");
-                rect(b.x, b.y, b.w, b.h);
-                // cooldown
-                fill("#0B548E");
-                let h = map(cd, ability.cooldown, 0, 0, b.h);
-                rect(b.x, b.y + h, b.w, b.h - h);
-                // cooldown text
-                fill("white");
-                text(Helper.Format.abilityCountDown(cd), x, y);
-                // hightlight line
-                stroke("#fff9");
-                line(b.x, b.y + h, b.x + b.w, b.y + h);
-            }
+            // cooldown
+            fill("#0B548E");
+            let h = map(cd, ability.cooldown, 0, 0, b.h);
+            rect(b.x, b.y + h, b.w, b.h - h);
 
-            // -------------- option 2 --------------
-            else if (option == 2) {
-                // let angle = map(currentCD, ability.cooldown, 0, 0, TWO_PI);
-                // arc(x, y, 70, 70, angle, 0, PIE);
+            // hightlight line
+            stroke("#fff9");
+            line(b.x, b.y + h, b.x + b.w, b.y + h);
 
-                // background
-                noStroke();
-                fill("#2229");
-                rect(b.x, b.y, b.w, b.h);
-
-                // cooldown
-                let h = map(cd, ability.cooldown, 0, b.h / 2, 0);
-                let outside = [
-                    [b.x, b.y],
-                    [b.x + b.w, b.y],
-                    [b.x + b.w, b.y + b.h],
-                    [b.x, b.y + b.h],
-                ];
-                let inside = [
-                    [b.x + h, b.y + b.h - h],
-                    [b.x + b.w - h, b.y + b.h - h],
-                    [b.x + b.w - h, b.y + h],
-                    [b.x + h, b.y + h],
-                ];
-
-                noStroke();
-                fill("#0B548E");
-
-                beginShape();
-                for (let p of outside) vertex(p[0], p[1]);
-                beginContour();
-                for (let p of inside) vertex(p[0], p[1]);
-                endContour();
-                endShape(CLOSE);
-
-                stroke("#fffa");
-                noFill();
-                beginShape();
-                for (let p of inside) vertex(p[0], p[1]);
-                endShape(CLOSE);
-
-                // cooldown text
-                fill("white");
-                noStroke();
-                text(Helper.Format.abilityCountDown(cd), x, y);
-            }
+            // cooldown text
+            fill("#fff");
+            text(Helper.Format.abilityCountDown(cd), x, y);
         }
 
         // ability available

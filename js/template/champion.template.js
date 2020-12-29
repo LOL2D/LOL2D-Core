@@ -10,12 +10,13 @@
 // import <Tên constant> from "path_to_helper"; // constant import đầu tiên (nếu cần)
 // import Helper from "path_to_helper"; // tiếp theo là helper (nếu cần)
 import ChampionCore from "path_to_core";
+
 export default class ChampionName extends ChampionCore {
     constructor(config = {}) {
         super(config);
 
         // override
-        // NOTE: be sure to add assetPaths to /asset/index.js first
+        // NOTE: be sure to add assetPaths to /asset/global.js first
         this.avatarCirclePath = "asset/path/to/image/...";
 
         this.abilities = {

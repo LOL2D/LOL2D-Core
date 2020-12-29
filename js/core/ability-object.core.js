@@ -9,6 +9,7 @@ export default class AbilityObjectCore extends MovementObjectCore {
         // default value
         this.owner = null;
         this.isStarted = false;
+        this.isFinished = false;
         this.effectRadius = 0;
         this.isShowEffectRadius = false;
 
@@ -29,8 +30,9 @@ export default class AbilityObjectCore extends MovementObjectCore {
 
         this.move();
 
-        if (this.checkFinished()) {
-            this.onFinished();
+        if (!this.isFinished) {
+            this.isFinished = this.checkFinished();
+            this.isFinished && this.onFinished();
         }
     }
 

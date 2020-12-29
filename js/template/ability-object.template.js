@@ -26,6 +26,9 @@ export default class AbilityObjectName extends AbilityObjectCore {
     }
 
     // override
+    update() {}
+
+    // override
     show() {}
 
     // override

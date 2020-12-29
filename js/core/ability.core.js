@@ -8,7 +8,7 @@ export default class AbilityCore {
         this.lastCastSpell = 0;
         this.cooldown = 0;
         this.cost = 0;
-        this.now = 0;
+        this.time = 0;
 
         Helper.Other.setValueFromConfig(this, config);
     }
@@ -17,17 +17,11 @@ export default class AbilityCore {
         this.now = millis();
     }
 
-    showIndicator() {}
-
     castSpell(destination) {
         this.lastCastSpell = this.now;
         this.cost > 0 && this.owner.loseMana(this.cost);
         this.onStarted();
     }
-
-    onStarted() {}
-
-    onFinished() {}
 
     isCoolDownFinished() {
         return (
@@ -42,4 +36,8 @@ export default class AbilityCore {
         // đã dùng chiêu ít nhất 1 lần
         return max(0, this.cooldown - (this.now - this.lastCastSpell));
     }
+
+    showIndicator() {}
+    onStarted() {}
+    onFinished() {}
 }

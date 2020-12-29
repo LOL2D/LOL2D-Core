@@ -10,7 +10,6 @@ export default class FoxFireObject extends AbilityObjectCore {
         this.effectRadius = this.effectRadius - this.owner.radius * 2;
         this.radius = 10;
         this.speed = 3;
-        this.fillColor = "#058DFF";
         this.positionTrackColor = "#058DFF55";
 
         // custom attribute
@@ -23,23 +22,23 @@ export default class FoxFireObject extends AbilityObjectCore {
         this.unreadyColor = "#F002";
         this.readyColor = "#00F";
         this.touchedTarget = false;
+
+        // set default fillColor to unreadyColor
+        this.fillColor = this.unreadyColor;
     }
 
     // override
-    show() {
-        this.fillColor = this.isDelayTimeFinished()
-            ? this.readyColor
-            : this.unreadyColor;
+    update() {
+        super.update();
 
-        super.show();
+        // change color if delay time finished (ready to attack)
+        if (this.fillColor != this.readyColor && this.isDelayTimeFinished()) {
+            this.fillColor = this.readyColor;
+        }
     }
 
     // override
-    overlap(champion) {
-        return this.targetChampion
-            ? super.overlap(champion, this.radius)
-            : super.overlap(champion, this.effectRadius + champion.radius);
-    }
+    // show() {}
 
     // override
     effectChampions(champions) {

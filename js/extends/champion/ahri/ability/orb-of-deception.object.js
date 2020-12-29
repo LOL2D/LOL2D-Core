@@ -24,25 +24,8 @@ export default class OrbOfDeceptionObject extends AbilityObjectCore {
     }
 
     // override
-    effectChampions(champions) {
-        let closestEnemy = Helper.Distance.getClosestChampionInRange({
-            rootPosition: this.position,
-            champions: champions,
-            inRange: this.radius,
-            addChampRadiusToRange: true,
-            allyWithPlayer: !this.owner.isAllyWithPlayer,
-            excludes: [this.owner],
-        });
-
-        if (closestEnemy && this.effectedChampions.indexOf(closestEnemy) < 0) {
-            closestEnemy.loseHealth(this.damage, this);
-            this.effectedChampions.push(closestEnemy);
-        }
-    }
-
-    // override
-    move() {
-        super.move();
+    update() {
+        super.update();
 
         // backward
         if (this.state == this.STATE.BACKWARD) {
@@ -57,6 +40,29 @@ export default class OrbOfDeceptionObject extends AbilityObjectCore {
             this.speed = 0;
         }
     }
+
+    // override
+    // show() {}
+
+    // override
+    effectChampions(champions) {
+        let touchedEnemy = Helper.Distance.getClosestChampionInRange({
+            rootPosition: this.position,
+            champions: champions,
+            inRange: this.radius,
+            addChampRadiusToRange: true,
+            allyWithPlayer: !this.owner.isAllyWithPlayer,
+            excludes: [this.owner],
+        });
+
+        if (touchedEnemy && this.effectedChampions.indexOf(touchedEnemy) < 0) {
+            touchedEnemy.loseHealth(this.damage, this);
+            this.effectedChampions.push(touchedEnemy);
+        }
+    }
+
+    // override
+    // move() {}
 
     // override
     checkFinished() {

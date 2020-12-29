@@ -1,22 +1,21 @@
 import COLOR from "../../../../constant/color.constant.js";
 import Helper from "../../../../helper/index.js";
 import AbilityCore from "../../../../core/ability.core.js";
-import OrbOfDeceptionObject from "./orb-of-deception.object.js";
+import CharmObject from "./charm.object.js";
 
-export default class OrbOfDeception extends AbilityCore {
+export default class Charm extends AbilityCore {
     constructor(config = {}) {
         super(config);
 
         // override
-        this.cooldown = 7000;
-        this.cost = 65; // Mana
-        this.imagePath =
-            "asset/image/champion/ahri/Orb-of-Deception.ability.png";
+        this.cooldown = 12000;
+        this.cost = 70; // Mana
+        this.imagePath = "asset/image/champion/ahri/Charm.ability.png";
 
         // custom attributes
-        this.effectRadius = 300;
-        this.width = 30;
-        this.damage = 40;
+        this.effectRadius = 350;
+        this.width = 20;
+        this.damage = 20;
     }
 
     // override
@@ -44,7 +43,7 @@ export default class OrbOfDeception extends AbilityCore {
             this.effectRadius
         );
 
-        const orbObj = new OrbOfDeceptionObject({
+        const orbObj = new CharmObject({
             position: this.owner.position.copy(),
             owner: this.owner,
             damage: this.damage,
@@ -60,4 +59,6 @@ export default class OrbOfDeception extends AbilityCore {
 
     // override
     onFinished() {}
+
+    // other functions here
 }

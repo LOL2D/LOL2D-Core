@@ -19,11 +19,11 @@ function setup() {
     strokeJoin(ROUND);
     strokeCap(ROUND);
     textAlign(CENTER, CENTER);
-    textSize(17);
-    textFont("monospace");
     imageMode(CENTER);
-    pixelDensity(1);
-    frameRate(60);
+    textFont(GameConfig.textFont);
+    textSize(GameConfig.textSize);
+    pixelDensity(GameConfig.pixelDensity);
+    frameRate(GameConfig.limitFPS);
     Helper.Other.preventRightClick();
 
     cursor(globalassets.cursor.normal);
@@ -54,11 +54,11 @@ function draw() {
     if (!focused) {
         fill("#555");
         stroke("white");
-        rect(width / 2 - 100, height / 2 - 50, 200, 100);
+        rect(width / 2 - 120, height / 2 - 50, 240, 100);
 
         fill("white");
         noStroke();
-        text("PAUSED\n-click to continue-", width / 2, height / 2);
+        text("PAUSED\n- click to continue -", width / 2, height / 2);
     }
 
     // focused

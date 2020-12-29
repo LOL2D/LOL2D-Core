@@ -39,27 +39,14 @@ export default class TerrainMapCore {
     effect(champion) {
         let data = this.getTerrainsNearChampion(champion);
 
+        let SATcollided;
         let response = new SAT.Response();
         let collided = false;
 
         for (let poly of data) {
-            // hight light
-            if (CONFIG.debugTerrainMap) {
-                fill("#fff9");
-                beginShape();
-                for (let p of poly.path) {
-                    vertex(p.x, p.y);
-                }
-                endShape(CLOSE);
-
-                fill("#ff52");
-                rect(poly.bound.x, poly.bound.y, poly.bound.w, poly.bound.h);
-            }
-            // end hight light
-
             response.clear();
 
-            let SATcollided = SAT.testPolygonCircle(
+            SATcollided = SAT.testPolygonCircle(
                 new SAT.Polygon(
                     new SAT.Vector(),
                     poly.path.map((p) => new SAT.Vector(p.x, p.y))
@@ -82,7 +69,7 @@ export default class TerrainMapCore {
     show(camera) {
         let data = this.getTerrainsInView(camera);
 
-        strokeWeight(3);
+        strokeWeight(5);
         stroke("#555");
         fill("#555");
 
@@ -114,16 +101,7 @@ export default class TerrainMapCore {
     }
 
     getTerrainsNearChampion(champion) {
-        let bound = champion.getBoundary();
-
-        // hight light
-        if (CONFIG.debugTerrainMap) {
-            fill("#ff52");
-            rect(bound.x, bound.y, bound.w, bound.h);
-        }
-        // end hight light
-
-        return this.getTerrainsInRectagleRange(bound);
+        return this.getTerrainsInRectagleRange(champion.getBoundary());
     }
 
     getTerrainsInSight(champion) {
