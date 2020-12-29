@@ -25,7 +25,7 @@ export default class AbilityName extends AbilityCore {
     }
 
     // override
-    showIndicator() {}
+    showIndicator(toOwnerDestination) {}
 
     // override
     castSpell(destination) {}

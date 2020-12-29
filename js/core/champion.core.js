@@ -121,6 +121,12 @@ export default class ChampionCore extends MovementObjectCore {
 
         this.health = constrain(this.health, 0, this.maxHealth);
         this.mana = constrain(this.mana, 0, this.maxMana);
+
+        this.move();
+
+        for (let key in this.abilities) {
+            if (this.abilities[key]) this.abilities[key].update();
+        }
     }
 
     run() {

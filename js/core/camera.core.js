@@ -50,8 +50,10 @@ export default class CameraCore {
         pop();
     }
 
-    follow(target) {
+    follow(target, immediately) {
         this.target = target;
+
+        if (immediately) this.position.set(target.x, target.y);
     }
 
     getViewBoundary() {

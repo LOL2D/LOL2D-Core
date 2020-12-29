@@ -16,6 +16,7 @@ export default class WorldCore {
         };
 
         this.size = 500;
+        this.accumulator = 0;
 
         // set value from config
         Helper.Other.setValueFromConfig(this, config);
@@ -84,7 +85,7 @@ export default class WorldCore {
                 bound: this.groundMap.getBound(),
             });
             this.champions.push(this.player);
-            this.camera.follow(this.player.position);
+            this.camera.follow(this.player.position, true);
         }
 
         // ally champions
@@ -132,6 +133,17 @@ export default class WorldCore {
         }
     }
 
+    // https://medium.com/@tglaiel/how-to-make-your-game-run-at-60fps-24c61210fe75
+    fixedUpdate() {
+        this.accumulator += min(deltaTime, 250);
+        while (this.accumulator > 1000 / 61) {
+            this.update();
+            this.accumulator -= 1000 / 60;
+
+            // if (this.accumulator < 1000 / 59 - 1000 / 60) this.accumulator = 0;
+        }
+    }
+
     update() {
         this.camera.update();
 
@@ -152,7 +164,6 @@ export default class WorldCore {
 
         for (let champ of this.champions) {
             champ.update();
-            champ.move();
 
             if (champ.isDead()) {
                 // heal for killer
@@ -195,6 +206,8 @@ export default class WorldCore {
     }
 
     show(func) {
+        background(30);
+
         this.camera.beginState();
 
         this.groundMap.drawEdge();

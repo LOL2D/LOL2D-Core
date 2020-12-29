@@ -23,6 +23,7 @@ function setup() {
     textFont("monospace");
     imageMode(CENTER);
     pixelDensity(1);
+    frameRate(60);
     Helper.Other.preventRightClick();
 
     cursor(globalassets.cursor.normal);
@@ -49,23 +50,32 @@ function setup() {
 function draw() {
     stats.begin();
 
-    background(30);
+    // lose focus
+    if (!focused) {
+        fill("#555");
+        stroke("white");
+        rect(width / 2 - 100, height / 2 - 50, 200, 100);
 
-    for (let i = 0; i < 60 / max(frameRate(), 1); i++) world.update();
+        fill("white");
+        noStroke();
+        text("PAUSED\n-click to continue-", width / 2, height / 2);
+    }
 
-    world.show(() => {
-        input.run();
+    // focused
+    else {
+        world.fixedUpdate();
 
-        if (mouseIsPressed) {
-            input.mouseIsPressed();
-        }
-        if (keyIsPressed) {
-            input.keyDown(keyCode);
-        }
-    });
+        world.show(() => {
+            input.run();
 
-    fill("white");
-    text((60 / max(frameRate(), 1)).toFixed(1), 20, 70);
+            if (mouseIsPressed) {
+                input.mouseIsPressed();
+            }
+            if (keyIsPressed) {
+                input.keyDown(keyCode);
+            }
+        });
+    }
 
     stats.end();
 }

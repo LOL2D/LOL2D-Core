@@ -22,7 +22,7 @@ export default class OrbOfDeception extends AbilityCore {
     // override
     showIndicator() {
         const vec = Helper.Vector.getVectorWithRange(
-            this.owner.position.copy(),
+            this.owner.position,
             this.owner.world.getMousePosition(),
             this.effectRadius
         );
