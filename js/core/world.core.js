@@ -222,7 +222,20 @@ export default class WorldCore {
         }
 
         for (let champ of this.champions) {
-            if (this.sight.isChampionInSight(champ)) {
+            let { x, y, w, h } = this.camera.getViewBoundary();
+            let r = champ.radius;
+            let r2 = r * 2;
+
+            let inview = Helper.Collide.pointRect(
+                champ.position.x,
+                champ.position.y,
+                x - r,
+                y - r,
+                w + r2,
+                h + r2
+            );
+
+            if (inview && this.sight.isChampionInSight(champ)) {
                 champ.show();
             }
         }
