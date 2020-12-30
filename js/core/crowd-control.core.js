@@ -1,4 +1,5 @@
 import { ALLOWED, NO } from "../constant/crowd-control.constant.js";
+import GlobalTime from "../global/time.global.js";
 import Helper from "../helper/index.js";
 
 export default class CrowdControlCore {
@@ -14,7 +15,7 @@ export default class CrowdControlCore {
         this.owner = null; // tướng tạo ra crowd control này
         this.target = null; // tướng chịu tác dụng của crowd control này
 
-        this.startTime = millis();
+        this.startTime = GlobalTime.getNow();
 
         Helper.Other.setValueFromConfig(this, config);
     }

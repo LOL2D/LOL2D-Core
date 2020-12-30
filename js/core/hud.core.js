@@ -1,3 +1,5 @@
+import GlobalAssets from "../global/asset.global.js";
+import GlobalGameConfig from "../global/game-config.global.js";
 import Helper from "../helper/index.js";
 
 export default class HUDCore {
@@ -17,14 +19,14 @@ export default class HUDCore {
 
         // item
         image(
-            globalassets["asset/image/hud/item.png"],
+            GlobalAssets["asset/image/hud/item.png"],
             width / 2 + 390,
             height - 82
         );
 
         // ability
         image(
-            globalassets["asset/image/hud/ability.png"],
+            GlobalAssets["asset/image/hud/ability.png"],
             width / 2,
             height - 85
         );
@@ -52,13 +54,13 @@ export default class HUDCore {
 
         // avatar
         image(
-            globalassets[player.avatarCirclePath],
+            GlobalAssets[player.avatarCirclePath],
             width / 2 - 300,
             height - 80
         );
 
         image(
-            globalassets["asset/image/hud/avatar.png"],
+            GlobalAssets["asset/image/hud/avatar.png"],
             width / 2 - 300,
             height - 80
         );
@@ -76,7 +78,7 @@ export default class HUDCore {
         };
 
         // image
-        image(globalassets[ability.imagePath], x, y, b.w, b.h);
+        image(GlobalAssets[ability.imagePath], x, y, b.w, b.h);
 
         // cost
         fill("#fff");
@@ -84,7 +86,7 @@ export default class HUDCore {
         text(
             ability.cost,
             b.x + b.w - textWidth(ability.cost) * 0.5,
-            b.y + GameConfig.textSize * 0.5
+            b.y + GlobalGameConfig.textSize * 0.5
         );
 
         let isHovered = Helper.Collide.pointRect(

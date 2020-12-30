@@ -1,8 +1,7 @@
 import COLOR from "../constant/color.constant.js";
 import { ALLOWED } from "../constant/crowd-control.constant.js";
-
+import GlobalAssets from "../global/asset.global.js";
 import Helper from "../helper/index.js";
-
 import MovementObjectCore from "./movement-object.core.js";
 import HealthBarCore from "./health-bar.core.js";
 import CombatTextCore from "./combat-text.core.js";
@@ -81,9 +80,9 @@ export default class ChampionCore extends MovementObjectCore {
         super.show();
 
         // avatar
-        if (globalassets[this.avatarCirclePath]) {
+        if (GlobalAssets[this.avatarCirclePath]) {
             image(
-                globalassets[this.avatarCirclePath],
+                GlobalAssets[this.avatarCirclePath],
                 this.position.x,
                 this.position.y,
                 this.radius * 2,
@@ -109,21 +108,17 @@ export default class ChampionCore extends MovementObjectCore {
         for (let cbt of this.combatTexts) {
             cbt.show();
         }
-
-        // updateTime each frame
-        for (let key in this.abilities) {
-            if (this.abilities[key]) this.abilities[key].updateTime();
-        }
     }
 
     update() {
+        super.update();
+
+        // heal + mana
         this.health += this.healthRegen;
         this.mana += this.manaRegen;
 
         this.health = constrain(this.health, 0, this.maxHealth);
         this.mana = constrain(this.mana, 0, this.maxMana);
-
-        this.move();
 
         // update notification effects
         for (let i = this.combatTexts.length - 1; i >= 0; i--) {

@@ -1,3 +1,4 @@
+import GlobalTime from "../global/time.global.js";
 import Helper from "../helper/index.js";
 
 // https://leagueoflegends.fandom.com/wiki/Champion_ability
@@ -13,19 +14,15 @@ export default class AbilityCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    updateTime() {
-        this.now = millis();
-    }
-
     castSpell(destination) {
-        this.lastCastSpell = this.now;
+        this.lastCastSpell = GlobalTime.getNow();
         this.cost > 0 && this.owner.loseMana(this.cost);
         this.onStarted();
     }
 
     isCoolDownFinished() {
         return (
-            !this.lastCastSpell || this.now - this.lastCastSpell > this.cooldown
+            !this.lastCastSpell || GlobalTime.getNow() - this.lastCastSpell > this.cooldown
         );
     }
 
@@ -34,7 +31,7 @@ export default class AbilityCore {
         if (!this.lastCastSpell) return 0;
 
         // đã dùng chiêu ít nhất 1 lần
-        return max(0, this.cooldown - (this.now - this.lastCastSpell));
+        return max(0, this.cooldown - (GlobalTime.getNow() - this.lastCastSpell));
     }
 
     showIndicator() {}

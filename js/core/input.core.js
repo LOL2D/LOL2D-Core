@@ -1,4 +1,5 @@
 import DEFAULT_HOTKEYS from "../constant/hotkeys.constant.js";
+import GlobalAssets from "../global/asset.global.js";
 import Helper from "../helper/index.js";
 
 export default class InputCore {
@@ -25,7 +26,7 @@ export default class InputCore {
         // basic attack
         this.enemyAtMouse = this.getEnemyAtMouse();
         if (this.enemyAtMouse) {
-            cursor(globalassets.cursor.fight);
+            cursor(GlobalAssets.cursor.fight);
 
             // hightlight target
             noFill();
@@ -37,7 +38,7 @@ export default class InputCore {
                 this.enemyAtMouse.radius * 2.5
             );
         } else {
-            cursor(globalassets.cursor.normal);
+            cursor(GlobalAssets.cursor.normal);
         }
 
         // show indicator

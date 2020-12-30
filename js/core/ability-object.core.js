@@ -22,13 +22,14 @@ export default class AbilityObjectCore extends MovementObjectCore {
         this.isShowEffectRadius && this.showEffectRadius();
     }
 
+    // override
     update() {
         if (!this.isStarted) {
             this.onStarted();
             this.isStarted = true;
         }
 
-        this.move();
+        super.update();
 
         if (!this.isFinished) {
             this.isFinished = this.checkFinished();

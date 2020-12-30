@@ -1,4 +1,5 @@
 import Helper from "../helper/index.js";
+import GlobalTime from "../global/time.global.js";
 import BulletTurretObject from "../extends/turret/bullet.turret.js";
 
 export default class TurretCore {
@@ -25,13 +26,10 @@ export default class TurretCore {
         this.world = null;
         this.isAllyWithPlayer = true;
 
-        this.now = 0;
-
         Helper.Other.setValueFromConfig(this, config);
     }
 
     update() {
-        this.now = millis();
         this.attack();
         this.heal();
     }
@@ -73,7 +71,7 @@ export default class TurretCore {
                     })
                 );
 
-                this.lastAttackTime = this.now;
+                this.lastAttackTime = GlobalTime.getNow();
             }
 
             // check out of range
@@ -123,15 +121,17 @@ export default class TurretCore {
                 a.addMana(this.healManaValue);
             }
 
-            this.lastHealTime = this.now;
+            this.lastHealTime = GlobalTime.getNow();
         }
     }
 
     isReadyToNextHeal() {
-        return this.now - this.lastHealTime >= this.healDelayTime;
+        return GlobalTime.getNow() - this.lastHealTime >= this.healDelayTime;
     }
 
     isReadyToNextAttack() {
-        return this.now - this.lastAttackTime >= this.attackDelayTime;
+        return (
+            GlobalTime.getNow() - this.lastAttackTime >= this.attackDelayTime
+        );
     }
 }

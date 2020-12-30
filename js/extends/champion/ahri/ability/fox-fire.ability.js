@@ -1,6 +1,6 @@
 import COLOR from "../../../../constant/color.constant.js";
+import GlobalTime from "../../../../global/time.global.js";
 import Helper from "../../../../helper/index.js";
-
 import AbilityCore from "../../../../core/ability.core.js";
 import FoxFireObject from "./fox-fire.object.js";
 
@@ -80,6 +80,6 @@ export default class FoxFire extends AbilityCore {
 
     // other functions here
     isReadyToNextEffect() {
-        return millis() - this.lastEffectTime > this.nextEffectDelay;
+        return GlobalTime.getNow() - this.lastEffectTime > this.nextEffectDelay;
     }
 }

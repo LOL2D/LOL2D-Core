@@ -1,3 +1,4 @@
+import GlobalTime from "../../global/time.global.js";
 import CrowdControlCore from "../../core/crowd-control.core.js";
 
 export default class Airborne extends CrowdControlCore {
@@ -12,6 +13,6 @@ export default class Airborne extends CrowdControlCore {
 
     // override
     isFinished() {
-        return (millis() - this.startTime) >> this.duration;
+        return (GlobalTime.getNow() - this.startTime) >> this.duration;
     }
 }

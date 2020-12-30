@@ -1,3 +1,6 @@
+import { GlobalAssets, loadAssets, loadMap } from "./global/asset.global.js";
+import GlobalGameConfig from "./global/game-config.global.js";
+import GlobalTime from "./global/time.global.js";
 import Helper from "./helper/index.js";
 import WorldCore from "./core/world.core.js";
 import InputCore from "./core/input.core.js";
@@ -20,16 +23,16 @@ function setup() {
     strokeCap(ROUND);
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
-    textFont(GameConfig.textFont);
-    textSize(GameConfig.textSize);
-    pixelDensity(GameConfig.pixelDensity);
-    frameRate(GameConfig.limitFPS);
+    textFont(GlobalGameConfig.textFont);
+    textSize(GlobalGameConfig.textSize);
+    pixelDensity(GlobalGameConfig.pixelDensity);
+    frameRate(GlobalGameConfig.limitFPS);
     Helper.Other.preventRightClick();
 
-    cursor(globalassets.cursor.normal);
+    cursor(GlobalAssets.cursor.normal);
 
     world = new WorldCore({
-        terrainMapData: globalassets["summoner-rift"],
+        terrainMapData: GlobalAssets["summoner-rift"],
         size: 6400,
         championsClassName: {
             player: Ahri,
@@ -63,6 +66,8 @@ function draw() {
 
     // focused
     else {
+        GlobalTime.updateTime();
+
         world.fixedUpdate();
 
         world.show(() => {

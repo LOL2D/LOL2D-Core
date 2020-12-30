@@ -1,13 +1,3 @@
-let globalassets = {
-    // cursor (do not need to loadImage)
-    cursor: {
-        normal: "asset/image/cursor/normal.cur",
-        fight: "asset/image/cursor/alt.cur",
-        ally: "asset/image/cursor/link.cur",
-        enemy: "asset/image/cursor/unavailable.cur",
-    },
-};
-
 const assetPaths = [
     // hud
     "asset/image/hud/ability.png",
@@ -25,10 +15,20 @@ const assetPaths = [
     // jinx
 ];
 
+let GlobalAssets = {
+    // cursor (do not need to loadImage)
+    cursor: {
+        normal: "asset/image/cursor/normal.cur",
+        fight: "asset/image/cursor/alt.cur",
+        ally: "asset/image/cursor/link.cur",
+        enemy: "asset/image/cursor/unavailable.cur",
+    },
+};
+
 function loadAssets() {
     for (let path of assetPaths) {
         loadImage(path, (data) => {
-            globalassets[path] = data;
+            GlobalAssets[path] = data;
         });
     }
 }
@@ -36,6 +36,9 @@ function loadAssets() {
 function loadMap(mapName) {
     let path = "asset/map/" + mapName + ".json";
     loadJSON(path, (json) => {
-        globalassets[mapName] = json;
+        GlobalAssets[mapName] = json;
     });
 }
+
+export { GlobalAssets, loadAssets, loadMap };
+export default GlobalAssets;

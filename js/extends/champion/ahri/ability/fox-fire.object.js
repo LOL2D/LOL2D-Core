@@ -1,4 +1,5 @@
 import Helper from "../../../../helper/index.js";
+import GlobalTime from "../../../../global/time.global.js";
 import AbilityObjectCore from "../../../../core/ability-object.core.js";
 
 export default class FoxFireObject extends AbilityObjectCore {
@@ -13,7 +14,7 @@ export default class FoxFireObject extends AbilityObjectCore {
         this.positionTrackColor = "#058DFF55";
 
         // custom attribute
-        this.startedTime = millis();
+        this.startedTime = GlobalTime.getNow();
         this.lifeSpan = 5000;
         this.delayTime = 1000;
         this.toTargetSpeed = 10;
@@ -58,7 +59,7 @@ export default class FoxFireObject extends AbilityObjectCore {
                     this.targetChampion = closestEnemy;
                     this.speed = this.toTargetSpeed;
                     this.isShowPositionTracking = true;
-                    this.abilityRef.lastEffectTime = millis();
+                    this.abilityRef.lastEffectTime = GlobalTime.getNow();
                 }
             }
         } else {
@@ -94,7 +95,8 @@ export default class FoxFireObject extends AbilityObjectCore {
     // override
     checkFinished() {
         let endOfLife =
-            !this.targetChampion && millis() - this.startedTime > this.lifeSpan;
+            !this.targetChampion &&
+            GlobalTime.getNow() - this.startedTime > this.lifeSpan;
 
         return endOfLife || this.touchedTarget;
     }
@@ -107,7 +109,7 @@ export default class FoxFireObject extends AbilityObjectCore {
     }
 
     isDelayTimeFinished() {
-        return millis() - this.startedTime > this.delayTime;
+        return GlobalTime.getNow() - this.startedTime > this.delayTime;
     }
 
     calculatePosition() {

@@ -1,4 +1,5 @@
 import COLOR from "../../../../constant/color.constant.js";
+import GlobalTime from "../../../../global/time.global.js";
 import Helper from "../../../../helper/index.js";
 import AbilityCore from "../../../../core/ability.core.js";
 import AhriBasicAttackObject from "./ahri.basic-attack.object.js";
@@ -71,7 +72,7 @@ export default class AhriBasicAttack extends AbilityCore {
                 })
             );
 
-            this.lastCastSpell = millis();
+            this.lastCastSpell = GlobalTime.getNow();
         }
     }
 

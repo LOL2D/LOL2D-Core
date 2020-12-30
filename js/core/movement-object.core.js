@@ -62,7 +62,7 @@ export default class MovementObjectCore {
         }
     }
 
-    move() {
+    update() {
         // add positionTracks
         this.positionTracks.push({
             x: this.position.x,
@@ -75,6 +75,14 @@ export default class MovementObjectCore {
         }
 
         // move to destination
+        this.move();
+
+        // bound position
+        let bounded = this.applyBound(this.position.x, this.position.y);
+        this.position.set(bounded.x, bounded.y);
+    }
+
+    move() {
         const { destination, position, speed } = this;
 
         if (this.isArrivedDestination()) {
@@ -83,10 +91,6 @@ export default class MovementObjectCore {
             let direction = p5.Vector.sub(destination, position);
             this.position.add(direction.setMag(speed));
         }
-
-        // bound position
-        let bounded = this.applyBound(position.x, position.y);
-        this.position.set(bounded.x, bounded.y);
     }
 
     isArrivedDestination() {
