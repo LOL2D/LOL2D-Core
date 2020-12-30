@@ -20,7 +20,7 @@ export default class TurretCore {
         this.healDelayTime = 1000;
         this.lastHealTime = 0;
         this.healValue = 100;
-        this.healManaValue = 180;
+        this.healManaValue = 50;
 
         this.sightRadius = 500;
         this.world = null;

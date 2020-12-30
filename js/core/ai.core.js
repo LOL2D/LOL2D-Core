@@ -81,11 +81,17 @@ export default class AICore {
             }
 
             // spell to it - add random check here to decrease power of AI :)
-            if (random(1) < 0.5) {
+            if (random(1) < 0.1) {
                 const dest = targetChamp.position.copy();
-                const spellId = random([1, 2, 3, 4]);
+                const spellId = random([
+                    "spell1",
+                    "spell2",
+                    "spell3",
+                    "spell4",
+                    "basicAttack",
+                ]);
 
-                this.champion.castSpell("spell" + spellId, dest);
+                this.champion.castSpell(spellId, dest);
             }
 
             // get closer to targetChamp

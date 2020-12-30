@@ -190,7 +190,7 @@ export default class WorldCore {
                 // heal for killer
                 if (champ.killedBy && champ.killedBy.owner) {
                     champ.killedBy.owner.heal(200);
-                    champ.killedBy.owner.addMana(200);
+                    champ.killedBy.owner.addMana(100);
                 }
 
                 // spawn at base

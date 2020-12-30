@@ -39,7 +39,7 @@ export default class ChampionCore extends MovementObjectCore {
         // base statistic
         this.sightRadius = 500;
         this.maxHealth = 1000;
-        this.maxMana = 1000;
+        this.maxMana = 400;
         this.fakeHealth = 0;
         this.healthRegen = 0;
         this.manaRegen = 0;
@@ -50,7 +50,7 @@ export default class ChampionCore extends MovementObjectCore {
         this.level = 0;
         this.health = this.maxHealth;
         this.mana = this.maxMana;
-        this.basicAttackDamage = 30;
+        this.basicAttackDamage = 15;
         this.basicAttackRadius = 250;
 
         // UI
