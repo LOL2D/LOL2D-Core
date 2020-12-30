@@ -13,7 +13,7 @@ export default class TurretCore {
         this.attackRadius = 350;
         this.attackDelayTime = 1500;
         this.lastAttackTime = 0;
-        this.attackDamage = 100;
+        this.attackDamage = 60;
         this.attackTarget = null;
 
         this.healRadius = 350;
@@ -35,19 +35,42 @@ export default class TurretCore {
     }
 
     show() {
+        // draw turret
         fill(this.fillColor);
         stroke(this.strokeColor);
         strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.radius * 2);
 
-        fill(Helper.Color.applyColorAlpha(this.fillColor, 20));
-        stroke("#555");
-        strokeWeight(this.strokeWeight);
-        circle(this.position.x, this.position.y, this.attackRadius * 2);
+        // draw attack radius
+        if (this.isAllyWithPlayer) {
+            fill("#0000");
+            stroke("#5555");
+            strokeWeight(this.strokeWeight);
+            circle(this.position.x, this.position.y, this.attackRadius * 2);
+        }
 
-        // red line to target
         if (this.attackTarget) {
-            stroke("#f005");
+            // hightlight attack zone
+            if (
+                !this.isAllyWithPlayer &&
+                this.attackTarget == this.world.player
+            ) {
+                Helper.Color.createRadialGradient(
+                    p5.instance,
+                    this.position.x,
+                    this.position.y,
+                    max(0, this.attackRadius - 50),
+                    this.attackRadius,
+                    [
+                        { stop: 0, color: "#f001" },
+                        { stop: 1, color: "#f005" },
+                    ]
+                );
+                circle(this.position.x, this.position.y, this.attackRadius * 2);
+            }
+
+            // red line to target
+            stroke("#f00");
             line(
                 this.position.x,
                 this.position.y,

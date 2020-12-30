@@ -59,6 +59,14 @@ export default class WorldCore {
         // turrets
         this.turrets.push(
             new TurretCore({
+                position: this.playerBase.copy(),
+                fillColor: "green",
+                isAllyWithPlayer: true,
+                world: this,
+            })
+        );
+        this.turrets.push(
+            new TurretCore({
                 position: this.enemyBase.copy(),
                 fillColor: "red",
                 isAllyWithPlayer: false,
@@ -66,19 +74,7 @@ export default class WorldCore {
             })
         );
 
-        let allyTurrets = [
-            [300, this.groundMap.height - 300],
-            [1590, 4788],
-            [521, 4450],
-            [1942, 5850],
-            [2995, 5775],
-            [4558, 5962],
-            [2153, 4346],
-            [2543, 3687],
-            [604, 3557],
-            [410, 1859],
-        ];
-        for (let pos of allyTurrets) {
+        for (let pos of this.terrainMapData.turret1) {
             this.turrets.push(
                 new TurretCore({
                     position: createVector(pos[0], pos[1]),
@@ -89,15 +85,7 @@ export default class WorldCore {
             );
         }
 
-        let enemyTurrets = [
-            [this.groundMap.height - 300, 300],
-            [5454, 779],
-            [5646, 967],
-            [4517, 518],
-            [4790, 1617],
-            [5898, 1922],
-        ];
-        for (let pos of enemyTurrets) {
+        for (let pos of this.terrainMapData.turret2) {
             this.turrets.push(
                 new TurretCore({
                     position: createVector(pos[0], pos[1]),

@@ -35,22 +35,38 @@ export default class TerrainMapCore {
     }
 
     jsonDataToPolygon(jsonData) {
-        let result = [];
-
         let { WALL, BRUSH, WATER, TURRET } = TERRAIN_TYPE;
 
+        let result = [];
         result.push(...this.jsonArrayToPolygon(jsonData.wall, WALL));
         result.push(...this.jsonArrayToPolygon(jsonData.brush, BRUSH));
         result.push(...this.jsonArrayToPolygon(jsonData.water, WATER));
-        result.push(...this.jsonArrayToPolygon(jsonData.turret1, TURRET));
-        result.push(...this.jsonArrayToPolygon(jsonData.turret2, TURRET));
-
-        console.log(result.length + " terrain polygons.");
+        result.push(...this.jsonArrayToCircle(jsonData.turret1, 50, TURRET));
+        result.push(...this.jsonArrayToCircle(jsonData.turret2, 50, TURRET));
 
         return result;
     }
 
+    jsonArrayToCircle(jsonArr, radius, type) {
+        // use for turret
+        let result = [];
+        for (let circlePos of jsonArr) {
+            result.push({
+                type,
+                radius,
+                position: { x: circlePos[0], y: circlePos[1] },
+                bound: Helper.Boundary.circle({
+                    x: circlePos[0],
+                    y: circlePos[1],
+                    radius,
+                }),
+            });
+        }
+        return result;
+    }
+
     jsonArrayToPolygon(jsonArr, type) {
+        // use for wall, brush, water
         let result = [];
         for (let polyArr of jsonArr) {
             result.push({
@@ -82,17 +98,28 @@ export default class TerrainMapCore {
         let response = new SAT.Response();
         let collided = false;
 
-        for (let poly of data) {
+        for (let terrain of data) {
             response.clear();
 
-            SATcollided = SAT.testPolygonCircle(
-                new SAT.Polygon(
-                    new SAT.Vector(),
-                    poly.path.map((p) => new SAT.Vector(p.x, p.y))
-                ),
-                champion.getSATBody(),
-                response
-            );
+            if (terrain.type == TERRAIN_TYPE.TURRET) {
+                SATcollided = SAT.testCircleCircle(
+                    new SAT.Circle(
+                        new SAT.Vector(terrain.position.x, terrain.position.y),
+                        terrain.radius
+                    ),
+                    champion.getSATBody(),
+                    response
+                );
+            } else if (terrain.type == TERRAIN_TYPE.WALL) {
+                SATcollided = SAT.testPolygonCircle(
+                    new SAT.Polygon(
+                        new SAT.Vector(),
+                        terrain.path.map((p) => new SAT.Vector(p.x, p.y))
+                    ),
+                    champion.getSATBody(),
+                    response
+                );
+            }
 
             if (SATcollided) {
                 champion.position.x += response.overlapV.x;
@@ -106,10 +133,14 @@ export default class TerrainMapCore {
     }
 
     show(camera) {
-        let data = this.getTerrainsInView(camera);
+        let data = this.getTerrainsInView(camera, [
+            TERRAIN_TYPE.WALL,
+            TERRAIN_TYPE.BRUSH,
+            TERRAIN_TYPE.WATER,
+        ]);
 
-        for (let poly of data) {
-            switch (poly.type) {
+        for (let terrain of data) {
+            switch (terrain.type) {
                 case TERRAIN_TYPE.WALL:
                     strokeWeight(5);
                     stroke("#555");
@@ -126,16 +157,10 @@ export default class TerrainMapCore {
                     noStroke();
                     fill("#082740");
                     break;
-
-                case TERRAIN_TYPE.TURRET:
-                    strokeWeight(4);
-                    stroke("#555");
-                    fill("#555");
-                    break;
             }
 
             beginShape();
-            for (let p of poly.path) {
+            for (let p of terrain.path) {
                 vertex(p.x, p.y);
             }
             endShape(CLOSE);

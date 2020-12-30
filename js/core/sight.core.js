@@ -63,7 +63,7 @@ export default class SightCore {
             let polygonsInSight = terrainMap.getTerrainsInSight(champ, [
                 TERRAIN_TYPE.WALL,
                 TERRAIN_TYPE.BRUSH,
-                TERRAIN_TYPE.TURRET,
+                // TERRAIN_TYPE.TURRET,
             ]);
 
             // check if champ is in brush
