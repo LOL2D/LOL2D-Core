@@ -36,24 +36,12 @@ export default class AICore {
         // basic move
         if (this.mode == "attack") {
             if (this.champion.isArrivedDestination()) {
-                let len = random(100, 1000);
-                let newTarget = this.champion.position
-                    .copy()
-                    .add(random(-len, len), random(-len, len));
-
-                newTarget.x = constrain(
-                    newTarget.x,
-                    this.champion.radius,
-                    this.champion.world.groundMap.width - this.champion.radius
+                let zone = 700;
+                let { width, height } = this.champion.world.groundMap;
+                this.champion.destination.set(
+                    width * 0.5 + random(-zone, zone),
+                    height * 0.5 + random(-zone, zone)
                 );
-
-                newTarget.y = constrain(
-                    newTarget.y,
-                    this.champion.radius,
-                    this.champion.world.groundMap.height - this.champion.radius
-                );
-
-                this.champion.destination.set(newTarget.x, newTarget.y);
             }
         }
     }
@@ -151,6 +139,7 @@ export default class AICore {
 
             if (fullResources || moreHealthThanTarget) {
                 this.mode = "attack";
+                this.champion.removeDestination(); // go back to attack zone
             }
         } else {
             let outOfResources =
