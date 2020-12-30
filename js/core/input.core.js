@@ -26,8 +26,6 @@ export default class InputCore {
         // basic attack
         this.enemyAtMouse = this.getEnemyAtMouse();
         if (this.enemyAtMouse) {
-            cursor(GlobalAssets.cursor.fight);
-
             // hightlight target
             noFill();
             stroke("red");
@@ -37,8 +35,6 @@ export default class InputCore {
                 this.enemyAtMouse.position.y,
                 this.enemyAtMouse.radius * 2.5
             );
-        } else {
-            cursor(GlobalAssets.cursor.normal);
         }
 
         // show indicator

@@ -21,7 +21,7 @@ function preloadData() {
         console.log("load asset finished");
         loadedAsset = true;
 
-        cursor(GlobalAssets.cursor.normal);
+        cursor(GlobalAssets.cursor.hand);
     });
 
     loadMap("summoner-rift", () => {

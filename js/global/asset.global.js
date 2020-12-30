@@ -21,6 +21,7 @@ const assetPaths = [
 let GlobalAssets = {
     // cursor (do not need to loadImage)
     cursor: {
+        hand: "asset/image/cursor/oldhand.cur",
         normal: "asset/image/cursor/normal.cur",
         fight: "asset/image/cursor/alt.cur",
         ally: "asset/image/cursor/link.cur",
