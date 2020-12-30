@@ -57,20 +57,22 @@ export default class AICore {
         });
 
         // reset target champ
+        this.totalEnemyHealth = 0;
         this.targetChamp = null;
 
         if (enemies.length > 0) {
             // find champion that have lowest health
-            let targetChamp = enemies[0];
+            let target = enemies[0];
             for (let e of enemies) {
-                if (e.health <= targetChamp.health) {
-                    targetChamp = e;
+                this.totalEnemyHealth += e.health;
+                if (e.health <= target.health) {
+                    target = e;
                 }
             }
 
             // spell to it - add random check here to decrease power of AI :)
             if (random(1) < 0.1) {
-                const dest = targetChamp.position.copy();
+                const dest = target.position.copy();
                 const spellId = random([
                     "spell1",
                     "spell2",
@@ -87,15 +89,13 @@ export default class AICore {
             let followRange = 250; // this.champion.attackRange; // not available yet
             let shouldFollow =
                 // check health
-                this.champion.health >= targetChamp.health &&
+                this.champion.health >= target.health &&
                 // check distance
-                p5.Vector.dist(
-                    this.champion.destination,
-                    targetChamp.position
-                ) > followRange;
+                p5.Vector.dist(this.champion.destination, target.position) >
+                    followRange;
 
             if (shouldFollow) {
-                let vec = targetChamp.position
+                let vec = target.position
                     .copy()
                     .add(
                         random(-followRange, followRange),
@@ -104,7 +104,7 @@ export default class AICore {
 
                 this.champion.destination.set(vec.x, vec.y);
                 // save to use in autoChangeMode
-                this.targetChamp = targetChamp;
+                this.targetChamp = target;
             }
         }
     }
@@ -133,11 +133,11 @@ export default class AICore {
                 this.champion.health > this.champion.maxHealth * 0.9 &&
                 this.champion.mana > this.champion.maxMana * 0.9;
 
-            let moreHealthThanTarget =
-                this.targetChamp &&
-                this.targetChamp.health < this.champion.health;
+            let moreHealthThanEnemy =
+                this.totalEnemyHealth != 0 &&
+                this.champion.health >= this.totalEnemyHealth;
 
-            if (fullResources || moreHealthThanTarget) {
+            if (fullResources || moreHealthThanEnemy) {
                 this.mode = "attack";
                 this.champion.removeDestination(); // go back to attack zone
             }
@@ -146,11 +146,11 @@ export default class AICore {
                 this.champion.health < this.champion.maxHealth * 0.5 ||
                 this.champion.mana < this.champion.maxMana * 0.2;
 
-            let lessHealthThanTarget =
-                this.targetChamp &&
-                this.targetChamp.health < this.champion.health;
+            let lessHealthThanEnemy =
+                this.totalEnemyHealth != 0 &&
+                this.champion.health < this.totalEnemyHealth;
 
-            if ((lessHealthThanTarget || !this.targetChamp) && outOfResources) {
+            if (lessHealthThanEnemy || outOfResources) {
                 this.mode = "defense";
             }
         }
