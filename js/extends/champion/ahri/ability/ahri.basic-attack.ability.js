@@ -76,11 +76,5 @@ export default class AhriBasicAttack extends AbilityCore {
         }
     }
 
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
-
     // other functions here
 }

@@ -54,11 +54,5 @@ export default class Charm extends AbilityCore {
         this.owner.world.addNewSpellObjects(orbObj);
     }
 
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
-
     // other functions here
 }

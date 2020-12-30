@@ -18,7 +18,6 @@ export default class ChampionCore extends MovementObjectCore {
         this.speed = 3;
 
         // abilities
-        this.crowdControls = [];
         this.status = {
             movement: ALLOWED,
             attacking: ALLOWED,
@@ -52,6 +51,8 @@ export default class ChampionCore extends MovementObjectCore {
         this.mana = this.maxMana;
         this.basicAttackDamage = 15;
         this.basicAttackRadius = 250;
+
+        this.isCheckCollideTerrain = true;
 
         // UI
         this.world = null;
@@ -113,6 +114,7 @@ export default class ChampionCore extends MovementObjectCore {
         }
     }
 
+    // override
     update() {
         super.update();
 
@@ -131,6 +133,11 @@ export default class ChampionCore extends MovementObjectCore {
                 this.combatTexts.splice(i, 1);
             }
         }
+    }
+
+    // override
+    move() {
+        if (this.status.movement == ALLOWED) super.move();
     }
 
     basicAttack(destination) {
@@ -226,7 +233,7 @@ export default class ChampionCore extends MovementObjectCore {
         this.health = health;
         this.mana = mana;
         this.position.set(position.x, position.y);
-        this.destination.set(position.x, position.y);
+        this.moveTo(position.x, position.y);
         this.killedBy = null;
     }
 

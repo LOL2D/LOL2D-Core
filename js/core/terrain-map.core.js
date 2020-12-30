@@ -89,6 +89,8 @@ export default class TerrainMapCore {
     }
 
     effect(champion) {
+        if (!champion.isCheckCollideTerrain) return;
+
         let data = this.getTerrainsNearChampion(champion, [
             TERRAIN_TYPE.WALL,
             TERRAIN_TYPE.TURRET,

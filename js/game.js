@@ -126,14 +126,14 @@ function keyPressed() {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         world.player.position.set(m.x, m.y);
-        world.player.destination.set(m.x, m.y);
+        world.player.moveTo(m.x, m.y);
     } else if (key == "g") {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         for (let champ of world.champions) {
             if (!champ.isAllyWithPlayer) {
                 champ.position.set(m.x, m.y);
-                champ.destination.set(m.x, m.y);
+                champ.moveTo(m.x, m.y);
             }
         }
     } else if (key == "f") {
@@ -142,7 +142,7 @@ function keyPressed() {
         for (let champ of world.champions) {
             if (champ.isAllyWithPlayer && champ != world.player) {
                 champ.position.set(m.x, m.y);
-                champ.destination.set(m.x, m.y);
+                champ.moveTo(m.x, m.y);
             }
         }
     }

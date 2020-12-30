@@ -1,9 +1,11 @@
 import { ALLOWED, NO } from "../constant/crowd-control.constant.js";
-import GlobalTime from "../global/time.global.js";
 import Helper from "../helper/index.js";
+import EffectOnChampion from "./effect-on-champion.core.js";
 
-export default class CrowdControlCore {
+export default class CrowdControlCore extends EffectOnChampion {
     constructor(config = {}) {
+        super(config);
+
         this.movement = ALLOWED;
         this.attacking = ALLOWED;
         this.abilities = ALLOWED;
@@ -11,14 +13,13 @@ export default class CrowdControlCore {
         this.disabledSummonerSpells = [];
         this.removal = [];
 
-        this.duration = 0;
-        this.owner = null; // tướng tạo ra crowd control này
-        this.target = null; // tướng chịu tác dụng của crowd control này
-
-        this.startTime = GlobalTime.getNow();
-
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    effect() {}
+    // override
+    onEffect() {
+        this.target.status.movement = this.movement;
+        this.target.status.attacking = this.attacking;
+        this.target.status.abilities = this.abilities;
+    }
 }

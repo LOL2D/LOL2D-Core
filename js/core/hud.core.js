@@ -186,6 +186,12 @@ export default class HUDCore {
             text(Helper.Format.abilityCountDown(cd), x, y);
         }
 
+        // not enough mana
+        else if (this.world.player.mana < ability.cost) {
+            fill("#2229");
+            rect(b.x, b.y, b.w, b.h);
+        }
+
         // ability available
         else {
             if (isHovered) {

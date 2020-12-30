@@ -72,11 +72,5 @@ export default class Flash extends AbilityCore {
         );
     }
 
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
-
     // other functions here
 }

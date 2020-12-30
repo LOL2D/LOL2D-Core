@@ -9,20 +9,21 @@ export default class AbilityCore {
         this.lastCastSpell = 0;
         this.cooldown = 0;
         this.cost = 0;
-        this.time = 0;
 
         Helper.Other.setValueFromConfig(this, config);
     }
 
+    showIndicator(destination) {}
+
     castSpell(destination) {
         this.lastCastSpell = GlobalTime.getNow();
         this.cost > 0 && this.owner.loseMana(this.cost);
-        this.onStarted();
     }
 
     isCoolDownFinished() {
         return (
-            !this.lastCastSpell || GlobalTime.getNow() - this.lastCastSpell > this.cooldown
+            !this.lastCastSpell ||
+            GlobalTime.getNow() - this.lastCastSpell > this.cooldown
         );
     }
 
@@ -31,10 +32,9 @@ export default class AbilityCore {
         if (!this.lastCastSpell) return 0;
 
         // đã dùng chiêu ít nhất 1 lần
-        return max(0, this.cooldown - (GlobalTime.getNow() - this.lastCastSpell));
+        return max(
+            0,
+            this.cooldown - (GlobalTime.getNow() - this.lastCastSpell)
+        );
     }
-
-    showIndicator(destination) {}
-    onStarted() {}
-    onFinished() {}
 }

@@ -72,12 +72,6 @@ export default class FoxFire extends AbilityCore {
         this.owner.world.addNewSpellObjects(listFireFoxObjects);
     }
 
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
-
     // other functions here
     isReadyToNextEffect() {
         return GlobalTime.getNow() - this.lastEffectTime > this.nextEffectDelay;

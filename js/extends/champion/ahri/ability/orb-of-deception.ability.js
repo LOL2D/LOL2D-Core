@@ -38,7 +38,7 @@ export default class OrbOfDeception extends AbilityCore {
     castSpell(destination) {
         super.castSpell(destination);
 
-        const { to: target } = Helper.Vector.getVectorWithRange(
+        const { to: dest } = Helper.Vector.getVectorWithRange(
             this.owner.position.copy(),
             destination,
             this.effectRadius
@@ -48,16 +48,10 @@ export default class OrbOfDeception extends AbilityCore {
             position: this.owner.position.copy(),
             owner: this.owner,
             damage: this.damage,
-            destination: target,
+            destination: dest,
             radius: this.width * 0.5,
         });
 
         this.owner.world.addNewSpellObjects(orbObj);
     }
-
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
 }

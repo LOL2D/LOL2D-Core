@@ -31,11 +31,5 @@ export default class AbilityName extends AbilityCore {
     // override
     castSpell(destination) {}
 
-    // override
-    onStarted() {}
-
-    // override
-    onFinished() {}
-
     // other functions here
 }

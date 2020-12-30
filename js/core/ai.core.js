@@ -38,7 +38,7 @@ export default class AICore {
             if (this.champion.isArrivedDestination()) {
                 let zone = 700;
                 let { width, height } = this.champion.world.groundMap;
-                this.champion.destination.set(
+                this.champion.moveTo(
                     width * 0.5 + random(-zone, zone),
                     height * 0.5 + random(-zone, zone)
                 );
@@ -102,7 +102,7 @@ export default class AICore {
                         random(-followRange, followRange)
                     );
 
-                this.champion.destination.set(vec.x, vec.y);
+                this.champion.moveTo(vec.x, vec.y);
 
                 // save to use in autoChangeMode
                 this.targetChamp = target;
@@ -114,13 +114,13 @@ export default class AICore {
         // move to turret if health is low
         if (this.mode == "defense") {
             if (this.champion.isAllyWithPlayer)
-                this.champion.destination.set(
+                this.champion.moveTo(
                     this.champion.radius * 2,
                     this.champion.world.groundMap.height -
                         this.champion.radius * 2
                 );
             else
-                this.champion.destination.set(
+                this.champion.moveTo(
                     this.champion.world.groundMap.width -
                         this.champion.radius * 2,
                     this.champion.radius * 2

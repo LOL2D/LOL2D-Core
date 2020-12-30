@@ -168,7 +168,7 @@ export default class InputCore {
                 this.world.player.position,
                 this.world.player.basicAttackRadius
             );
-            this.world.player.destination.set(vecRange.to.x, vecRange.to.y);
+            this.world.player.moveTo(vecRange.to.x, vecRange.to.y);
         } else {
             // stop move to attack
             this.world.player.removeDestination();

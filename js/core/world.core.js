@@ -31,6 +31,7 @@ export default class WorldCore {
         this.terrainMap = null;
         this.camera = null;
 
+        this.effectOnChampions = [];
         this.abilityObjects = [];
         this.champions = [];
         this.turrets = [];
@@ -183,6 +184,18 @@ export default class WorldCore {
             ai.update();
         }
 
+        for (let i = this.effectOnChampions.length - 1; i >= 0; i--) {
+            this.effectOnChampions[i].update();
+
+            // effect
+            this.effectOnChampions[i].onEffect();
+
+            // check finish
+            if (this.effectOnChampions[i].isFinished) {
+                this.effectOnChampions.splice(i, 1);
+            }
+        }
+
         for (let champ of this.champions) {
             champ.update();
 
@@ -276,11 +289,22 @@ export default class WorldCore {
             ao.show();
         }
 
+        for (let ef of this.effectOnChampions) {
+            ef.show();
+        }
+
         this.camera.endState();
         // ================ END state camera ================
 
         // draw hud
         this.hud.show();
+    }
+
+    addNewEffectOnChampion(effect) {
+        if (effect) {
+            if (Array.isArray(effect)) this.effectOnChampions.push(...effect);
+            else this.effectOnChampions.push(effect);
+        }
     }
 
     addNewSpellObjects(something) {
