@@ -8,7 +8,7 @@ export default class Flash extends AbilityCore {
         super(config);
 
         // override
-        this.cooldown = 10000;
+        this.cooldown = 30000;
         this.cost = 0; // Mana
         this.imagePath = "asset/image/spell/Flash.png";
 
