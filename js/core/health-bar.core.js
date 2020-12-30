@@ -29,7 +29,7 @@ export default class HealthBarCore {
 
     show() {
         let topleft = {
-            x: this.champion.position.x - this.width / 2,
+            x: this.champion.position.x - this.width * 0.5,
             y:
                 this.champion.position.y -
                 this.champion.radius -
@@ -38,8 +38,8 @@ export default class HealthBarCore {
         };
 
         this.position.set(
-            topleft.x + this.width / 2,
-            topleft.y + this.height / 2
+            topleft.x + this.width * 0.5,
+            topleft.y + this.height * 0.5
         );
 
         // background
@@ -47,8 +47,8 @@ export default class HealthBarCore {
         stroke(this.borderColor);
         strokeWeight(this.borderWidth);
         rect(
-            topleft.x - this.borderWidth / 2,
-            topleft.y - this.borderWidth / 2,
+            topleft.x - this.borderWidth * 0.5,
+            topleft.y - this.borderWidth * 0.5,
             this.width + this.borderWidth,
             this.height + this.borderWidth,
             ...this.borderRadius
@@ -102,13 +102,13 @@ export default class HealthBarCore {
         strokeWeight(1);
         text(
             this.champion.level,
-            topleft.x + this.height / 2,
-            topleft.y + this.height / 2
+            topleft.x + this.height * 0.5,
+            topleft.y + this.height * 0.5
         );
 
         // name
         fill(this.nameColor);
         stroke(this.nameStroke);
-        text(this.champion.name, topleft.x + this.width / 2, topleft.y - 14);
+        text(this.champion.name, topleft.x + this.width * 0.5, topleft.y - 14);
     }
 }

@@ -48,7 +48,7 @@ export default class Charm extends AbilityCore {
             owner: this.owner,
             damage: this.damage,
             destination: target,
-            radius: this.width / 2,
+            radius: this.width * 0.5,
         });
 
         this.owner.world.addNewSpellObjects(orbObj);

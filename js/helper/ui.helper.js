@@ -23,7 +23,7 @@ const UIHelper = {
         push();
         translate(from.x, from.y);
         rotate(angle);
-        rect(0, -rectWidth / 2, rectLength, rectWidth);
+        rect(0, -rectWidth * 0.5, rectLength, rectWidth);
         pop();
     },
 };

@@ -1,3 +1,4 @@
+import DEFAULT_HOTKEYS from "../constant/hotkeys.constant.js";
 import GlobalAssets from "../global/asset.global.js";
 import GlobalGameConfig from "../global/game-config.global.js";
 import Helper from "../helper/index.js";
@@ -10,6 +11,15 @@ export default class HUDCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
+    setScale(value) {
+        this.scale = value;
+
+        this.topleft = {
+            x: width * 0.5 - 300,
+            y: height - 80,
+        };
+    }
+
     show() {
         this.showMainHud();
     }
@@ -17,77 +27,131 @@ export default class HUDCore {
     showMainHud() {
         let player = this.world.player;
 
-        // item
+        // --------------------- item ---------------------
         image(
             GlobalAssets["asset/image/hud/item.png"],
-            width / 2 + 390,
+            width * 0.5 + 390,
             height - 82
         );
 
-        // ability
+        // --------------------- ability ---------------------
         image(
             GlobalAssets["asset/image/hud/ability.png"],
-            width / 2,
+            width * 0.5,
             height - 85
         );
 
         this.showAbility(
             player.abilities.spell1,
-            width / 2 - 130,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastSpell1),
+            width * 0.5 - 130,
             height - 85 - 25
         );
         this.showAbility(
             player.abilities.spell2,
-            width / 2 - 55,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastSpell2),
+            width * 0.5 - 55,
             height - 85 - 25
         );
         this.showAbility(
             player.abilities.spell3,
-            width / 2 + 18,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastSpell3),
+            width * 0.5 + 18,
             height - 85 - 25
         );
         this.showAbility(
             player.abilities.spell4,
-            width / 2 + 90,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastSpell4),
+            width * 0.5 + 90,
             height - 85 - 25
         );
+        this.showAbility(
+            player.abilities.avatarSpell1,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastAvatarSpell1),
+            width * 0.5 + 168,
+            height - 118,
+            43,
+            43
+        );
+        this.showAbility(
+            player.abilities.avatarSpell2,
+            String.fromCharCode(DEFAULT_HOTKEYS.CastAvatarSpell2),
+            width * 0.5 + 225,
+            height - 118,
+            43,
+            43
+        );
 
-        // avatar
+        // --------------------- health + mana ---------------------
+        const { health, maxHealth } = player;
+        const healthContainerW = 457;
+        const healthW = map(health, 0, maxHealth, 0, healthContainerW);
+
+        const { mana, maxMana } = player;
+        const manaW = map(mana, 0, maxMana, 0, healthContainerW);
+
+        // health
+        stroke("#000");
+        fill("#019204");
+        rect(width * 0.5 - 215, height - 53, healthW, 20);
+
+        // mana
+        fill("#004CA1");
+        rect(width * 0.5 - 215, height - 30, manaW, 15);
+
+        // text
+        fill("white");
+        text(
+            health + " / " + maxHealth,
+            width * 0.5,
+            height - 51 + GlobalGameConfig.textSize * 0.5
+        );
+        text(
+            mana + " / " + maxMana,
+            width * 0.5,
+            height - 30 + GlobalGameConfig.textSize * 0.5
+        );
+
+        // --------------------- avatar ---------------------
         image(
             GlobalAssets[player.avatarCirclePath],
-            width / 2 - 300,
+            width * 0.5 - 300,
             height - 80
         );
 
         image(
             GlobalAssets["asset/image/hud/avatar.png"],
-            width / 2 - 300,
+            width * 0.5 - 300,
             height - 80
         );
+
+        // level
+        text(player.level, width * 0.5 - 272, height - 25);
     }
 
-    showAbility(ability, x, y) {
+    showAbility(ability, hotkey, x, y, w = 60, h = 60) {
         if (!ability) return;
 
         // bound
         let b = {
-            x: x - 30,
-            y: y - 30,
-            w: 60,
-            h: 60,
+            x: x - w * 0.5,
+            y: y - h * 0.5,
+            w: w,
+            h: h,
         };
 
         // image
         image(GlobalAssets[ability.imagePath], x, y, b.w, b.h);
 
         // cost
-        fill("#fff");
-        noStroke();
-        text(
-            ability.cost,
-            b.x + b.w - textWidth(ability.cost) * 0.5,
-            b.y + GlobalGameConfig.textSize * 0.5
-        );
+        if (ability.cost) {
+            fill("#fff");
+            text(
+                ability.cost,
+                b.x + b.w - textWidth(ability.cost) * 0.5,
+                b.y + GlobalGameConfig.textSize * 0.5
+            );
+        }
 
         let isHovered = Helper.Collide.pointRect(
             mouseX,
@@ -109,15 +173,16 @@ export default class HUDCore {
 
             // cooldown
             fill("#0B548E");
-            let h = map(cd, ability.cooldown, 0, 0, b.h);
-            rect(b.x, b.y + h, b.w, b.h - h);
+            let _h = map(cd, ability.cooldown, 0, 0, b.h);
+            rect(b.x, b.y + _h, b.w, b.h - _h);
 
             // hightlight line
             stroke("#fff9");
-            line(b.x, b.y + h, b.x + b.w, b.y + h);
+            line(b.x, b.y + _h, b.x + b.w, b.y + _h);
 
             // cooldown text
             fill("#fff");
+            stroke("#000");
             text(Helper.Format.abilityCountDown(cd), x, y);
         }
 
@@ -125,23 +190,26 @@ export default class HUDCore {
         else {
             if (isHovered) {
                 stroke("#8E7C3C");
-                strokeWeight(4);
                 noFill();
                 rect(b.x, b.y, b.w, b.h);
 
                 // TODO draw in camera view
                 this.world.camera.beginState();
-                ability.showIndicator();
+                ability.showIndicator(this.world.getMousePosition());
                 this.world.camera.endState();
             }
 
             // hightlight border
             else {
                 stroke("#8E7C3C");
-                strokeWeight(2);
                 noFill();
                 rect(b.x, b.y, b.w, b.h);
             }
         }
+
+        // hot key
+        fill("#f5d664");
+        stroke("#000");
+        text(hotkey, b.x, b.y + b.w);
     }
 }

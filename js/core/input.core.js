@@ -43,7 +43,10 @@ export default class InputCore {
 
         // show indicator
         if (this.showIndicatorId) {
-            this.world.player.showIndicator(this.showIndicatorId);
+            this.world.player.showIndicator(
+                this.showIndicatorId,
+                this.mousePos
+            );
         }
 
         // show destination
@@ -90,6 +93,14 @@ export default class InputCore {
 
             case hotkeys.CastSpell4:
                 this.showIndicatorId = "spell4";
+                break;
+
+            case hotkeys.CastAvatarSpell1:
+                this.showIndicatorId = "avatarSpell1";
+                break;
+
+            case hotkeys.CastAvatarSpell2:
+                this.showIndicatorId = "avatarSpell2";
                 break;
 
             default:

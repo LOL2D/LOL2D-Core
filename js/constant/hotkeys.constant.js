@@ -33,8 +33,8 @@ const DEFAULT_HOTKEYS = {
     // SelfCastSpell4: [ALT, 82], // Alt R
 
     // phép bổ trợ
-    CastAvatarSpell1: 70, // D
-    CastAvatarSpell2: 71, // F
+    CastAvatarSpell1: 68, // D
+    CastAvatarSpell2: 70, // F
 
     // sử dụng trang bị có kích hoạt
     UseItem1: 49, // 1

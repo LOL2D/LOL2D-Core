@@ -151,9 +151,9 @@ export default class ChampionCore extends MovementObjectCore {
         this.castSpell("basicAttack", destination);
     }
 
-    showIndicator(abilityKey) {
+    showIndicator(abilityKey, destination) {
         if (this.canSpell(abilityKey))
-            this.abilities[abilityKey].showIndicator();
+            this.abilities[abilityKey].showIndicator(destination);
     }
 
     castSpell(abilityKey, destination) {

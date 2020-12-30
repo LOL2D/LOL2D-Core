@@ -28,7 +28,7 @@ export default class SightCore {
         this.overlay.noErase();
 
         // show overlay
-        image(this.overlay, width / 2, height / 2);
+        image(this.overlay, width * 0.5, height * 0.5);
     }
 
     drawSights() {

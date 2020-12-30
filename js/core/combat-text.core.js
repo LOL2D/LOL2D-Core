@@ -21,7 +21,7 @@ export default class CombatTextCore {
     }
 
     show() {
-        strokeWeight(2);
+        strokeWeight(1);
         stroke(this.colorAlpha);
         fill(this.colorAlpha);
         text(

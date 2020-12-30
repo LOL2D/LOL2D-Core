@@ -32,8 +32,8 @@ export default class CameraCore {
         // move camera on edge
         else if (this.isMouseOnEdge()) {
             let vec = createVector(
-                mouseX - width / 2,
-                mouseY - height / 2
+                mouseX - width * 0.5,
+                mouseY - height * 0.5
             ).setMag(this.borderSpeed);
             this.position.add(vec);
         }

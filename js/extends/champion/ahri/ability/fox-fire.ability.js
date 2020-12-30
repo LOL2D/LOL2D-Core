@@ -26,7 +26,7 @@ export default class FoxFire extends AbilityCore {
     }
 
     // override
-    showIndicator() {
+    showIndicator(destination) {
         stroke(COLOR.ABILITY.INDICATOR.BORDER);
         strokeWeight(3);
         fill("white"); // turn on fill to use Gradient below
@@ -52,7 +52,7 @@ export default class FoxFire extends AbilityCore {
 
     // override
     castSpell(destination) {
-        super.castSpell();
+        super.castSpell(destination);
 
         let listFireFoxObjects = [];
 

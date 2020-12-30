@@ -10,8 +10,8 @@ function draw() {
     background(255);
 
     let b = {
-        x: width / 2 - 50,
-        y: height / 2 - 50,
+        x: width * 0.5 - 50,
+        y: height * 0.5 - 50,
         w: 100,
         h: 100,
     };
@@ -20,7 +20,7 @@ function draw() {
     else cd = cooldown;
 
     // cooldown
-    let h = ~~map(cd, cooldown, 0, b.h / 2, 0);
+    let h = ~~map(cd, cooldown, 0, b.h * 0.5, 0);
     fill("black");
     text(h, 10, 20);
 

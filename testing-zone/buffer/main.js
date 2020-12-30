@@ -15,7 +15,7 @@ function draw() {
     }
 
     textSize(36);
-    text(frameRate(), 50, height / 2);
+    text(frameRate(), 50, height * 0.5);
 }
 
 function drawCircles() {

@@ -35,12 +35,6 @@ export default class TurretCore {
     }
 
     show() {
-        // draw turret
-        fill(this.fillColor);
-        stroke(this.strokeColor);
-        strokeWeight(this.strokeWeight);
-        circle(this.position.x, this.position.y, this.radius * 2);
-
         // draw attack radius
         if (this.isAllyWithPlayer) {
             fill("#0000");
@@ -48,6 +42,12 @@ export default class TurretCore {
             strokeWeight(this.strokeWeight);
             circle(this.position.x, this.position.y, this.attackRadius * 2);
         }
+
+        // draw turret
+        fill(this.fillColor);
+        stroke(this.strokeColor);
+        strokeWeight(this.strokeWeight);
+        circle(this.position.x, this.position.y, this.radius * 2);
 
         if (this.attackTarget) {
             // hightlight attack zone
@@ -62,10 +62,12 @@ export default class TurretCore {
                     max(0, this.attackRadius - 50),
                     this.attackRadius,
                     [
-                        { stop: 0, color: "#f001" },
+                        { stop: 0, color: "#0000" },
                         { stop: 1, color: "#f005" },
                     ]
                 );
+                
+                stroke("#f00");
                 circle(this.position.x, this.position.y, this.attackRadius * 2);
             }
 

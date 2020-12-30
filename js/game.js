@@ -21,8 +21,9 @@ function setup() {
 
     strokeJoin(ROUND);
     strokeCap(ROUND);
-    textAlign(CENTER, CENTER);
     imageMode(CENTER);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
     textFont(GlobalGameConfig.textFont);
     textSize(GlobalGameConfig.textSize);
     pixelDensity(GlobalGameConfig.pixelDensity);
@@ -63,11 +64,11 @@ function draw() {
     if (!focused) {
         fill("#555");
         stroke("white");
-        rect(width / 2 - 120, height / 2 - 50, 240, 100);
+        rect(width * 0.5 - 120, height * 0.5 - 50, 240, 100);
 
         fill("white");
         noStroke();
-        text("PAUSED\n- click to continue -", width / 2, height / 2);
+        text("PAUSED\n- click to continue -", width * 0.5, height * 0.5);
     }
 
     // focused
@@ -100,19 +101,27 @@ function keyPressed() {
         world.camera.follow(
             world.champions[~~random(world.champions.length - 1)].position
         );
-    } else if (key == "d") {
+    } else if (key == "c") {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         world.player.position.set(m.x, m.y);
         world.player.destination.set(m.x, m.y);
-    } else if (key == "t") {
+    } else if (key == "g") {
         let m = world.camera.canvasToWorld(mouseX, mouseY);
 
         for (let champ of world.champions) {
             if (!champ.isAllyWithPlayer) {
                 champ.position.set(m.x, m.y);
                 champ.destination.set(m.x, m.y);
-                break;
+            }
+        }
+    } else if (key == "f") {
+        let m = world.camera.canvasToWorld(mouseX, mouseY);
+
+        for (let champ of world.champions) {
+            if (champ.isAllyWithPlayer && champ != world.player) {
+                champ.position.set(m.x, m.y);
+                champ.destination.set(m.x, m.y);
             }
         }
     }

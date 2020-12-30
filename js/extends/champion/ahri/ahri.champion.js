@@ -4,6 +4,7 @@ import OrbOfDeception from "./ability/orb-of-deception.ability.js";
 import FoxFire from "./ability/fox-fire.ability.js";
 import Charm from "./ability/charm.ability.js";
 import SpriritRush from "./ability/spririt-rush.ability.js";
+import Flash from "../../summoner-spell/flash.spell.js";
 
 export default class Ahri extends ChampionCore {
     constructor(config = {}) {
@@ -22,7 +23,7 @@ export default class Ahri extends ChampionCore {
             spell3: new Charm({ owner: this }),
             spell4: new SpriritRush({ owner: this }),
 
-            avatarSpell1: null,
+            avatarSpell1: new Flash({ owner: this }),
             avatarSpell2: null,
         };
     }

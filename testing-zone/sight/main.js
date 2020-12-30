@@ -49,7 +49,7 @@ function drawUseErase() {
 
     // magic here
     fovUsingErase(mouseX, mouseY, fovRadius);
-    fovUsingErase(width / 2, height / 2, fovRadius);
+    fovUsingErase(width * 0.5, height * 0.5, fovRadius);
 
     // show overlay on top of ground
     image(overlay, 0, 0);
@@ -64,7 +64,7 @@ function fovUsingErase(x, y, d) {
     overlay.erase();
     overlay.fill(255);
   
-    radialGradient(x, y, d / 2 - 50, d / 2, "#FFF", "#0001");
+    radialGradient(x, y, d * 0.5 - 50, d * 0.5, "#FFF", "#0001");
     overlay.ellipse(x, y, d);
     overlay.noErase();
 }
@@ -82,7 +82,7 @@ function drawUseBlendMode() {
 
     // magic here
     fovUsingBlendMode(mouseX, mouseY, fovRadius);
-    fovUsingBlendMode(width / 2, height / 2, fovRadius);
+    fovUsingBlendMode(width * 0.5, height * 0.5, fovRadius);
 
     // show overlay on top of ground
     image(overlay, 0, 0);
@@ -96,7 +96,7 @@ function drawUseBlendMode() {
 function fovUsingBlendMode(x, y, d) {
     overlay.blendMode(REMOVE);
     //overlay.fill(255);
-    radialGradient(x, y, d / 2 - 50, d / 2, "#FFF", "#0001");
+    radialGradient(x, y, d * 0.5 - 50, d * 0.5, "#FFF", "#0001");
     overlay.ellipse(x, y, d);
     overlay.blendMode(BLEND);
 }
@@ -133,4 +133,4 @@ function drawThings() {
 // overlay.ellipse(x, y, d / 1.25);
 // overlay.ellipse(x, y, d / 1.5);
 // overlay.ellipse(x, y, d / 1.75);
-// overlay.ellipse(x, y, d / 2);
+// overlay.ellipse(x, y, d * 0.5);

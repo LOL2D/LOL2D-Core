@@ -13,8 +13,8 @@ function draw() {
 
     text(
         "Không dùng html để render HUD nữa, render bằng p5js luôn!!\nAi giỏi css html làm dùm thì xin cám ơn :)))",
-        width / 2,
-        height / 2
+        width * 0.5,
+        height * 0.5
     );
 }
 

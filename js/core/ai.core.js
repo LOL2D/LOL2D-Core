@@ -88,6 +88,7 @@ export default class AICore {
                     "spell2",
                     "spell3",
                     "spell4",
+                    "avatarSpell1",
                     "basicAttack",
                 ]);
 

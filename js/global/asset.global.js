@@ -4,6 +4,9 @@ const assetPaths = [
     "asset/image/hud/item.png",
     "asset/image/hud/avatar.png",
 
+    // spell
+    "asset/image/spell/Flash.png",
+
     // ahri
     "asset/image/champion/ahri/Ahri.avatar.circle.png",
     "asset/image/champion/ahri/Ahri.avatar.square.png",

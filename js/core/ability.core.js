@@ -34,7 +34,7 @@ export default class AbilityCore {
         return max(0, this.cooldown - (GlobalTime.getNow() - this.lastCastSpell));
     }
 
-    showIndicator() {}
+    showIndicator(destination) {}
     onStarted() {}
     onFinished() {}
 }

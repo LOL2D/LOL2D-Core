@@ -60,7 +60,7 @@ export default class WorldCore {
         this.turrets.push(
             new TurretCore({
                 position: this.playerBase.copy(),
-                fillColor: "green",
+                fillColor: "#00A201",
                 isAllyWithPlayer: true,
                 world: this,
             })
@@ -68,7 +68,7 @@ export default class WorldCore {
         this.turrets.push(
             new TurretCore({
                 position: this.enemyBase.copy(),
-                fillColor: "red",
+                fillColor: "#F43E07",
                 isAllyWithPlayer: false,
                 world: this,
             })
@@ -78,7 +78,7 @@ export default class WorldCore {
             this.turrets.push(
                 new TurretCore({
                     position: createVector(pos[0], pos[1]),
-                    fillColor: "green",
+                    fillColor: "#00A201",
                     isAllyWithPlayer: true,
                     world: this,
                 })
@@ -89,7 +89,7 @@ export default class WorldCore {
             this.turrets.push(
                 new TurretCore({
                     position: createVector(pos[0], pos[1]),
-                    fillColor: "red",
+                    fillColor: "#F43E07",
                     isAllyWithPlayer: false,
                     world: this,
                 })
