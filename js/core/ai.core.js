@@ -140,18 +140,27 @@ export default class AICore {
 
     autoChangeMode() {
         if (this.mode == "defense") {
-            if (
+            let fullResources =
                 this.champion.health > this.champion.maxHealth * 0.9 ||
-                this.champion.mana > this.champion.maxMana * 0.9
-            ) {
+                this.champion.mana > this.champion.maxMana * 0.9;
+
+            let moreHealthThanTarget =
+                this.targetChamp &&
+                this.targetChamp.health < this.champion.health;
+
+            if (fullResources || moreHealthThanTarget) {
                 this.mode = "attack";
             }
         } else {
-            if (
-                !this.targetChamp &&
-                (this.champion.health < this.champion.maxHealth * 0.5 ||
-                    this.champion.mana < this.champion.maxMana * 0.2)
-            ) {
+            let outOfResources =
+                this.champion.health < this.champion.maxHealth * 0.5 ||
+                this.champion.mana < this.champion.maxMana * 0.2;
+
+            let lessHealthThanTarget =
+                this.targetChamp &&
+                this.targetChamp.health < this.champion.health;
+
+            if ((lessHealthThanTarget || !this.targetChamp) && outOfResources) {
                 this.mode = "defense";
             }
         }
