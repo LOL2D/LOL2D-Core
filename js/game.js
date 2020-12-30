@@ -48,6 +48,12 @@ function setup() {
     stats = new Stats();
     stats.showPanel(0);
     document.body.appendChild(stats.dom);
+
+    // https://www.html5canvastutorials.com/tutorials/html5-canvas-shadow-text-tutorial/
+    // drawingContext.shadowOffsetX = 3;
+    // drawingContext.shadowOffsetY = 3;
+    // drawingContext.shadowColor = "rgba(0,0,0,0.3)";
+    // drawingContext.shadowBlur = 4;
 }
 
 function draw() {
