@@ -130,7 +130,7 @@ export default class AICore {
     autoChangeMode() {
         if (this.mode == "defense") {
             let fullResources =
-                this.champion.health > this.champion.maxHealth * 0.9 ||
+                this.champion.health > this.champion.maxHealth * 0.9 &&
                 this.champion.mana > this.champion.maxMana * 0.9;
 
             let moreHealthThanTarget =
