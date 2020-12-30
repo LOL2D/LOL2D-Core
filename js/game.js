@@ -10,10 +10,38 @@ import Ahri from "./extends/champion/ahri/ahri.champion.js";
 let world;
 let input;
 let stats;
+let loadedAsset = false;
+let loadedMap = false;
+let playing = false;
 
-function preload() {
-    loadAssets();
-    loadMap("summoner-rift");
+function preload() {}
+
+function preloadData() {
+    loadAssets(() => {
+        console.log("load asset finished");
+        loadedAsset = true;
+
+        cursor(GlobalAssets.cursor.normal);
+    });
+
+    loadMap("summoner-rift", () => {
+        console.log("load map finished");
+        loadedMap = true;
+
+        world = new WorldCore({
+            terrainMapData: GlobalAssets["summoner-rift"],
+            size: 6400,
+            championsClassName: {
+                player: Ahri,
+                allies: [Ahri, Ahri, Ahri, Ahri],
+                enemies: [Ahri, Ahri, Ahri, Ahri, Ahri],
+            },
+        });
+
+        input = new InputCore({
+            world: world,
+        });
+    });
 }
 
 function setup() {
@@ -30,63 +58,54 @@ function setup() {
     frameRate(GlobalGameConfig.limitFPS);
     Helper.Other.preventRightClick();
 
-    cursor(GlobalAssets.cursor.normal);
-
-    world = new WorldCore({
-        terrainMapData: GlobalAssets["summoner-rift"],
-        size: 6400,
-        championsClassName: {
-            player: Ahri,
-            allies: [Ahri, Ahri, Ahri, Ahri],
-            enemies: [Ahri, Ahri, Ahri, Ahri, Ahri],
-        },
-    });
-
-    input = new InputCore({
-        world: world,
-    });
-
     stats = new Stats();
     stats.showPanel(0);
     document.body.appendChild(stats.dom);
 
-    // https://www.html5canvastutorials.com/tutorials/html5-canvas-shadow-text-tutorial/
-    // drawingContext.shadowOffsetX = 3;
-    // drawingContext.shadowOffsetY = 3;
-    // drawingContext.shadowColor = "rgba(0,0,0,0.3)";
-    // drawingContext.shadowBlur = 4;
+    preloadData();
 }
 
 function draw() {
     stats.begin();
 
-    // lose focus
-    if (!focused) {
-        fill("#555");
-        stroke("white");
-        rect(width * 0.5 - 120, height * 0.5 - 50, 240, 100);
+    // loading
+    if (!loadedAsset || !loadedMap) {
+        background(30);
 
         fill("white");
-        noStroke();
-        text("PAUSED\n- click to continue -", width * 0.5, height * 0.5);
+        text("Loading", width / 2, height / 2);
     }
 
-    // focused
+    // loaded
     else {
-        GlobalTime.updateTime();
+        // lose focus
+        if (!focused || !playing) {
+            fill("#555");
+            stroke("white");
+            rect(width * 0.5 - 120, height * 0.5 - 50, 240, 100);
 
-        world.fixedUpdate();
+            fill("white");
+            noStroke();
+            text("PAUSED\n- click to continue -", width * 0.5, height * 0.5);
+        }
 
-        world.show(() => {
-            input.run();
+        // focused
+        else {
+            GlobalTime.updateTime();
 
-            if (mouseIsPressed) {
-                input.mouseIsPressed();
-            }
-            if (keyIsPressed) {
-                input.keyDown(keyCode);
-            }
-        });
+            world.fixedUpdate();
+
+            world.show(() => {
+                input.run();
+
+                if (mouseIsPressed) {
+                    input.mouseIsPressed();
+                }
+                if (keyIsPressed) {
+                    input.keyDown(keyCode);
+                }
+            });
+        }
     }
 
     stats.end();
@@ -133,6 +152,7 @@ function keyTyped() {}
 
 function mousePressed() {
     input.mousePressed();
+    if (!playing) playing = true;
 }
 function mouseReleased() {}
 function mouseClicked() {}

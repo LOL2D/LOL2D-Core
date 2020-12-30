@@ -28,18 +28,26 @@ let GlobalAssets = {
     },
 };
 
-function loadAssets() {
+function loadAssets(callback) {
+    let i = 0;
+
     for (let path of assetPaths) {
         loadImage(path, (data) => {
             GlobalAssets[path] = data;
+
+            i++;
+            if (i == assetPaths.length) {
+                callback && callback();
+            }
         });
     }
 }
 
-function loadMap(mapName) {
+function loadMap(mapName, callback) {
     let path = "asset/map/" + mapName + ".json";
     loadJSON(path, (json) => {
         GlobalAssets[mapName] = json;
+        callback && callback(json);
     });
 }
 
