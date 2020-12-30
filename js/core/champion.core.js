@@ -133,23 +133,6 @@ export default class ChampionCore extends MovementObjectCore {
         }
     }
 
-    run() {
-        this.startCrowdControls();
-        if (this.status.movement != DISABLED) this.move();
-        this.update();
-        this.show();
-        this.endCrowdControls();
-    }
-
-    getSightBoundary() {
-        return {
-            x: this.position.x - this.sightRadius,
-            y: this.position.y - this.sightRadius,
-            w: this.sightRadius * 2,
-            h: this.sightRadius * 2,
-        };
-    }
-
     basicAttack(destination) {
         this.castSpell("basicAttack", destination);
     }
@@ -172,18 +155,6 @@ export default class ChampionCore extends MovementObjectCore {
             this.abilities[abilityKey].isCoolDownFinished() &&
             this.mana >= this.abilities[abilityKey].cost
         );
-    }
-
-    startCrowdControls() {
-        for (let c of this.crowdControls) {
-            c.effect(this);
-        }
-    }
-
-    endCrowdControls() {
-        this.status.movement = ALLOWED;
-        this.status.attacking = ALLOWED;
-        this.status.abilities = ALLOWED;
     }
 
     heal(value) {
@@ -261,5 +232,30 @@ export default class ChampionCore extends MovementObjectCore {
 
     isDead() {
         return this.health == 0;
+    }
+
+    // =================== on action-effect ===================
+    // https://leagueoflegends.fandom.com/wiki/On-action_effects
+    // chưa biết làm gì, để tạm ở đây như vậy
+    // vụ dealing/taking nữa ... rối
+    onAttack() {}
+    onCast() {}
+    onCrowdControl() {}
+    onCrit() {}
+    onDamage() {}
+    onDeath() {}
+    onHit() {}
+    onHealing() {}
+    onShielding() {}
+    onSpell() {}
+
+    // =================== utils ===================
+    getSightBoundary() {
+        return {
+            x: this.position.x - this.sightRadius,
+            y: this.position.y - this.sightRadius,
+            w: this.sightRadius * 2,
+            h: this.sightRadius * 2,
+        };
     }
 }

@@ -54,8 +54,10 @@ function setup() {
     textStyle(BOLD);
     textFont(GlobalGameConfig.textFont);
     textSize(GlobalGameConfig.textSize);
-    pixelDensity(GlobalGameConfig.pixelDensity);
     frameRate(GlobalGameConfig.limitFPS);
+    if (GlobalGameConfig.pixelDensity)
+        pixelDensity(GlobalGameConfig.pixelDensity);
+
     Helper.Other.preventRightClick();
 
     stats = new Stats();
