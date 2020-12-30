@@ -188,9 +188,9 @@ export default class WorldCore {
 
             if (champ.isDead()) {
                 // heal for killer
-                if (champ.killedBy && champ.killedBy.owner) {
-                    champ.killedBy.owner.heal(200);
-                    champ.killedBy.owner.addMana(100);
+                if (champ.lastDamageSource) {
+                    champ.lastDamageSource.heal(200);
+                    champ.lastDamageSource.addMana(100);
                 }
 
                 // spawn at base
@@ -203,10 +203,10 @@ export default class WorldCore {
                 });
 
                 // decrease level
-                // if (champ.level > 0) champ.level--;
+                champ.level--;
 
                 // increase killer's level
-                // if (champ.killedBy) champ.killedBy.level++;
+                if (champ.lastDamageSource) champ.lastDamageSource.level++;
 
                 // restore some heal
                 champ.heal(100);

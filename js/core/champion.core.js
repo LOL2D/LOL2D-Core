@@ -63,6 +63,9 @@ export default class ChampionCore extends MovementObjectCore {
         // stand still
         this.removeDestination();
 
+        // check killed
+        this.lastDamageSource = null;
+
         // team
         const c =
             COLOR.HEALTHBAR.HEALTH[this.isAllyWithPlayer ? "ALLY" : "ENEMY"];
@@ -203,7 +206,9 @@ export default class ChampionCore extends MovementObjectCore {
             this.health -= -this.fakeHealth;
             this.fakeHealth = 0;
 
-            if (this.health <= 0) this.killedBy = damageSource;
+            if (damageSource.owner) {
+                this.lastDamageSource = damageSource.owner;
+            }
         }
 
         noStroke();

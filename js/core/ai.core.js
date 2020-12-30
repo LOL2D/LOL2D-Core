@@ -89,7 +89,7 @@ export default class AICore {
             let followRange = 250; // this.champion.attackRange; // not available yet
             let shouldFollow =
                 // check health
-                this.champion.health >= target.health &&
+                this.champion.health >= this.totalEnemyHealth &&
                 // check distance
                 p5.Vector.dist(this.champion.destination, target.position) >
                     followRange;
@@ -103,6 +103,7 @@ export default class AICore {
                     );
 
                 this.champion.destination.set(vec.x, vec.y);
+
                 // save to use in autoChangeMode
                 this.targetChamp = target;
             }
@@ -130,27 +131,36 @@ export default class AICore {
     autoChangeMode() {
         if (this.mode == "defense") {
             let fullResources =
-                this.champion.health > this.champion.maxHealth * 0.9 &&
-                this.champion.mana > this.champion.maxMana * 0.9;
+                this.champion.health > this.champion.maxHealth * 0.7 &&
+                this.champion.mana > this.champion.maxMana * 0.5;
+
+            let haveEnemy = this.totalEnemyHealth != 0;
 
             let moreHealthThanEnemy =
-                this.totalEnemyHealth != 0 &&
                 this.champion.health >= this.totalEnemyHealth;
 
-            if (fullResources || moreHealthThanEnemy) {
+            if (fullResources && !haveEnemy) {
                 this.mode = "attack";
                 this.champion.removeDestination(); // go back to attack zone
+            }
+
+            if (haveEnemy && moreHealthThanEnemy) {
+                this.mode = "attack";
             }
         } else {
             let outOfResources =
                 this.champion.health < this.champion.maxHealth * 0.5 ||
                 this.champion.mana < this.champion.maxMana * 0.2;
 
+            let haveEnemy = this.totalEnemyHealth != 0;
+
             let lessHealthThanEnemy =
-                this.totalEnemyHealth != 0 &&
                 this.champion.health < this.totalEnemyHealth;
 
-            if (lessHealthThanEnemy || outOfResources) {
+            if (
+                (outOfResources && !haveEnemy) ||
+                (lessHealthThanEnemy && haveEnemy)
+            ) {
                 this.mode = "defense";
             }
         }
