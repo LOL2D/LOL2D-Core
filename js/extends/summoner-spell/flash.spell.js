@@ -63,6 +63,13 @@ export default class Flash extends AbilityCore {
 
         this.owner.position.set(to.x, to.y);
         this.owner.removeDestination();
+
+        this.owner.world.addNewSpellObjects(
+            new FlashObject({
+                position: this.owner.position.copy(),
+                radius: this.owner.radius,
+            })
+        );
     }
 
     // override

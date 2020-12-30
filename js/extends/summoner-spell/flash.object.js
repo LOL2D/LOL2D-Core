@@ -6,21 +6,52 @@ export default class FlashObject extends AbilityObjectCore {
         super(config);
 
         // override
-        this.fillColor = "#FDF028";
-        // this.speed = 0;
+        this.fillColor = "#FFFF73";
+        this.strokeColor = "yellow";
 
         // custom attributes
+        this.dots = [];
+
+        for (let i = 0; i < 10; i++) {
+            this.dots.push({
+                x: random(
+                    this.position.x - this.radius,
+                    this.position.x + this.radius
+                ),
+                y: random(
+                    this.position.y - this.radius,
+                    this.position.y + this.radius
+                ),
+                r: random(3, 10),
+            });
+        }
     }
 
     // override
     update() {
         super.update();
 
-        this.radius -= 2;
+        for (let i = this.dots.length - 1; i >= 0; i--) {
+            this.dots[i].x += random(-2, 2);
+            this.dots[i].y += random(-2, 2);
+            this.dots[i].r -= 0.2;
+
+            if (this.dots[i].r <= 0) {
+                this.dots.splice(i, 1);
+            }
+        }
     }
 
     // override
-    // show() {}
+    show() {
+        // super.show(); // DO NOT NEED
+
+        fill(this.fillColor);
+        stroke(this.strokeColor);
+        for (let dot of this.dots) {
+            circle(dot.x, dot.y, dot.r * 2);
+        }
+    }
 
     // override
     // effectChampions(champions) {}
@@ -30,7 +61,7 @@ export default class FlashObject extends AbilityObjectCore {
 
     // override
     checkFinished() {
-        return this.radius <= 0;
+        return this.dots.length <= 0;
     }
 
     // other functions here
