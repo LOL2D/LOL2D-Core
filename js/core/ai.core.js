@@ -50,6 +50,7 @@ export default class AICore {
         // get all enemies in range
         const enemies = this.world.getChampionsInRange({
             rootPosition: this.champion.position,
+            champions: this.champion.championsInSight,
             inRange: this.autoAttackRadius,
             allyWithPlayer: !this.champion.isAllyWithPlayer,
             excludes: [this.champion],
