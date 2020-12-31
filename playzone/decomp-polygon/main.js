@@ -55,7 +55,7 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-    decompPolygon(path, polys);
+    polys = decompPolygon(path);
 }
 
 function mouseDragged() {
@@ -75,12 +75,12 @@ function mouseDragged() {
     }
 }
 
-function decompPolygon(_path, result) {
-    if (_path.length < 3) return;
+function decompPolygon(_path) {
+    if (_path.length < 3) return [];
 
     // Make sure the polygon has counter-clockwise winding. Skip this step if you know it's already counter-clockwise.
     decomp.makeCCW(_path);
 
     // Decompose into convex polygons, using the faster algorithm
-    return decomp.quickDecomp(_path, result);
+    return decomp.quickDecomp(_path);
 }
