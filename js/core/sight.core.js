@@ -179,9 +179,10 @@ export default class SightCore {
         let result = [];
 
         for (let otherChamp of this.world.champions) {
-            // TODO remove self champion
+            // remove self
+            // if (otherChamp == champion) continue;
 
-            // check out of sight radius => continue to increase performance
+            // if out-of-sight-radius => use 'continue' to increase performance
             let distChamp = p5.Vector.dist(
                 otherChamp.position,
                 champion.position
@@ -201,20 +202,17 @@ export default class SightCore {
                 otherChamp.position.y
             );
 
-            let isInVisibility = false;
             for (let poly of decompVisibility) {
-                if (!isInVisibility) {
-                    SATpolygon = new SAT.Polygon(
-                        new SAT.Vector(),
-                        poly.map((p) => new SAT.Vector(p[0], p[1]))
-                    );
+                SATpolygon = new SAT.Polygon(
+                    new SAT.Vector(),
+                    poly.map((p) => new SAT.Vector(p[0], p[1]))
+                );
 
-                    let overlap = SAT.pointInPolygon(SATchamp, SATpolygon);
+                let overlap = SAT.pointInPolygon(SATchamp, SATpolygon);
 
-                    if (overlap) {
-                        result.push(otherChamp);
-                        isInVisibility = true;
-                    }
+                if (overlap) {
+                    result.push(otherChamp);
+                    break;
                 }
             }
         }
@@ -228,18 +226,27 @@ export default class SightCore {
         let result = [...champion.championsInSight];
 
         for (let otherChamp of this.world.champions) {
-            // prevent duplicate
-            if (result.indexOf(otherChamp) >= 0) {
-                continue;
-            }
-
-            // is ally
+            // is ally ?
             if (otherChamp.isAllyWithPlayer == champion.isAllyWithPlayer) {
-                result.push(...otherChamp.championsInSight);
+                // add ally to result array
+                if (result.indexOf(otherChamp) < 0) {
+                    result.push(otherChamp);
+                }
+                // combine ally's championsInSight to result array
+                for (let c of otherChamp.championsInSight) {
+                    if (result.indexOf(c) < 0) {
+                        result.push(c);
+                    }
+                }
             }
 
-            // is enemy
+            // is enemy ?
             else {
+                // prevent duplicate
+                if (result.indexOf(otherChamp) >= 0) {
+                    continue;
+                }
+
                 // check in turret sight radius
                 for (let t of this.world.turrets) {
                     if (t.isAllyWithPlayer == champion.isAllyWithPlayer) {
