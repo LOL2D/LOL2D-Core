@@ -59,8 +59,9 @@ export default class FoxFire extends AbilityCore {
         for (let i = 0; i < this.foxFireCount; i++) {
             listFireFoxObjects.push(
                 new FoxFireObject({
-                    angle: (360 / this.foxFireCount) * i,
+                    world: this.world,
                     owner: this.owner,
+                    angle: (360 / this.foxFireCount) * i,
                     damage: this.damage,
                     speed: this.speed,
                     effectRadius: this.effectRadius,

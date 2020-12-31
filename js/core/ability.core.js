@@ -4,6 +4,7 @@ import Helper from "../helper/index.js";
 // https://leagueoflegends.fandom.com/wiki/Champion_ability
 export default class AbilityCore {
     constructor(config = {}) {
+        this.world = null;
         this.owner = null;
         this.imagePath = null;
         this.lastCastSpell = 0;

@@ -66,7 +66,7 @@ export default class TurretCore {
                         { stop: 1, color: "#f005" },
                     ]
                 );
-                
+
                 stroke("#f00");
                 circle(this.position.x, this.position.y, this.attackRadius * 2);
             }
@@ -116,9 +116,8 @@ export default class TurretCore {
         // do not have target
         else {
             // find closest champion
-            let closestEnemy = Helper.Distance.getClosestChampionInRange({
+            let closestEnemy = this.world.getClosestChampionInRange({
                 rootPosition: this.position,
-                champions: this.world.champions,
                 inRange: this.attackRadius,
                 allyWithPlayer: !this.isAllyWithPlayer,
                 excludes: [],
@@ -133,9 +132,8 @@ export default class TurretCore {
 
     heal() {
         if (this.isReadyToNextHeal()) {
-            let allies = Helper.Distance.getChampionsInRange({
+            let allies = this.world.getChampionsInRange({
                 rootPosition: this.position,
-                champions: this.world.champions,
                 inRange: this.attackRadius,
                 allyWithPlayer: this.isAllyWithPlayer,
                 excludes: [],

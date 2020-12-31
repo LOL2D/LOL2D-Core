@@ -18,7 +18,7 @@ export default class AhriBasicAttackObject extends AbilityObjectCore {
     // show() {}
 
     // override
-    effectChampions(champions) {
+    onEffect() {
         let touchedTarget =
             p5.Vector.dist(this.targetChampion.position, this.position) <
             this.targetChampion.radius;

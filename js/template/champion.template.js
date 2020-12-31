@@ -20,7 +20,7 @@ export default class ChampionName extends ChampionCore {
         this.avatarCirclePath = "asset/path/to/image/...";
 
         this.abilities = {
-            spell1: null, // new OrbOfDeception({ owner: this }),
+            spell1: null, // new OrbOfDeception({ owner: this, world: this.world }),
             spell2: null,
             spell3: null,
             spell4: null,

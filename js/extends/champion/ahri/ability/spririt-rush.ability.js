@@ -44,6 +44,7 @@ export default class SpriritRush extends AbilityCore {
 
         this.owner.world.addNewEffectOnChampion(
             new DashEffect({
+                world: this.world,
                 owner: this.owner,
                 target: this.owner,
                 destination: dest,

@@ -44,8 +44,9 @@ export default class Charm extends AbilityCore {
         );
 
         const orbObj = new CharmObject({
-            position: this.owner.position.copy(),
+            world: this.world,
             owner: this.owner,
+            position: this.owner.position.copy(),
             damage: this.damage,
             destination: target,
             radius: this.width * 0.5,

@@ -3,7 +3,6 @@ import ColorHelper from "./color.helper.js";
 import CollideHelper from "./collide.helper.js";
 import UIHelper from "./ui.helper.js";
 import OtherHelper from "./other.helper.js";
-import DistanceHelper from "./distance.helper.js";
 import BoundaryHelper from "./boundary.helper.js";
 import FormatHelper from "./format.helper.js";
 
@@ -13,7 +12,6 @@ const Helper = {
     Collide: CollideHelper,
     UI: UIHelper,
     Other: OtherHelper,
-    Distance: DistanceHelper,
     Boundary: BoundaryHelper,
     Format: FormatHelper,
 };

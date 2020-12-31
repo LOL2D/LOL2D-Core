@@ -45,8 +45,9 @@ export default class OrbOfDeception extends AbilityCore {
         );
 
         const orbObj = new OrbOfDeceptionObject({
-            position: this.owner.position.copy(),
+            world: this.world,
             owner: this.owner,
+            position: this.owner.position.copy(),
             damage: this.damage,
             destination: dest,
             radius: this.width * 0.5,

@@ -28,7 +28,7 @@ export default class BulletTurretObject extends AbilityObjectCore {
     //show() {}
 
     // override
-    effectChampions(champions) {
+    onEffect() {
         let isTouchedTarget = Helper.Collide.circleCircle(
             this.position.x,
             this.position.y,

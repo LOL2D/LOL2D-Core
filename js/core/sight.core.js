@@ -149,9 +149,8 @@ export default class SightCore {
 
         // is enemy
         // find all allies in this enemy sightRange
-        let alliesInRange = Helper.Distance.getChampionsInRange({
+        let alliesInRange = this.world.getChampionsInRange({
             rootPosition: champion.position,
-            champions: this.world.champions,
             inRange: champion.sightRadius,
             addChampRadiusToRange: true,
             allyWithPlayer: true,

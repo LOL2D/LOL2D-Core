@@ -54,7 +54,7 @@ export default class FlashObject extends AbilityObjectCore {
     }
 
     // override
-    // effectChampions(champions) {}
+    // onEffect() {}
 
     // override
     // move() {}

@@ -42,12 +42,11 @@ export default class FoxFireObject extends AbilityObjectCore {
     // show() {}
 
     // override
-    effectChampions(champions) {
+    onEffect() {
         if (!this.targetChampion) {
             if (this.isReadyToEffect()) {
-                let closestEnemy = Helper.Distance.getClosestChampionInRange({
+                let closestEnemy = this.world.getClosestChampionInRange({
                     rootPosition: this.position,
-                    champions: champions,
                     inRange: this.effectRadius,
                     addChampRadiusToRange: true,
                     allyWithPlayer: !this.owner.isAllyWithPlayer,

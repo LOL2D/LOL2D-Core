@@ -16,14 +16,17 @@ export default class Ahri extends ChampionCore {
         this.maxHealth = 500;
 
         this.abilities = {
-            basicAttack: new AhriBasicAttack({ owner: this }),
+            basicAttack: new AhriBasicAttack({
+                owner: this,
+                world: this.world,
+            }),
 
-            spell1: new OrbOfDeception({ owner: this }),
-            spell2: new FoxFire({ owner: this }),
-            spell3: new Charm({ owner: this }),
-            spell4: new SpriritRush({ owner: this }),
+            spell1: new OrbOfDeception({ owner: this, world: this.world }),
+            spell2: new FoxFire({ owner: this, world: this.world }),
+            spell3: new Charm({ owner: this, world: this.world }),
+            spell4: new SpriritRush({ owner: this, world: this.world }),
 
-            avatarSpell1: new Flash({ owner: this }),
+            avatarSpell1: new Flash({ owner: this, world: this.world }),
             avatarSpell2: null,
         };
     }

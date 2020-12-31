@@ -48,9 +48,8 @@ export default class AICore {
 
     autoAttack() {
         // get all enemies in range
-        const enemies = Helper.Distance.getChampionsInRange({
+        const enemies = this.world.getChampionsInRange({
             rootPosition: this.champion.position,
-            champions: this.world.champions,
             inRange: this.autoAttackRadius,
             allyWithPlayer: !this.champion.isAllyWithPlayer,
             excludes: [this.champion],

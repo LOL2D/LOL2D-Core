@@ -46,9 +46,8 @@ export default class AhriBasicAttack extends AbilityCore {
         //super.castSpell(destination);
 
         // find all enemy in attackRange
-        let enemiesInRange = Helper.Distance.getChampionsInRange({
+        let enemiesInRange = this.world.getChampionsInRange({
             rootPosition: this.owner.position,
-            champions: this.owner.world.champions,
             inRange: this.attackRadius,
             addChampRadiusToRange: true,
             allyWithPlayer: !this.owner.isAllyWithPlayer,
@@ -57,14 +56,15 @@ export default class AhriBasicAttack extends AbilityCore {
 
         if (enemiesInRange.length > 0) {
             // get closest champion to mouse
-            let closestEnemy = Helper.Distance.getClosestChampionInRange({
-                rootPosition: this.owner.world.getMousePosition(),
+            let closestEnemy = this.world.getClosestChampionInRange({
+                rootPosition: destination,
                 champions: enemiesInRange,
                 excludes: [this.owner],
             });
 
-            this.owner.world.addNewSpellObjects(
+            this.world.addNewSpellObjects(
                 new AhriBasicAttackObject({
+                    world: this.world,
                     owner: this.owner,
                     position: this.owner.position.copy(),
                     destination: closestEnemy.position,

@@ -23,10 +23,9 @@ export default class CharmObject extends AbilityObjectCore {
     // show() {}
 
     // override
-    effectChampions(champions) {
-        let touchedEnemy = Helper.Distance.getClosestChampionInRange({
+    onEffect() {
+        let touchedEnemy = this.world.getClosestChampionInRange({
             rootPosition: this.position,
-            champions: champions,
             inRange: this.radius,
             addChampRadiusToRange: true,
             allyWithPlayer: !this.owner.isAllyWithPlayer,

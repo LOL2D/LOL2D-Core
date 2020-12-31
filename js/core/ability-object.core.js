@@ -7,6 +7,7 @@ export default class AbilityObjectCore extends MovementObjectCore {
         super(config);
 
         // default value
+        this.world = null;
         this.owner = null;
         this.isStarted = false;
         this.isFinished = false;
@@ -17,10 +18,7 @@ export default class AbilityObjectCore extends MovementObjectCore {
     }
 
     // override
-    show() {
-        super.show();
-        this.isShowEffectRadius && this.showEffectRadius();
-    }
+    // show() {}
 
     // override
     update() {
@@ -37,16 +35,10 @@ export default class AbilityObjectCore extends MovementObjectCore {
         }
     }
 
-    showEffectRadius() {
-        stroke(COLOR.ABILITY.INDICATOR.BORDER);
-        fill(COLOR.ABILITY.INDICATOR.FILL);
-        strokeWeight(3);
-        circle(this.position.x, this.position.y, this.effectRadius * 2);
-    }
+    showEffectRadius() {}
 
     onStarted() {}
+    onEffect() {}
     onFinished() {}
     checkFinished() {}
-    effectChampions() {}
-    effectAbilities() {}
 }

@@ -32,7 +32,7 @@ export default class AbilityObjectName extends AbilityObjectCore {
     show() {}
 
     // override
-    effectChampions(champions) {}
+    onEffect() {}
 
     // override
     move() {}
