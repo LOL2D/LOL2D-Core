@@ -349,6 +349,7 @@ export default class WorldCore {
     getChampionsInRange(config = {}) {
         const {
             rootPosition,
+            champions = this.champions,
             inRange = Infinity,
             addChampRadiusToRange = false,
             allyWithPlayer = null,
@@ -357,7 +358,7 @@ export default class WorldCore {
 
         let champsInRange = [];
 
-        for (let champ of this.champions) {
+        for (let champ of champions) {
             if (allyWithPlayer != null) {
                 if (champ.isAllyWithPlayer != allyWithPlayer) continue;
             }
@@ -377,7 +378,7 @@ export default class WorldCore {
         return champsInRange;
     }
 
-    getClosestChampion(rootPosition, champions = []) {
+    getClosestChampion(rootPosition, champions = this.champions) {
         let closestChamp = null;
         let closestDistance = Infinity;
 

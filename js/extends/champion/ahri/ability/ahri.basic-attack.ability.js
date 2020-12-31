@@ -59,7 +59,6 @@ export default class AhriBasicAttack extends AbilityCore {
             let closestEnemy = this.world.getClosestChampionInRange({
                 rootPosition: destination,
                 champions: enemiesInRange,
-                excludes: [this.owner],
             });
 
             this.world.addNewSpellObjects(
