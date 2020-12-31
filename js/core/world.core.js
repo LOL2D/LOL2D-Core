@@ -169,21 +169,12 @@ export default class WorldCore {
     update() {
         this.camera.update();
 
-        for (let champ of this.champions) {
-            if (this.terrainMap.effect(champ)) {
-                // TODO this is test, remove later
-                if (champ != this.player) champ.removeDestination();
-            }
-        }
-
+        // turret
         for (let turret of this.turrets) {
             turret.update();
         }
 
-        for (let ai of this.listAI) {
-            ai.update();
-        }
-
+        // effect on champion
         for (let i = this.effectOnChampions.length - 1; i >= 0; i--) {
             this.effectOnChampions[i].update();
 
@@ -196,6 +187,23 @@ export default class WorldCore {
             }
         }
 
+        // terrain collision
+        for (let champ of this.champions) {
+            if (this.terrainMap.effect(champ)) {
+                // TODO this is test, remove later
+                if (champ != this.player) champ.removeDestination();
+            }
+        }
+
+        // sight visibility
+        this.sight.update();
+
+        // AI
+        for (let ai of this.listAI) {
+            ai.update();
+        }
+
+        // champions
         for (let champ of this.champions) {
             champ.update();
 
@@ -233,6 +241,7 @@ export default class WorldCore {
             }
         }
 
+        // ability objects
         for (let i = this.abilityObjects.length - 1; i >= 0; i--) {
             this.abilityObjects[i].update();
 
@@ -273,7 +282,10 @@ export default class WorldCore {
         // func is something need to execute after world's camera beginState
         func && func();
 
-        for (let champ of this.champions) {
+        // draw champion
+        let visibleChampions = this.sight.getAllChampionsCanSeeOf(this.player);
+
+        for (let champ of visibleChampions) {
             let { x, y, w, h } = this.camera.getViewBoundary();
             let r = champ.radius;
             let r2 = r * 2;
@@ -287,7 +299,7 @@ export default class WorldCore {
                 h + r2
             );
 
-            if (inview && this.sight.isChampionInSight(champ)) {
+            if (inview) {
                 champ.show();
             }
         }

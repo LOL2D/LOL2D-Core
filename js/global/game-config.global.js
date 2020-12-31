@@ -3,6 +3,7 @@ let GlobalGameConfig = {
     textFont: "monospace",
     pixelDensity: 1,
     limitFPS: 60,
+    debugSight: false,
 };
 
 export default GlobalGameConfig;

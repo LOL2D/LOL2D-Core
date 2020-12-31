@@ -56,6 +56,8 @@ export default class ChampionCore extends MovementObjectCore {
         this.basicAttackDamage = 15;
         this.basicAttackRadius = 250;
 
+        this.visibility = [];
+        this.championsInSight = [];
         this.isCheckCollideTerrain = true;
 
         // UI

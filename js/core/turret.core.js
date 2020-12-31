@@ -22,7 +22,7 @@ export default class TurretCore {
         this.healValue = 100;
         this.healManaValue = 50;
 
-        this.sightRadius = 500;
+        this.sightRadius = 350;
         this.world = null;
         this.isAllyWithPlayer = true;
 
