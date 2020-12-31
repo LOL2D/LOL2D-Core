@@ -102,12 +102,12 @@ export default class HUDCore {
         // text
         fill("white");
         text(
-            health + " / " + maxHealth,
+            ~~health + " / " + maxHealth,
             width * 0.5,
             height - 51 + GlobalGameConfig.textSize * 0.5
         );
         text(
-            mana + " / " + maxMana,
+            ~~mana + " / " + maxMana,
             width * 0.5,
             height - 30 + GlobalGameConfig.textSize * 0.5
         );

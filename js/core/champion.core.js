@@ -44,8 +44,8 @@ export default class ChampionCore extends MovementObjectCore {
         this.maxHealth = 1000;
         this.maxMana = 400;
         this.fakeHealth = 0;
-        this.healthRegen = 0;
-        this.manaRegen = 0;
+        this.healthRegen = 0.1;
+        this.manaRegen = 0.1;
 
         // attributes
         this.name = "Champion name";

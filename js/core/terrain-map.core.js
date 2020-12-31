@@ -141,31 +141,45 @@ export default class TerrainMapCore {
             TERRAIN_TYPE.WATER,
         ]);
 
+        strokeWeight(5);
+
+        // water
+        noStroke();
+        fill("#082740");
         for (let terrain of data) {
-            switch (terrain.type) {
-                case TERRAIN_TYPE.WALL:
-                    strokeWeight(5);
-                    stroke("#555");
-                    fill("#555");
-                    break;
-
-                case TERRAIN_TYPE.BRUSH:
-                    strokeWeight(5);
-                    stroke("#107d49");
-                    fill("#10613a");
-                    break;
-
-                case TERRAIN_TYPE.WATER:
-                    noStroke();
-                    fill("#082740");
-                    break;
+            if (terrain.type == TERRAIN_TYPE.WATER) {
+                beginShape();
+                for (let p of terrain.path) {
+                    vertex(p.x, p.y);
+                }
+                endShape(CLOSE);
             }
+        }
 
-            beginShape();
-            for (let p of terrain.path) {
-                vertex(p.x, p.y);
+        // brush
+        stroke("#107d49");
+        fill("#10613a");
+        for (let terrain of data) {
+            if (terrain.type == TERRAIN_TYPE.BRUSH) {
+                beginShape();
+                for (let p of terrain.path) {
+                    vertex(p.x, p.y);
+                }
+                endShape(CLOSE);
             }
-            endShape(CLOSE);
+        }
+
+        // wall
+        stroke("#555");
+        fill("#555");
+        for (let terrain of data) {
+            if (terrain.type == TERRAIN_TYPE.WALL) {
+                beginShape();
+                for (let p of terrain.path) {
+                    vertex(p.x, p.y);
+                }
+                endShape(CLOSE);
+            }
         }
     }
 
