@@ -93,11 +93,6 @@ export default class MovementObjectCore {
         }
     }
 
-    isArrivedDestination() {
-        const { destination, position, speed } = this;
-        return !destination || p5.Vector.dist(position, destination) <= speed;
-    }
-
     moveTo(x, y) {
         let bounded = this.applyBound(x, y);
         this.destination.set(bounded.x, bounded.y);
@@ -105,6 +100,19 @@ export default class MovementObjectCore {
 
     removeDestination() {
         this.destination.set(this.position.x, this.position.y);
+    }
+
+    isArrivedDestination() {
+        const { destination, position, speed } = this;
+        return !destination || p5.Vector.dist(position, destination) <= speed;
+    }
+
+    getHeadingVector() {
+        return p5.Vector.sub(this.destination, this.position).normalize();
+    }
+
+    getHeadingAngle() {
+        return this.getHeadingVector().heading();
     }
 
     applyBound(x, y) {

@@ -25,8 +25,9 @@ export default class EffectOnChampion {
 
         if (!this.isFinished) {
             this.isFinished = this.checkFinished();
-            this.isFinished && this.onFinished();
         }
+
+        this.isFinished && this.onFinished();
     }
 
     show() {}

@@ -33,8 +33,8 @@ function preloadData() {
             size: 6400,
             championsClassName: {
                 player: Ahri,
-                allies: [Ahri, Ahri, Ahri, Ahri],
-                enemies: [Ahri, Ahri, Ahri, Ahri, Ahri],
+                allies: [Ahri, Ahri],
+                enemies: [Ahri, Ahri, Ahri],
             },
         });
 

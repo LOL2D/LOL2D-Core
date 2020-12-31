@@ -31,8 +31,9 @@ export default class AbilityObjectCore extends MovementObjectCore {
 
         if (!this.isFinished) {
             this.isFinished = this.checkFinished();
-            this.isFinished && this.onFinished();
         }
+
+        this.isFinished && this.onFinished();
     }
 
     showEffectRadius() {}

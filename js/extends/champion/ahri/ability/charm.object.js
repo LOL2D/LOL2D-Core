@@ -1,5 +1,6 @@
 import Helper from "../../../../helper/index.js";
 import AbilityObjectCore from "../../../../core/ability-object.core.js";
+import CharmCrowd from "../../../crowd-control/charm.crowd.js";
 
 export default class CharmObject extends AbilityObjectCore {
     constructor(config = {}) {
@@ -34,6 +35,15 @@ export default class CharmObject extends AbilityObjectCore {
 
         if (touchedEnemy) {
             touchedEnemy.loseHealth(this.damage, this);
+
+            this.world.addNewEffectOnChampion(
+                new CharmCrowd({
+                    owner: this.owner,
+                    target: touchedEnemy,
+                    duration: 1500,
+                })
+            );
+
             this.touchedTarget = true;
         }
     }

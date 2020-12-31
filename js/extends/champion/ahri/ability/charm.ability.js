@@ -15,7 +15,7 @@ export default class Charm extends AbilityCore {
         // custom attributes
         this.effectRadius = 350;
         this.width = 20;
-        this.damage = 20;
+        this.damage = 5;
     }
 
     // override

@@ -1,5 +1,9 @@
 import COLOR from "../constant/color.constant.js";
-import { ALLOWED } from "../constant/crowd-control.constant.js";
+import {
+    ALLOWED,
+    DISABLED,
+    UNCONTROLLABLE,
+} from "../constant/crowd-control.constant.js";
 import GlobalAssets from "../global/asset.global.js";
 import Helper from "../helper/index.js";
 import MovementObjectCore from "./movement-object.core.js";
@@ -96,13 +100,12 @@ export default class ChampionCore extends MovementObjectCore {
 
         // destination direction
         if (!this.isArrivedDestination()) {
-            let { from, to } = Helper.Vector.getVectorWithRange(
-                this.position,
-                this.destination,
-                this.radius
-            );
+            let heading = this.getHeadingVector()
+                .setMag(this.radius)
+                .add(this.position.x, this.position.y);
+
             stroke("#ddd");
-            line(from.x, from.y, to.x, to.y);
+            line(this.position.x, this.position.y, heading.x, heading.y);
         }
 
         // health bar
@@ -117,6 +120,11 @@ export default class ChampionCore extends MovementObjectCore {
     // override
     update() {
         super.update();
+
+        // abilities
+        for (let abkey in this.abilities) {
+            this.abilities[abkey] && this.abilities[abkey].update();
+        }
 
         // heal + mana
         this.health += this.healthRegen;
@@ -138,6 +146,11 @@ export default class ChampionCore extends MovementObjectCore {
     // override
     move() {
         if (this.status.movement == ALLOWED) super.move();
+    }
+
+    // override
+    moveTo(x, y) {
+        if (this.status.movement != UNCONTROLLABLE) super.moveTo(x, y);
     }
 
     basicAttack(destination) {

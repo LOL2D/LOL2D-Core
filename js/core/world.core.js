@@ -215,6 +215,13 @@ export default class WorldCore {
                     mana: champ.mana,
                 });
 
+                // remove all effects
+                for (let ef of this.effectOnChampions) {
+                    if (ef.target == champ) {
+                        ef.isFinished = true;
+                    }
+                }
+
                 // decrease level
                 champ.level--;
 

@@ -10,9 +10,12 @@ export default class AbilityCore {
         this.lastCastSpell = 0;
         this.cooldown = 0;
         this.cost = 0;
+        this.castTime = 0;
 
         Helper.Other.setValueFromConfig(this, config);
     }
+
+    update() {}
 
     showIndicator(destination) {}
 
