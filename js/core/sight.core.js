@@ -235,7 +235,7 @@ export default class SightCore {
 
             // is ally
             if (otherChamp.isAllyWithPlayer == champion.isAllyWithPlayer) {
-                result.push(otherChamp);
+                result.push(...otherChamp.championsInSight);
             }
 
             // is enemy
