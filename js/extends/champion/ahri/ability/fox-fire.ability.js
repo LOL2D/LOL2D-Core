@@ -16,7 +16,7 @@ export default class FoxFire extends AbilityCore {
         // custom attribute
         this.castTime = 250;
         this.effectRadius = 200;
-        this.damage = 40;
+        this.damage = 30;
         this.speed = 10;
 
         this.foxFireCount = 3;

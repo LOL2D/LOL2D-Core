@@ -49,6 +49,8 @@ export default class SpriritRush extends AbilityCore {
                 target: this.owner,
                 destination: dest,
                 speed: 8,
+                fillColor: "#55d9",
+                strokeColor: "#55ee",
             })
         );
     }

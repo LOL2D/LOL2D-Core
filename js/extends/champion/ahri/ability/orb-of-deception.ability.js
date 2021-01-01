@@ -16,7 +16,7 @@ export default class OrbOfDeception extends AbilityCore {
         // custom attributes
         this.effectRadius = 300;
         this.width = 30;
-        this.damage = 40;
+        this.damage = 80;
     }
 
     // override

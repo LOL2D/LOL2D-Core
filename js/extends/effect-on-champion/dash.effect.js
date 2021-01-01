@@ -1,4 +1,7 @@
-import { ALLOWED, UNCONTROLLABLE } from "../../constant/crowd-control.constant.js";
+import {
+    ALLOWED,
+    UNCONTROLLABLE,
+} from "../../constant/crowd-control.constant.js";
 import Helper from "../../helper/index.js";
 import EffectOnChampion from "../../core/effect-on-champion.core.js";
 
@@ -11,6 +14,8 @@ export default class DashEffect extends EffectOnChampion {
         // custom attribute
         this.destination = this.owner.position.copy();
         this.speed = 0;
+        this.fillColor = "#fff5";
+        this.strokeColor = "#fffa";
 
         Helper.Other.setValueFromConfig(this, config);
     }
@@ -22,6 +27,7 @@ export default class DashEffect extends EffectOnChampion {
         if (!this.target.isCheckCollideTerrain) this.isFinished = true;
 
         this.target.isShowPositionTracking = true;
+        this.target.positionTrackColor = this.fillColor;
         this.target.isCheckCollideTerrain = false;
         this.target.moveTo(this.destination.x, this.destination.y);
         this.target.status.movement = UNCONTROLLABLE;
@@ -35,9 +41,9 @@ export default class DashEffect extends EffectOnChampion {
         super.show();
 
         let angle = this.target.getHeadingAngle();
-        
-        fill("#fff5");
-        stroke("#fffa");
+
+        fill(this.fillColor);
+        stroke(this.strokeColor);
         arc(
             this.target.position.x,
             this.target.position.y,
