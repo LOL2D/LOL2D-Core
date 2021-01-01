@@ -164,6 +164,9 @@ export default class WorldCore {
 
             if (this.accumulator < 1000 / 59 - 1000 / 60) this.accumulator = 0;
         }
+
+        // sight visibility
+        this.sight.calculateSight();
     }
 
     update() {
@@ -194,9 +197,6 @@ export default class WorldCore {
                 if (champ != this.player) champ.removeDestination();
             }
         }
-
-        // sight visibility
-        this.sight.update();
 
         // AI
         for (let ai of this.listAI) {

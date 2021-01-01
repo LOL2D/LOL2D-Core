@@ -8,7 +8,6 @@ export default class TurretCore {
         this.radius = 50;
         this.fillColor = "red";
         this.strokeColor = "gray";
-        this.strokeWeight = 2;
 
         this.attackRadius = 350;
         this.attackDelayTime = 1500;
@@ -37,16 +36,14 @@ export default class TurretCore {
     show() {
         // draw attack radius
         if (this.isAllyWithPlayer) {
-            fill("#0000");
+            noFill();
             stroke("#5555");
-            strokeWeight(this.strokeWeight);
             circle(this.position.x, this.position.y, this.attackRadius * 2);
         }
 
         // draw turret
         fill(this.fillColor);
         stroke(this.strokeColor);
-        strokeWeight(this.strokeWeight);
         circle(this.position.x, this.position.y, this.radius * 2);
 
         if (this.attackTarget) {

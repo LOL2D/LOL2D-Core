@@ -48,13 +48,19 @@ export default class AICore {
 
     autoAttack() {
         // get all enemies in range
-        const enemies = this.world.getChampionsInRange({
-            rootPosition: this.champion.position,
-            champions: this.champion.championsInSight,
-            inRange: this.autoAttackRadius,
-            allyWithPlayer: !this.champion.isAllyWithPlayer,
-            excludes: [this.champion],
-        });
+        // const enemies = this.world.getChampionsInRange({
+        //     rootPosition: this.champion.position,
+        //     champions: this.champion.championsInSight,
+        //     inRange: this.autoAttackRadius,
+        //     allyWithPlayer: !this.champion.isAllyWithPlayer,
+        //     excludes: [this.champion],
+        // });
+
+        let enemies = this.champion.championsInSight.filter(
+            (champ) =>
+                champ != this.champion &&
+                champ.isAllyWithPlayer != this.champion.isAllyWithPlayer
+        );
 
         // reset target champ
         this.totalEnemyHealth = 0;
@@ -64,25 +70,37 @@ export default class AICore {
             // find champion that have lowest health
             let target = enemies[0];
             for (let e of enemies) {
-                this.totalEnemyHealth += e.health;
-                if (e.health <= target.health) {
-                    target = e;
+                // in attack range
+                if (
+                    p5.Vector.dist(this.champion.position, e.position) <
+                    this.champion.basicAttackRadius
+                ) {
+                    this.totalEnemyHealth += e.health;
+
+                    if (e.health <= target.health) {
+                        target = e;
+                    }
                 }
             }
 
             // spell to it - add random check here to decrease power of AI :)
-            if (random(1) < 0.1) {
-                const dest = target.position.copy();
-                const spellId = random([
-                    "spell1",
-                    "spell2",
-                    "spell3",
-                    "spell4",
-                    "avatarSpell1",
-                    "basicAttack",
-                ]);
+            if (
+                p5.Vector.dist(this.champion.position, target.position) <
+                this.champion.basicAttackRadius
+            ) {
+                if (random(1) < 0.1) {
+                    const dest = target.position.copy();
+                    const spellId = random([
+                        "spell1",
+                        "spell2",
+                        "spell3",
+                        "spell4",
+                        "avatarSpell1",
+                        "basicAttack",
+                    ]);
 
-                this.champion.castSpell(spellId, dest);
+                    this.champion.castSpell(spellId, dest);
+                }
             }
 
             // get closer to targetChamp

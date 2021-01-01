@@ -17,13 +17,16 @@ export default class SightCore {
         Helper.Other.setValueFromConfig(this, config);
     }
 
-    update() {
+    calculateSight() {
         let { terrainMap } = this.world;
 
         for (let champ of this.world.champions) {
             let polygonsInSight = terrainMap.getTerrainsInSight(champ, [
                 TERRAIN_TYPE.WALL,
                 TERRAIN_TYPE.BRUSH,
+                // TODO: để có thể thêm turret vào tính visibility thì
+                // lấy đường kính vuông góc với champ của turret làm 1 đoạn thẳng để tính toán
+                // hoặc đơn giản là cho turret thành polygon luôn
                 // TERRAIN_TYPE.TURRET,
             ]);
 
