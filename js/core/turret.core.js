@@ -7,7 +7,7 @@ export default class TurretCore {
         this.position = createVector(0, 0);
         this.radius = 50;
         this.fillColor = "red";
-        this.strokeColor = "gray";
+        this.strokeColor = "#aaa";
 
         this.attackRadius = 350;
         this.attackDelayTime = 1500;
