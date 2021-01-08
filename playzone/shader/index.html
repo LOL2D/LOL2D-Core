@@ -1,0 +1,101 @@
+<!-- https://viblo.asia/p/tim-hieu-ve-webgl-phan-1-thu-vien-do-hoa-web-PwRkgmyVGEd -->
+
+<!doctype html>
+<html>
+
+<body>
+    <canvas width="300" height="300" id="my_Canvas"></canvas>
+
+    <script>
+        /* Chuẩn bị canvas và get WebGL context */
+
+        var canvas = document.getElementById('my_Canvas');
+        var gl = canvas.getContext('experimental-webgl');
+
+        /* Tạo tọa độ các đỉnh dưới dạng mảng và lưu nó vào buffer object */
+
+        //Tạo tọa độ đỉnh
+        var vertices = [-0.5, 0.5, -0.5, -0.5, 0.0, -0.5, ];
+
+        // Tạo buffer object
+        var vertex_buffer = gl.createBuffer();
+
+        // bind buffer object với một mảng buffer rỗng
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+
+        // Lưu trữ dữ liệu các đỉnh vào buffer.
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+        // Unbind buffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+        /* tạo và biên dich shader program */
+
+        // code cho vertex shader
+        var vertCode =
+            'attribute vec2 coordinates;' +
+            'void main(void) {' + ' gl_Position = vec4(coordinates,0.0, 1.0);' + '}';
+
+        //Tạo vertex shader object
+        var vertShader = gl.createShader(gl.VERTEX_SHADER);
+
+        //gán vertex shader code cho vertex shader object
+        gl.shaderSource(vertShader, vertCode);
+
+        //biên dịch vertext shader
+        gl.compileShader(vertShader);
+
+        //Tương tự với fragment shader
+        var fragCode = 'void main(void) {' + 'gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);' + '}';
+
+        var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+
+        gl.shaderSource(fragShader, fragCode);
+
+        gl.compileShader(fragShader);
+
+        // Tạo shader program object để lưu trữ shader.
+        var shaderProgram = gl.createProgram();
+
+        // gán các shader object cho shasder program
+        gl.attachShader(shaderProgram, vertShader);
+
+        gl.attachShader(shaderProgram, fragShader);
+
+        // Liên kết 2 shader
+        gl.linkProgram(shaderProgram);
+
+        // Sử dụng shader program
+        gl.useProgram(shaderProgram);
+
+        /* Liên kết shader program với buffer object */
+
+        //Bind vertex buffer object
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+
+        //Lấy attribute location của shader program
+        var coord = gl.getAttribLocation(shaderProgram, "coordinates");
+
+        gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 0, 0);
+
+        gl.enableVertexAttribArray(coord);
+
+        /* Vẽ hình */
+
+        // Set màu cho canvas
+        gl.clearColor(0.5, 0.5, 0.5, 0.9);
+
+        gl.enable(gl.DEPTH_TEST);
+
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // thiết lập view port
+        gl.viewport(0, 0, canvas.width, canvas.height);
+
+        // Vẽ hình yêu cầu ở đây là tam giác
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+    </script>
+
+</body>
+
+</html>
