@@ -19,7 +19,6 @@ export default class BaseObject {
         let index = BaseObject._objects.indexOf(obj);
 
         if (index > -1) {
-            BaseObject._objects[index].onDestroy();
             BaseObject._objects.splice(index, 1);
         }
     }
@@ -38,15 +37,13 @@ export default class BaseObject {
         return this.#name;
     }
     set name(newName) {
-        this.#name = newName;
+        if (typeof newName === "string") this.#name = newName;
     }
 
     // -------------- methods --------------
     getInstanceID() {
         return this.#id;
     }
-
-    onDestroy() {} // TODO Unity dont have this method in baseobject
 }
 
 function* idGenerator(start = 0) {

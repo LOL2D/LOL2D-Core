@@ -6,22 +6,22 @@ import Transform from "./Transform.js";
 export default class GameObject extends BaseObject {
     // -------------- static --------------
     //Creates a game object with a primitive mesh renderer and appropriate collider.
-    createPrimitive(type) {}
+    static createPrimitive(type) {}
 
     //Finds a GameObject by name and returns it.
-    find(name) {
+    static find(name) {
         let gameObjs = BaseObject.findObjectsOfType(GameObject);
         return gameObjs.filter((g) => g.name === name && g.isActive()) || null;
     }
 
     //Returns an array of active GameObjects tagged tag. Returns empty array if no GameObject was found.
-    findGameObjectsWithTag(tag) {
+    static findGameObjectsWithTag(tag) {
         let gameObjs = BaseObject.findObjectsOfType(GameObject);
         return gameObjs.filter((g) => g.tag === tag && g.isActive()) || [];
     }
 
     //Returns one active GameObject tagged tag. Returns null if no GameObject was found.
-    findWithTag() {
+    static findWithTag() {
         let gameObjs = BaseObject.findObjectsOfType(GameObject);
         return gameObjs.find((g) => g.tag === tag && g.isActive()) || [];
     }
@@ -72,9 +72,9 @@ export default class GameObject extends BaseObject {
         this.#components.push(new componentType(this));
     }
 
-    SendMessage; //Calls the method named methodName on every MonoBehaviour in this game object.
-    SendMessageUpwards; //Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
-    BroadcastMessage; //Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+    sendMessage; //Calls the method named methodName on every MonoBehaviour in this game object.
+    sendMessageUpwards; //Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+    broadcastMessage; //Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 
     //Returns the component of Type type if the game object has one attached, null if it doesn't.
     getComponent(type) {
