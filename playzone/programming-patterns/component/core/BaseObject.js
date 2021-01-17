@@ -1,7 +1,6 @@
 // https://docs.unity3d.com/ScriptReference/Object.html
 
 export default class BaseObject {
-    // -------------- static --------------
     static _objects = [];
     static _idGenerator = idGenerator();
 
@@ -13,36 +12,19 @@ export default class BaseObject {
         return this._objects.filter((o) => o instanceof type) || [];
     }
 
-    static instantiate(obj) {}
+    static instantiate(obj) {
+        throw new Error("BaseObject.instantiate() not supported yet!");
+    }
 
     static destroy(obj) {
-        let index = BaseObject._objects.indexOf(obj);
-
-        if (index > -1) {
-            BaseObject._objects.splice(index, 1);
-        }
+        BaseObject._objects = BaseObject._objects.filter((o) => o !== obj);
     }
 
-    // -------------- properties --------------
-    #id = BaseObject._idGenerator.next().value; // The unique id (auto increasement) of the object.
-    #name = ""; // The name of the object.
-
-    // -------------- constructor --------------
     constructor() {
+        this.name = "";
+        this.id = BaseObject._idGenerator.next().value;
+
         BaseObject._objects.push(this);
-    }
-
-    // -------------- getter/setter --------------
-    get name() {
-        return this.#name;
-    }
-    set name(newName) {
-        if (typeof newName === "string") this.#name = newName;
-    }
-
-    // -------------- methods --------------
-    getInstanceID() {
-        return this.#id;
     }
 }
 
