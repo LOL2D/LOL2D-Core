@@ -14,7 +14,6 @@ export default class SpriritRush extends AbilityCore {
 
         // custom attributes
         this.effectRadius = 150;
-        this.width = 20;
     }
 
     // override
@@ -29,7 +28,7 @@ export default class SpriritRush extends AbilityCore {
         fill(COLOR.ABILITY.INDICATOR.RECTFILL);
         strokeWeight(3);
 
-        Helper.UI.rectFromVectorRange(vec, this.width);
+        Helper.UI.rectFromVectorRange(vec, this.owner.radius * 2, true);
     }
 
     // override

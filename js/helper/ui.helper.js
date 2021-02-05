@@ -13,17 +13,21 @@ const UIHelper = {
         strokeWeight(1);
     },
 
-    rectFromVectorRange(vectorRange, rectWidth) {
+    rectFromVectorRange(vectorRange, width, rounded = false) {
         const { from, to } = vectorRange;
 
         const vecSub = to.copy().sub(from);
-        const rectLength = vecSub.mag();
+        const len = vecSub.mag();
         const angle = vecSub.heading();
 
         push();
         translate(from.x, from.y);
         rotate(angle);
-        rect(0, -rectWidth * 0.5, rectLength, rectWidth);
+
+        rounded
+            ? rect(0, -width * 0.5, len, width, 0, width, width, 0)
+            : rect(0, -width * 0.5, len, width);
+
         pop();
     },
 };

@@ -4,6 +4,9 @@ export default class Jinx extends ChampionCore {
     constructor(config = {}) {
         super(config);
 
+        this.avatarCirclePath =
+            "asset/image/champion/jinx/Jinx.avatar.circle.png";
+
         this.abilities = {
             spell1: null,
             spell2: null,

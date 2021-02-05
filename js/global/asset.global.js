@@ -16,6 +16,7 @@ const assetPaths = [
     "asset/image/champion/ahri/Spirit-Rush.ability.png",
 
     // jinx
+    "asset/image/champion/jinx/Jinx.avatar.circle.png",
 ];
 
 let GlobalAssets = {

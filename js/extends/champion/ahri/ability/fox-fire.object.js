@@ -9,7 +9,6 @@ export default class FoxFireObject extends AbilityObjectCore {
 
         // override
         this.effectRadius = this.effectRadius - this.owner.radius * 2;
-        this.radius = 10;
         this.speed = 3;
         this.positionTrackColor = "#058DFF55";
 

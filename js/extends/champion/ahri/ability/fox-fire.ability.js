@@ -15,11 +15,12 @@ export default class FoxFire extends AbilityCore {
 
         // custom attribute
         this.castTime = 250;
-        this.effectRadius = 200;
+        this.effectRadius = 250;
         this.damage = 30;
         this.speed = 10;
 
         this.foxFireCount = 3;
+        this.foxFireRadius = 12;
         this.foxFireRotateRadius = this.owner.radius;
         this.lastEffectTime = 0;
         this.nextEffectDelay = 400;
@@ -61,6 +62,7 @@ export default class FoxFire extends AbilityCore {
                 new FoxFireObject({
                     world: this.world,
                     owner: this.owner,
+                    radius: this.foxFireRadius,
                     angle: (360 / this.foxFireCount) * i,
                     damage: this.damage,
                     speed: this.speed,

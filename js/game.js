@@ -6,6 +6,7 @@ import WorldCore from "./core/world.core.js";
 import InputCore from "./core/input.core.js";
 
 import Ahri from "./extends/champion/ahri/ahri.champion.js";
+import Jinx from "./extends/champion/jinx/jinx.champion.js";
 
 let world;
 let input;

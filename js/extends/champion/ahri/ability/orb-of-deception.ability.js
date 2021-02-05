@@ -15,7 +15,7 @@ export default class OrbOfDeception extends AbilityCore {
 
         // custom attributes
         this.effectRadius = 300;
-        this.width = 30;
+        this.width = 40;
         this.damage = 80;
     }
 
@@ -31,7 +31,7 @@ export default class OrbOfDeception extends AbilityCore {
         fill(COLOR.ABILITY.INDICATOR.RECTFILL);
         strokeWeight(3);
 
-        Helper.UI.rectFromVectorRange(vec, this.width);
+        Helper.UI.rectFromVectorRange(vec, this.width, true);
     }
 
     // override
