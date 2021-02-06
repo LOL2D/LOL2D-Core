@@ -15,9 +15,14 @@
     <title>LOL2D Core</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pxlucasf/hextech-css@master/dist/hextech.min.css">
+    
 
-    <!-- libs -->
+    <!-- global libs - new version -->
     <script src="lib/p5.min.js"></script>
+    <script src="lib/state-machine.min.js"></script>
+    <script src="lib/scenemanager.js"></script>
+    <script src="lib/anime.min.js"></script>
     <script src="lib/SAT.js"></script>
     <script src="lib/stats.min.js"></script>
     <script src="lib/decomp.min.js"></script>
@@ -25,6 +30,26 @@
 </head>
 
 <body>
+
+    <div class="center-page-container">
+        <div id="game-scene"></div>
+
+        <div id="loading-scene">
+            <div class="loading"></div>
+            <div class="loading-text"></div>
+            <h2 class="error-text"></h2>
+        </div>
+
+        <div id="menu-scene">
+            <img src="./asset/image/more/newlogo.png" alt="logo" class="logo">
+            <button id="play-btn" class="button is-primary">PLAY</button>
+        </div>
+
+        <div id="setting-scene">
+            <h2>Setting</h2>
+        </div>
+    </div>
+
     <script type="module" src="main.js"></script>
 </body>
 

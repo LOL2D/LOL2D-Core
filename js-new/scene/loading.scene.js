@@ -23,15 +23,26 @@ const assetPaths = [
 
 export default class LoadingScene {
     setup() {
-        this.loaded = 0;
-        this.errorText = "";
+        this.loadingSceneDiv = document.querySelector("#loading-scene");
+        this.loadingAnimation = this.loadingSceneDiv.querySelector(".loading");
+        this.loadingText = this.loadingSceneDiv.querySelector(".loading-text");
+        this.errorText = this.loadingSceneDiv.querySelector(".error-text");
 
         // holding global assets data
         this.sceneManager.gameData.assets = {};
+    }
+
+    enter() {
+        // reset dom
+        this.loadingSceneDiv.style.display = "block";
+        this.loadingAnimation.style.display = "block";
+        this.loadingText.innerHTML = "0%";
+        this.errorText.innerHTML = "";
+
+        let loadedCount = 0;
+        let hasError = false;
 
         // load assets
-        let i = 0;
-
         for (let path of assetPaths) {
             loadImage(
                 path,
@@ -39,43 +50,28 @@ export default class LoadingScene {
                 (data) => {
                     this.sceneManager.gameData.assets[path] = data;
 
-                    i++;
-                    this.loaded = i / assetPaths.length;
+                    loadedCount++;
+                    this.loadingText.innerHTML =
+                        round((loadedCount / assetPaths.length) * 100) + "%";
+
+                    if (loadedCount == assetPaths.length && !hasError) {
+                        setTimeout(() => {
+                            this.sceneManager.showScene(MenuScene);
+                        }, 1000);
+                    }
                 },
                 // failed
                 (error) => {
-                    this.errorText = error.path[0].currentSrc;
-                    console.log(error);
+                    hasError = true;
+                    this.loadingAnimation.style.display = "none";
+                    this.errorText.innerHTML = `ERROR: Failed to load assets. ${error.path[0].currentSrc}`;
                 }
             );
         }
     }
 
-    draw() {
-        background(30);
-
-        // failed
-        if (this.errorText) {
-            fill("red");
-            text(
-                "ERROR: Failed to load assets. " + this.errorText,
-                width / 2,
-                height / 2
-            );
-        }
-
-        // loading
-        else {
-            fill(255);
-            text(
-                `Loading ${round(this.loaded * 100)}%...`,
-                width / 2,
-                height / 2
-            );
-
-            if (this.loaded == 1) {
-                this.sceneManager.showScene(MenuScene);
-            }
-        }
+    exit() {
+        // hide dom
+        this.loadingSceneDiv.style.display = "none";
     }
 }

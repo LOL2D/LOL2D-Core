@@ -1,44 +1,22 @@
-import UIButton from "../ui/button.ui.js";
-import UIManager from "../ui/manager.ui.js";
 import GameScene from "./game.scene.js";
 
 export default class MenuScene {
     setup() {
-        this.uimanager = new UIManager();
+        this.menuSceneDiv = document.querySelector("#menu-scene");
+        this.playBtn = document.querySelector("#play-btn");
 
-        // play button
-        let playBtn = new UIButton("Play", width / 2, height / 2 - 25, 100, 40);
-        playBtn.onClick = () => {
+        this.playBtn.addEventListener("click", () => {
             this.sceneManager.showScene(GameScene);
-        };
-        this.uimanager.add(playBtn);
-
-        // setting button
-        let settingBtn = new UIButton(
-            "Setting",
-            width / 2,
-            height / 2 + 25,
-            100,
-            40
-        );
-        this.uimanager.add(settingBtn);
+        });
     }
 
     enter() {
-        this.sceneManager.showScene(GameScene);
+        // reset dom
+        this.menuSceneDiv.style.display = "block";
     }
 
-    draw() {
-        background(30);
-
-        push();
-        textSize(36);
-        fill(255);
-        noStroke();
-        text("League of Legends 2D", width / 2, 100);
-        pop();
-
-        this.uimanager.update();
-        this.uimanager.show();
+    exit() {
+        // hide dom
+        this.menuSceneDiv.style.display = "none";
     }
 }

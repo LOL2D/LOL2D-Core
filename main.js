@@ -1,4 +1,4 @@
-import Game from "./js/game.js";
+import Game from "./js-new/game.js";
 
 for (let o in Game) {
     window[o] = Game[o];

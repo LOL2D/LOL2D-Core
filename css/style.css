@@ -1,3 +1,9 @@
+* {
+    font-family: monospace;
+    outline-style: none;
+    color: #eee;
+}
+
 html,
 body {
     height: 100%;
@@ -5,13 +11,77 @@ body {
 
 body {
     margin: 0;
-    display: flex;
-
-    /* This centers our sketch horizontally. */
-    justify-content: center;
-
-    /* This centers our sketch vertically. */
-    align-items: center;
-
-    background-color: #333;
+    position: relative;
+    background-color: #13172C;
 }
+
+.center-page-container>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+}
+
+/* https://www.csswand.dev/ */
+/* button {
+    background-color: #292D3E;
+    border: 2px solid #1D9AF2;
+    border-radius: 4px;
+    padding: 0 15px;
+    cursor: pointer;
+    height: 32px;
+    font-size: 14px;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+button:active {
+    transform: scale(1);
+} */
+
+/* loading scene */
+.loading {
+    height: 40px;
+    width: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    border-top: 2px solid #1D9AF2;
+    border-right: 2px solid transparent;
+    border-bottom: none;
+    border-left: none;
+    animation: spinner5 700ms linear infinite;
+}
+
+@keyframes spinner5 {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.error-text {
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+}
+
+/* menu scene */
+#menu-scene {
+    text-align: center;
+}
+
+#menu-scene img.logo {
+    display: block;
+    width: 450px;
+    margin-bottom: 50px;
+}
+
+/* game scene */

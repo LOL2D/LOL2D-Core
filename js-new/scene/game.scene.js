@@ -1,28 +1,33 @@
-import CameraCore from "../core/camera.core.js";
-import ChampionCore from "../core/champion.core.js";
-import GroundMapCore from "../core/ground-map.core.js";
-import Champ from "../core/champion/index.js";
-
 export default class GameScene {
-    setup() {}
+    setup() {
+        this.gameSceneDiv = document.querySelector("#game-scene");
+
+        // stats
+        this.stats = new Stats();
+        this.stats.showPanel(0);
+        document.body.appendChild(this.stats.dom);
+    }
 
     enter() {
-        this.camera = new CameraCore();
-        this.groundMap = new GroundMapCore();
+        // reset dom
+        this.gameSceneDiv.style.display = "block";
+        this.stats.dom.style.display = "block";
+    }
 
-        this.champions = [];
-        this.abilityObjects = [];
-        this.turrets = [];
-        // this.monsters = [];
-        // this.minions = [];
-
-        this.player = new ChampionCore(this, Champ.Ahri);
-        this.player.position.set(width / 2, height / 2);
+    exit() {
+        this.gameSceneDiv.style.display = "none";
+        this.stats.dom.style.display = "none";
     }
 
     draw() {
-        background(30);
+        this.stats.begin();
 
-        this.player.show();
+        background("#0d0f1a");
+        fill(255);
+        text("Game", width / 2, height / 2);
+
+        this.stats.end();
     }
+
+    keyPressed() {}
 }

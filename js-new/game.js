@@ -1,10 +1,9 @@
 import LoadingScene from "./scene/loading.scene.js";
 
-let stats;
 let mgr;
 
 function setup() {
-    createCanvas(800, 600);
+    createCanvas(800, 600).parent("#game-scene");
 
     strokeJoin(ROUND);
     strokeCap(ROUND);
@@ -15,13 +14,9 @@ function setup() {
     textFont("monospace");
     textSize(17);
 
-    // stats
-    stats = new Stats();
-    stats.showPanel(0);
-    document.body.appendChild(stats.dom);
-
     // scene manager
     mgr = new SceneManager();
+    mgr.wire();
 
     // holding global data
     mgr.gameData = {};
@@ -30,10 +25,4 @@ function setup() {
     mgr.showScene(LoadingScene);
 }
 
-function draw() {
-    stats.begin();
-    mgr.draw();
-    stats.end();
-}
-
-export default { setup, draw };
+export default { setup };
