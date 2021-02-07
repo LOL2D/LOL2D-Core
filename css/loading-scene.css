@@ -1,0 +1,29 @@
+/* loading scene */
+.loading {
+    height: 40px;
+    width: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    border-top: 2px solid #1D9AF2;
+    border-right: 2px solid transparent;
+    border-bottom: none;
+    border-left: none;
+    animation: spinner5 700ms linear infinite;
+}
+
+@keyframes spinner5 {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.error-text {
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+}

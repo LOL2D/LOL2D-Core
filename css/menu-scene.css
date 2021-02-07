@@ -1,0 +1,60 @@
+/* menu scene */
+#menu-scene {
+    text-align: center;
+}
+
+#menu-scene button {
+    margin-top: 50px;
+}
+
+.shiny {
+    display: block;
+    height: 200px;
+    width: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.shiny img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.shiny:before {
+    content: "";
+    z-index: 10;
+    position: absolute;
+    height: 200%;
+    width: 200%;
+    top: -120%;
+    left: -120%;
+    background: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.1) 45%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.1) 55%, transparent 100%);
+    transition: all 2s;
+    transform: rotate(-45deg);
+    animation: shine 6s infinite forwards;
+}
+
+@keyframes shine {
+    0% {
+        top: -120%;
+        left: -120%;
+    }
+
+    20% {
+        left: 100%;
+        top: 100%;
+    }
+
+    40% {
+        left: 100%;
+        top: 100%;
+    }
+
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
