@@ -34,18 +34,13 @@
     background: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.1) 45%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.1) 55%, transparent 100%);
     transition: all 2s;
     transform: rotate(-45deg);
-    animation: shine 6s infinite forwards;
+    animation: shine 5s infinite forwards;
 }
 
 @keyframes shine {
     0% {
         top: -120%;
         left: -120%;
-    }
-
-    20% {
-        left: 100%;
-        top: 100%;
     }
 
     40% {

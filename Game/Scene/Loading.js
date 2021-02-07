@@ -1,4 +1,4 @@
-import MenuScene from "./menu.scene.js";
+import MenuScene from "./Menu.js";
 
 const assetPaths = [
     // hud
