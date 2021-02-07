@@ -172,7 +172,7 @@ function windowResized() {
     world.resizeWindow(windowWidth, windowHeight);
 }
 
-console.log("game.js was loaded...");
+console.log("sketch.js was loaded...");
 
 export default {
     preload,
