@@ -15,3 +15,6 @@ const BuffAddType = {
     /// Inherits stack count of the oldest buff of the same name.
     STACKS_AND_OVERLAPS: 4,
 };
+
+Object.freeze(BuffAddType);
+export default BuffAddType;
