@@ -1,4 +1,4 @@
-import GameScene from "./Game.js";
+import GameScene from "./GameScene.js";
 
 export default class MenuScene {
     setup() {
@@ -13,6 +13,8 @@ export default class MenuScene {
     enter() {
         // reset dom
         this.menuSceneDiv.style.display = "block";
+
+        this.sceneManager.showScene(GameScene);
     }
 
     exit() {

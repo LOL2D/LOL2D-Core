@@ -1,3 +1,5 @@
+import Game from "../GameLib/Game.js";
+
 export default class GameScene {
     setup() {
         this.gameSceneDiv = document.querySelector("#game-scene");
@@ -12,6 +14,9 @@ export default class GameScene {
         // reset dom
         this.gameSceneDiv.style.display = "block";
         this.stats.dom.style.display = "block";
+
+        this.game = new Game();
+        this.game.initialize();
     }
 
     exit() {
@@ -23,8 +28,10 @@ export default class GameScene {
         this.stats.begin();
 
         background("#0d0f1a");
-        fill(255);
-        text("Game", width / 2, height / 2);
+        // fill(255);
+        // text("Game", width / 2, height / 2);
+
+        this.game.gameLoop();
 
         this.stats.end();
     }
