@@ -1,0 +1,42 @@
+Trong LeagueSandbox-Script/:
+Dùng IBuffGameScript để buff IAttackableUnit
++ Dùng IStatsModifier để áp dụng effect lên IAttackableUnit
++ class IAttackableUnit sẽ có hàm addStatModifier và remveStatModifier
+
+IBuffGameScript sẽ có 3 events:
+1. onActive
+2. onDeactive
+3. onUpdate
+
+Dùng IGameScript để tạo chiêu thức:
+Các events:
+1. onActive (owner)
+2. onDeactive (owner)
+3. onStartCasting (owner, spell, target)
+4. onFinishCasting (owner, spell, target)
+5. applyEffect
+6. onUpdate
+
+GameObjects chứa:
++ AttackableUnits:
+	+ Champion
+	+ Turret
+	+ Minion
+	+ Building
+
+Spell extends từ ISpell
++ chứa SpellData và SpellGameScript
++ SpellGameScript extends IGameScript
++ SpellData chứa 1 đống attributes :))
+
+Champion extends IChampion:
++ Shop, Spells, ChampStats, Skin
++ CanMove, CanCast
++ SpawSpells, GetSpell, LevelUpSpell
++ OnKill
+
+ChampStats extends IChampionStats:
++ Chứa các thông tin về champion
+	+ Kills, DoubleKills, MinionsKilled, ...
+	+ Deaths, Gold, PhysicalDamageTaken, ...
+	+ ...

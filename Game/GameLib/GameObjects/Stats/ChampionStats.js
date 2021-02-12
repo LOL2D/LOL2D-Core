@@ -1,1 +1,42 @@
-﻿
+﻿export default class ChampionStats {
+    assists;
+    kills;
+    doublekills;
+    unrealkills;
+    goldearned;
+    goldspent;
+    currentkillingspree;
+    largestcriticalstrike;
+    largestkillingspree;
+    largestmultikill;
+    longesttimespentliving;
+    magicdamagedealt;
+    magicdamagedealttochampions;
+    magicdamagetaken;
+    minionskilled;
+    neutralminionskilled;
+    neutralminionskilledinenemyjungle;
+    neutralminionskilledinteamjungle;
+    deaths;
+    pentakills;
+    physicaldamagedealt;
+    physicaldamagedealttochampions;
+    physicaldamagetaken;
+    quadrakills;
+    teamid;
+    totaldamagedealt;
+    totaldamagedealttochampions;
+    totaldamagetaken;
+    totalheal;
+    totaltimecrowdcontroldealt;
+    totaltimespentdead;
+    totalunitshealed;
+    triplekills;
+    truedamagedealt;
+    truedamagedealttochampions;
+    truedamagetaken;
+    turretskilled;
+    barrackskilled;
+    wardskilled;
+    wardsplaced;
+}
