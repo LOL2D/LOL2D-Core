@@ -1,4 +1,4 @@
-import Game from "../GameLib/Game.js";
+import Game from "../GameLogic/Game.js";
 
 export default class GameScene {
     setup() {
@@ -8,6 +8,9 @@ export default class GameScene {
         this.stats = new Stats();
         this.stats.showPanel(0);
         document.body.appendChild(this.stats.dom);
+
+        // game
+        this.game = new Game();
     }
 
     enter() {
@@ -15,7 +18,6 @@ export default class GameScene {
         this.gameSceneDiv.style.display = "block";
         this.stats.dom.style.display = "block";
 
-        this.game = new Game();
         this.game.initialize();
     }
 
@@ -28,8 +30,6 @@ export default class GameScene {
         this.stats.begin();
 
         background("#0d0f1a");
-        // fill(255);
-        // text("Game", width / 2, height / 2);
 
         this.game.gameLoop();
 

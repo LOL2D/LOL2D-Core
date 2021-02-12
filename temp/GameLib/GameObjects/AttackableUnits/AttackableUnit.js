@@ -1,6 +1,6 @@
-import SpellFlags from "../../Enums/SpellFlags.js";
-import DamageType from "../../Enums/DamageType.js";
-import BuffAddType from "../../Enums/BuffAddType.js";
+import SpellFlags from "../../../GameCore/Enums/SpellFlags.js";
+import DamageType from "../../../GameCore/Enums/DamageType.js";
+import BuffAddType from "../../../GameCore/Enums/BuffAddType.js";
 import ApiEventManager from "../../API/ApiEventManager.js";
 import GameObject from "../GameObject.js";
 

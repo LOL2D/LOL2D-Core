@@ -1,5 +1,6 @@
 import ApiFunctionManager from "./API/ApiFunctionManager.js";
 import ApiEventManager from "./API/ApiEventManager.js";
+import PlayerManager from "./Players/PlayerManager.js";
 import ObjectManager from "./ObjectManager.js";
 
 export default class Game {

@@ -1,7 +1,7 @@
 import SpellFlags from "../../Enums/SpellFlags.js";
 import DamageType from "../../Enums/DamageType.js";
 import BuffAddType from "../../Enums/BuffAddType.js";
-import ApiEventManager from "../../API/ApiEventManager.js";
+import ApiEventManager from "../../API/ApiEventManager.js.js.js";
 import GameObject from "../GameObject.js";
 
 /// Base class for all attackable units.
