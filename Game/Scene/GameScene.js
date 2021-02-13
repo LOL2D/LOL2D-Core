@@ -28,11 +28,7 @@ export default class GameScene {
 
     draw() {
         this.stats.begin();
-
-        background("#0d0f1a");
-
         this.game.gameLoop();
-
         this.stats.end();
     }
 
