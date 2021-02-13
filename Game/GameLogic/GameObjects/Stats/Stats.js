@@ -1,5 +1,5 @@
-﻿import ActionState from "../../../GameCore/Enums/ActionState.js";
-import SpellFlags from "../../../GameCore/Enums/SpellFlags.js";
+﻿import ActionState from "../../Enums/ActionState.js";
+import SpellFlags from "../../Enums/SpellFlags.js";
 import Stat from "./Stat.js";
 
 export default class Stats {
