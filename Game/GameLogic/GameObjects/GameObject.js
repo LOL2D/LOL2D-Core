@@ -33,7 +33,7 @@ export default class GameObject {
     onCollision(collider, isTerrain) {}
 
     // update
-    update() {}
+    update(diff) {}
 
     // draw
     draw() {

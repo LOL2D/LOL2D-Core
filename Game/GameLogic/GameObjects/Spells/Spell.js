@@ -1,5 +1,5 @@
 export default class Spell {
-    constructor(game, owner, spellName, slot) {
+    constructor(game, owner, spellScript, slot) {
         this.game = game;
         this.owner = owner;
         this.slot = slot;
@@ -21,5 +21,4 @@ export default class Spell {
     update(diff) {}
 
     applyEffect(unit, pprojectile = null) {}
-
 }

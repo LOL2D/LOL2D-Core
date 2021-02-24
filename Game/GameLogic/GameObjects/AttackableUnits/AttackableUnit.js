@@ -19,13 +19,46 @@ export default class AttackableUnit extends GameObject {
         this.stats = stats;
         this.model = model;
         this.destination = this.position.copy();
+        this.statUpdateTimer = 0;
         this.isDead = false;
+        this.isDasing = false;
+        this.dashTime = 0;
+        this.dashElapsedTime = 0;
+
+        this.crowdControls = [];
     }
 
     // override
-    update() {
+    update(diff) {
+        this.statUpdateTimer += diff;
+        while (this.statUpdateTimer >= 500) {
+            // update Stats (hpregen, manaregen) every 0.5 seconds
+            this.stats.update(this.statUpdateTimer);
+            this.statUpdateTimer -= 500;
+        }
+
+        // moving
         if (this.isMoving()) {
             this.move();
+        }
+
+        // crowdControls
+        for (let cc of this.crowdControls) {
+            cc.update(diff);
+        }
+        this.crowdControls = this.crowdControls.filter((cc) => !cc.isRemoved);
+
+        // dashing
+        if (this.isDashing) {
+            if (this.dashTime <= 0) {
+                this.setDashingState(false);
+                return;
+            }
+
+            this.dashElapsedTime += diff;
+            if (this.dashElapsedTime >= this.dashTime) {
+                this.setDashingState(false);
+            }
         }
     }
 
@@ -184,5 +217,17 @@ export default class AttackableUnit extends GameObject {
 
     die(attacker) {
         console.log("die");
+    }
+
+    setDashingState(state) {
+        if (this.isDashing && state == false) {
+            this.dashTime = 0;
+            this.dashElapsedTime = 0;
+
+            // let animList = ["RUN"];
+            // _game.PacketNotifier.NotifySetAnimation(this, animList);
+        }
+
+        this.isDashing = state;
     }
 }

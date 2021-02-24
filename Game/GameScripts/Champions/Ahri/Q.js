@@ -1,4 +1,18 @@
 export default class OrbOfDeception {
+    static spellData = {
+        metaData: {
+            id: "AhriOrbofDeception",
+            name: "AhriOrbofDeception",
+        },
+        values: {
+            spellData: {
+                manaCost: 55,
+                cooldown: 7,
+                castRadius: 275,
+            },
+        },
+    };
+
     constructor() {}
 
     onActivate(owner) {}
