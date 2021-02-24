@@ -3,7 +3,7 @@ import LoadingScene from "./Scene/LoadingScene.js";
 let mgr;
 
 function setup() {
-    createCanvas(800, 600).parent("#game-scene");
+    createCanvas(windowWidth, windowHeight).parent("#game-scene");
 
     strokeJoin(ROUND);
     strokeCap(ROUND);
@@ -25,4 +25,8 @@ function setup() {
     mgr.showScene(LoadingScene);
 }
 
-export default { setup };
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight, true);
+}
+
+export default { setup, windowResized };

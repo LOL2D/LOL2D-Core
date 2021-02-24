@@ -9,14 +9,14 @@
     get modified() {
         return this.#modified;
     }
-    set modified() {
+    set modified(value) {
         this.#modified = value;
     }
 
     get baseBonus() {
         return this.#baseBonus;
     }
-    set baseBonus() {
+    set baseBonus(value) {
         this.modified = true;
         this.#baseBonus = value;
     }
@@ -24,7 +24,7 @@
     get flatBonus() {
         return this.#flatBonus;
     }
-    set flatBonus() {
+    set flatBonus(value) {
         this.modified = true;
         this.#flatBonus = value;
     }
@@ -32,7 +32,7 @@
     get baseValue() {
         return this.#baseValue;
     }
-    set baseValue() {
+    set baseValue(value) {
         this.modified = true;
         this.#baseValue = value;
     }
@@ -40,7 +40,7 @@
     get percentBonus() {
         return this.#percentBonus;
     }
-    set percentBonus() {
+    set percentBonus(value) {
         this.modified = true;
         this.#percentBonus = value;
     }
@@ -48,7 +48,7 @@
     get percentBaseBonus() {
         return this.#percentBaseBonus;
     }
-    set percentBaseBonus() {
+    set percentBaseBonus(value) {
         this.modified = true;
         this.#percentBaseBonus = value;
     }

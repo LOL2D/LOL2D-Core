@@ -13,7 +13,7 @@ export default class ApiFunctionManager {
     }
 
     static getTeams() {
-        return this._game.ObjectManager.Teams;
+        return this._game.objectManager.Teams;
     }
 
     static teleportTo(unit, x, y) {
@@ -23,9 +23,9 @@ export default class ApiFunctionManager {
         unit.teleportTo(x, y);
     }
 
-    static isWalkable(x, y, checkRadius = 0) {
-        return this._game.map.navigationGrid.isWalkable(x, y, checkRadius);
-    }
+    // static isWalkable(x, y, checkRadius = 0) {
+    //     return this._game.map.navigationGrid.isWalkable(x, y, checkRadius);
+    // }
 
     static addBuff(
         buffName,

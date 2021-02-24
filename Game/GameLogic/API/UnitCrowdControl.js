@@ -11,7 +11,7 @@ export default class UnitCrowdControl {
         if (
             this.currentTime >= this.duration &&
             !this.isRemoved &&
-            Math.Abs(this.duration - -1) > 0.0001
+            Math.abs(this.duration - -1) > 0.0001
         ) {
             this.isRemoved = true;
         }

@@ -1,4 +1,5 @@
 import TeamID from "./Enums/TeamID.js";
+import Collision from "./Helpers/Collision.js";
 
 export default class ObjectManager {
     constructor(game) {
@@ -6,6 +7,7 @@ export default class ObjectManager {
         this.objects = {};
         this.champions = {};
         this.visionUnits = {};
+        this.player = null;
 
         this.teams = { ...TeamID };
         for (let key in this.teams) {
@@ -29,9 +31,17 @@ export default class ObjectManager {
     }
 
     draw() {
-        for (let key in this.objects) {
-            this.objects[key].draw();
+        this.game.camera.beginState();
+
+        let objsInView = this.getObjectsInView();
+        // text(Object.keys(objsInView), width / 2, 100);
+
+        for (let key in objsInView) {
+            // line(0, 0, objsInView[key].position.x, objsInView[key].position.y);
+            objsInView[key].draw();
         }
+
+        this.game.camera.endState();
     }
 
     addObject(o) {
@@ -56,8 +66,33 @@ export default class ObjectManager {
         return this.objects[id];
     }
 
+    getObjectsInView() {
+        let result = {};
+        let camx = this.game.camera.position.x,
+            camy = this.game.camera.position.y,
+            camw = width * this.game.camera.scale,
+            camh = height * this.game.camera.scale;
+
+        for (let key in this.objects) {
+            let o = this.objects[key];
+            let collided = Collision.rectRect(
+                camx,
+                camy,
+                camw,
+                camh,
+                o.position.x,
+                o.position.y,
+                o.collisionRadius * 2,
+                o.collisionRadius * 2
+            );
+            if (collided) result[key] = this.objects[key];
+        }
+
+        return result;
+    }
+
     // Champions
-    addChampion(champion) {
+    /*addChampion(champion) {
         this.champion[champion.id] = champion;
     }
 
@@ -95,5 +130,5 @@ export default class ObjectManager {
         }
 
         return champs;
-    }
+    }*/
 }

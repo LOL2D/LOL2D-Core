@@ -3,7 +3,7 @@ import SpellFlags from "../../Enums/SpellFlags.js";
 import Stat from "./Stat.js";
 
 export default class Stats {
-    spellsEnabled; //// { get; private set; }
+    spellsEnabled; // { get; private set; }
     summonerSpellsEnabled; // { get; private set; }
 
     actionState; // { get; private set; }
@@ -68,14 +68,14 @@ export default class Stats {
     get currentMana() {
         return Math.min(this.manaPoints.total, this._currentMana);
     }
-    set currentMana() {
+    set currentMana(value) {
         this._currentMana = value;
     }
 
     isGeneratingGold; // { get; set; } // Used to determine if the Stats update should include generating gold. Changed in Champion.h
     spellCostReduction; // { get; set; } //URF Buff/Lissandra's passive
 
-    Stats() {
+    constructor() {
         this.spellCostReduction = 0;
         this.manaCost = [];
         this.actionState =

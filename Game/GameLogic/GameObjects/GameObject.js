@@ -1,11 +1,11 @@
 import TeamId from "../Enums/TeamID.js";
-import uuidv4 from "../Helpers/uuid.js";
+import uuidv4 from "../Helpers/Uuid.js";
 
 export default class GameObject {
     constructor(
         game,
         position = createVector(0, 0),
-        collisionRadius = 40,
+        collisionRadius = 35,
         visionRadius = 0,
         id = uuidv4(),
         team = TeamId.TEAM_NEUTRAL
@@ -46,7 +46,15 @@ export default class GameObject {
         this.position.set(x, y);
     }
 
-    isCollidingWith(o) {
+    isToRemove() {
+        return this.toRemove;
+    }
+
+    setToRemove() {
+        this.toRemove = true;
+    }
+
+    /*isCollidingWith(o) {
         return (
             p5.Vector.dist(this.position, o.position) <
             this.collisionRadius + o.collisionRadius
@@ -65,13 +73,5 @@ export default class GameObject {
 
     setVisibleByTeam(team, visible) {
         this._visibleByTeam[team] = visible;
-    }
-
-    isToRemove() {
-        return this.toRemove;
-    }
-
-    setToRemove() {
-        this.toRemove = true;
-    }
+    }*/
 }
