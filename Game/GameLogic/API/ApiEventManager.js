@@ -214,7 +214,7 @@ class EventOnUnitCrowdControlled {
     _listeners = [];
 
     addListener(owner, unit, callback) {
-        let listenerTuple = [owner, unit, callback];
+        let listenerTuple = {owner, unit, callback};
         this._listeners.push(listenerTuple);
     }
 

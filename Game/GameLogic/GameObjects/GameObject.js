@@ -25,23 +25,16 @@ export default class GameObject {
         this.toRemove = false;
     }
 
-    // events
     onAdded() {}
-
     onRemoved() {}
-
     onCollision(collider, isTerrain) {}
 
-    // update
     update(diff) {}
-
-    // draw
     draw() {
         fill(255);
         circle(this.position.x, this.position.y, this.collisionRadius * 2);
     }
 
-    // others
     setPosition(x, y) {
         this.position.set(x, y);
     }
@@ -49,7 +42,6 @@ export default class GameObject {
     isToRemove() {
         return this.toRemove;
     }
-
     setToRemove() {
         this.toRemove = true;
     }

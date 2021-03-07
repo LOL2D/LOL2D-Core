@@ -81,7 +81,7 @@ export default class AttackableUnit extends GameObject {
         push();
         let direction = this.getDirectionVector(this.collisionRadius);
         stroke(255);
-        strokeWeight(3);
+        strokeWeight(4);
         line(
             this.position.x,
             this.position.y,

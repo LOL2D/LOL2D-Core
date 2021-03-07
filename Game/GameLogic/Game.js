@@ -11,6 +11,7 @@ export default class Game {
     init() {
         this.accumulator = 0;
         this.paused = false;
+        
         this.camera = new Camera();
         this.gameMap = new GameMap(this);
         this.objectManager = new ObjectManager(this);
@@ -25,7 +26,7 @@ export default class Game {
             "asset/image/champion/ahri/Ahri.avatar.circle.png",
             stats
         );
-        this.player.position.set(0, 0);
+        this.player.setPosition(0, 0);
         this.objectManager.addObject(this.player);
         this.camera.follow(this.player.position);
     }
