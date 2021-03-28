@@ -9,17 +9,15 @@ export default class GameMap {
         // this.collisionHandler = null;
     }
 
-    update(diff) {
-        // this.collisionHandler.update(diff);
+    update() {
+        // this.collisionHandler.update();
     }
 
     draw() {
         let viewport = this.game.camera.getViewport();
 
-        this.game.camera.beginState();
         this.groundMap.drawEdge();
         this.groundMap.drawGrid(viewport);
         this.terrainMap.drawTerrain();
-        this.game.camera.endState();
     }
 }

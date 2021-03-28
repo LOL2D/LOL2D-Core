@@ -5,7 +5,14 @@ export default class InputManager {
         this.connect();
     }
 
-    update(diff) {}
+    update() {
+        if (mouseIsPressed) {
+            if (mouseButton == RIGHT) {
+                let { x, y } = this.game.camera.canvasToWorld(mouseX, mouseY);
+                this.game.player.setDestination(x, y);
+            }
+        }
+    }
 
     connect() {
         // bind to p5js events handler

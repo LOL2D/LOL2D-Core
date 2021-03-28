@@ -2,6 +2,7 @@ import ObjectManager from "../../ObjectManager.js";
 import InputManager from "../../InputManager.js";
 import Camera from "./maps/Camera.js";
 import GameMap from "./maps/GameMap.js";
+import ChampionData from "./champions/ChampionData.js";
 
 export default class Game {
     constructor() {}
@@ -14,6 +15,10 @@ export default class Game {
         this.gameMap = new GameMap(this);
         this.objectManager = new ObjectManager(this);
         this.inputManager = new InputManager(this);
+
+        this.objectManager.addChampion(ChampionData.Jinx);
+        this.player = this.objectManager.addChampion(ChampionData.Ahri);
+        this.camera.follow(this.player.position);
     }
 
     exit() {
@@ -30,7 +35,7 @@ export default class Game {
         this.accumulator += Math.min(deltaTime, 250);
 
         while (this.accumulator > 1000 / (fps + 1)) {
-            this.update(deltaTime);
+            this.update();
             this.accumulator -= 1000 / (fps - 1);
 
             if (this.accumulator < 1000 / (fps - 1) - 1000 / fps)
@@ -38,16 +43,18 @@ export default class Game {
         }
     }
 
-    update(diff) {
-        this.inputManager.update(diff);
-        this.objectManager.update(diff);
+    update() {
+        this.inputManager.update();
+        this.objectManager.update();
         this.camera.update();
     }
 
     draw() {
         background("#0d0f1a");
 
+        this.camera.beginState();
         this.gameMap.draw();
         this.objectManager.draw();
+        this.camera.beginState();
     }
 }
