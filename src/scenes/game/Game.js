@@ -1,7 +1,7 @@
 import ObjectManager from "../../ObjectManager.js";
 import InputManager from "../../InputManager.js";
-import Camera from "./game-maps/Camera.js";
-import GameMap from "./game-maps/GameMap.js";
+import Camera from "./maps/Camera.js";
+import GameMap from "./maps/GameMap.js";
 
 export default class Game {
     constructor() {}
@@ -9,7 +9,7 @@ export default class Game {
     init() {
         this.accumulator = 0;
         this.paused = false;
-        
+
         this.camera = new Camera();
         this.gameMap = new GameMap(this);
         this.objectManager = new ObjectManager(this);

@@ -24,8 +24,6 @@ export default class GameScene {
 
         // game
         this.game = new Game();
-
-        console.log(this);
     }
 
     enter() {
@@ -46,6 +44,4 @@ export default class GameScene {
         this.game.gameLoop();
         this.stats.end();
     }
-
-    keyPressed() {}
 }

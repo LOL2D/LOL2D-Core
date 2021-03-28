@@ -27,7 +27,7 @@ export default class LoadingScene {
             () => {
                 setTimeout(() => {
                     this.sceneManager.showScene(MenuScene);
-                }, 1);
+                }, 1000);
             },
 
             // failed

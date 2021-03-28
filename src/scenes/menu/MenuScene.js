@@ -14,7 +14,7 @@ export default class MenuScene {
         // reset dom
         this.menuSceneDiv.style.display = "block";
 
-        this.sceneManager.showScene(GameScene);
+        // this.sceneManager.showScene(GameScene);
     }
 
     exit() {
