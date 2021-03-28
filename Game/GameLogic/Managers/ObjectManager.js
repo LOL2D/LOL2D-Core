@@ -1,5 +1,5 @@
-import TeamID from "./Enums/TeamID.js";
-import Collision from "./Helpers/Collision.js";
+import TeamID from "../Enums/TeamID.js";
+import Collision from "../Helpers/Collision.js";
 
 export default class ObjectManager {
     constructor(game) {
@@ -7,7 +7,6 @@ export default class ObjectManager {
         this.objects = {};
         this.champions = {};
         this.visionUnits = {};
-        this.player = null;
 
         this.teams = { ...TeamID };
         for (let key in this.teams) {
@@ -34,10 +33,8 @@ export default class ObjectManager {
         this.game.camera.beginState();
 
         let objsInView = this.getObjectsInView();
-        // text(Object.keys(objsInView), width / 2, 100);
 
         for (let key in objsInView) {
-            // line(0, 0, objsInView[key].position.x, objsInView[key].position.y);
             objsInView[key].draw();
         }
 
@@ -92,7 +89,7 @@ export default class ObjectManager {
     }
 
     // Champions
-    /*addChampion(champion) {
+    addChampion(champion) {
         this.champion[champion.id] = champion;
     }
 
@@ -130,5 +127,5 @@ export default class ObjectManager {
         }
 
         return champs;
-    }*/
+    }
 }

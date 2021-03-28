@@ -5,14 +5,7 @@ export default class InputManager {
         this.connect();
     }
 
-    update(diff) {
-        if (mouseIsPressed) {
-            if (mouseButton == RIGHT) {
-                let { x, y } = this.getMousePosition();
-                this.game.player.destination.set(x, y);
-            }
-        }
-    }
+    update(diff) {}
 
     connect() {
         // bind to p5js events handler
@@ -20,6 +13,7 @@ export default class InputManager {
         window.keyReleased = this.keyReleased.bind(this);
         window.mousePressed = this.mousePressed.bind(this);
         window.mouseReleased = this.mouseReleased.bind(this);
+        window.mouseWheel = this.mouseWheel.bind(this);
     }
 
     disconnect() {
@@ -27,6 +21,7 @@ export default class InputManager {
         window.keyReleased = null;
         window.mousePressed = null;
         window.mouseReleased = null;
+        window.mouseWheel = null;
     }
 
     keyPressed() {
@@ -48,6 +43,16 @@ export default class InputManager {
     mousePressed() {}
 
     mouseReleased() {}
+
+    mouseWheel(event) {
+        const camera = this.game.camera;
+
+        if (event.delta > 0) {
+            if (camera.scaleTo > 0.1) camera.scaleTo -= camera.scaleTo / 10;
+        } else {
+            if (camera.scaleTo < 5) camera.scaleTo += camera.scaleTo / 10;
+        }
+    }
 
     getMousePosition() {
         return this.game.camera.canvasToWorld(mouseX, mouseY);

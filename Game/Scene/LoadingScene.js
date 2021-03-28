@@ -1,4 +1,4 @@
-import AssetManager from "../GameLogic/AssetManager.js";
+import AssetManager from "../GameLogic/Managers/AssetManager.js";
 import MenuScene from "./MenuScene.js";
 
 export default class LoadingScene {

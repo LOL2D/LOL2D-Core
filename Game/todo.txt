@@ -1,7 +1,0 @@
-1. Skill
-2. Buff
-3. Interact to other champion
-4. Terrain map
-6. Turret
-7. Monster
-8. Minion

@@ -1,9 +1,7 @@
-import ObjectManager from "./ObjectManager.js";
-import InputManager from "./InputManager.js";
+import ObjectManager from "./Managers/ObjectManager.js";
+import InputManager from "./Managers/InputManager.js";
 import Camera from "./GameMaps/Camera.js";
 import GameMap from "./GameMaps/GameMap.js";
-import AttackableUnit from "./GameObjects/AttackableUnits/AttackableUnit.js";
-import Stats from "./GameObjects/Stats/Stats.js";
 
 export default class Game {
     constructor() {}
@@ -16,19 +14,6 @@ export default class Game {
         this.gameMap = new GameMap(this);
         this.objectManager = new ObjectManager(this);
         this.inputManager = new InputManager(this);
-
-        // test
-        let stats = new Stats();
-        stats.moveSpeed.baseValue = 3;
-
-        this.player = new AttackableUnit(
-            this,
-            "asset/image/champion/ahri/Ahri.avatar.circle.png",
-            stats
-        );
-        this.player.setPosition(0, 0);
-        this.objectManager.addObject(this.player);
-        this.camera.follow(this.player.position);
     }
 
     exit() {

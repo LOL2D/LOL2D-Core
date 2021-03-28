@@ -1,21 +1,25 @@
 import GroundMap from "./GroundMap.js";
+import TerrainMap from "./TerrainMap.js";
 
 export default class GameMap {
     constructor(game) {
         this.game = game;
-        this.terrains = {};
+        this.terrainMap = new TerrainMap();
         this.groundMap = new GroundMap();
         // this.collisionHandler = null;
     }
 
-    update() {
-        // this.collisionHandler.update();
+    update(diff) {
+        // this.collisionHandler.update(diff);
     }
 
     draw() {
+        let viewport = this.game.camera.getViewport();
+
         this.game.camera.beginState();
         this.groundMap.drawEdge();
-        this.groundMap.drawGrid(this.game.camera.getViewport());
+        this.groundMap.drawGrid(viewport);
+        this.terrainMap.drawTerrain();
         this.game.camera.endState();
     }
 }
