@@ -1,7 +1,7 @@
-import ObjectManager from "./Managers/ObjectManager.js";
-import InputManager from "./Managers/InputManager.js";
-import Camera from "./GameMaps/Camera.js";
-import GameMap from "./GameMaps/GameMap.js";
+import ObjectManager from "../../ObjectManager.js";
+import InputManager from "../../InputManager.js";
+import Camera from "./game-maps/Camera.js";
+import GameMap from "./game-maps/GameMap.js";
 
 export default class Game {
     constructor() {}

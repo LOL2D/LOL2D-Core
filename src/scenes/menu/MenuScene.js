@@ -1,4 +1,4 @@
-import GameScene from "./GameScene.js";
+import GameScene from "../game/GameScene.js";
 
 export default class MenuScene {
     setup() {

@@ -1,7 +1,11 @@
-import Game from "../GameLogic/Game.js";
+import Game from "./Game.js";
 
 export default class GameScene {
+    static currentInstance = null;
+
     setup() {
+        GameScene.currentInstance = this;
+
         this.gameSceneDiv = document.querySelector("#game-scene");
 
         // prevent contex menu on canvas
@@ -20,6 +24,8 @@ export default class GameScene {
 
         // game
         this.game = new Game();
+
+        console.log(this);
     }
 
     enter() {

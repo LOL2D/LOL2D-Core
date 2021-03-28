@@ -1,4 +1,4 @@
-import LoadingScene from "./Scene/LoadingScene.js";
+import LoadingScene from "./scenes/loading/LoadingScene.js";
 
 let mgr;
 
