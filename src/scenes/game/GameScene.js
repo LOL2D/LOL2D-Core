@@ -1,10 +1,10 @@
 import Game from "./Game.js";
 
 export default class GameScene {
-    static currentInstance = null;
+    static instance = null;
 
     setup() {
-        GameScene.currentInstance = this;
+        GameScene.instance = this;
 
         this.gameSceneDiv = document.querySelector("#game-scene");
 
@@ -30,7 +30,7 @@ export default class GameScene {
         // reset dom
         this.gameSceneDiv.style.display = "block";
         this.stats.dom.style.display = "block";
-        this.game.init();
+        this.game.enter();
     }
 
     exit() {

@@ -1,7 +1,8 @@
-import Champion from "./scenes/game/champions/Champion.js";
+import Champion from "./champions/Champion.js";
 
 export default class ObjectManager {
-    constructor() {
+    constructor(game) {
+        this.game = game;
         this.champions = [];
     }
 

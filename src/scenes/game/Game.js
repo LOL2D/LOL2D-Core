@@ -1,5 +1,5 @@
-import ObjectManager from "../../ObjectManager.js";
-import InputManager from "../../InputManager.js";
+import ObjectManager from "./ObjectManager.js";
+import InputManager from "./InputManager.js";
 import Camera from "./maps/Camera.js";
 import GameMap from "./maps/GameMap.js";
 import ChampionData from "./champions/ChampionData.js";
@@ -7,7 +7,7 @@ import ChampionData from "./champions/ChampionData.js";
 export default class Game {
     constructor() {}
 
-    init() {
+    enter() {
         this.accumulator = 0;
         this.paused = false;
 
@@ -55,6 +55,6 @@ export default class Game {
         this.camera.beginState();
         this.gameMap.draw();
         this.objectManager.draw();
-        this.camera.beginState();
+        this.camera.endState();
     }
 }

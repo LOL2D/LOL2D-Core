@@ -1,4 +1,5 @@
 import AssetManager from "../../../AssetManager.js";
+import Spell from "../spells/Spell.js";
 import { getChampionData } from "./ChampionData.js";
 
 export default class Champion {
@@ -7,6 +8,12 @@ export default class Champion {
         this.championData = getChampionData(champData);
         this.position = position;
         this.destination = position.copy();
+
+        this.spells = {
+            Q: new Spell(game, this, this.championData.Q, 0),
+        };
+
+        console.log(this);
     }
 
     update() {
