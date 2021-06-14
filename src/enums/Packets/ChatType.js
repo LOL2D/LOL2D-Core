@@ -1,6 +1,6 @@
 const ChatType = {
-    CHAT_ALL: 0,
-    CHAT_TEAM: 1,
+    ALL: 0,
+    TEAM: 1,
 };
 
 Object.freeze(ChatType);

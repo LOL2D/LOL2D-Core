@@ -1,10 +1,10 @@
 const DamageResultType = {
-    RESULT_INVULNERABLE: 0x0,
-    RESULT_INVULNERABLENOMESSAGE: 0x1,
-    RESULT_DODGE: 0x2,
-    RESULT_CRITICAL: 0x3,
-    RESULT_NORMAL: 0x4,
-    RESULT_MISS: 0x5,
+    INVULNERABLE: 0x0,
+    INVULNERABLENOMESSAGE: 0x1,
+    DODGE: 0x2,
+    CRITICAL: 0x3,
+    NORMAL: 0x4,
+    MISS: 0x5,
 };
 
 Object.freeze(DamageResultType);
