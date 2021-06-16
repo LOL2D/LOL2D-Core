@@ -1,7 +1,9 @@
+import { Scene } from "../SceneManager.js";
 import AssetManager from "../AssetManager.js";
 import MenuScene from "./MenuScene.js";
 
-export default class LoadingScene {
+export default class LoadingScene extends Scene {
+    // override
     setup() {
         this.loadingSceneDiv = document.querySelector("#loading-scene");
         this.loadingAnimation = this.loadingSceneDiv.querySelector(".loading");
@@ -9,6 +11,7 @@ export default class LoadingScene {
         this.errorText = this.loadingSceneDiv.querySelector(".error-text");
     }
 
+    // override
     enter() {
         // reset dom
         this.loadingSceneDiv.style.display = "block";
@@ -41,6 +44,7 @@ export default class LoadingScene {
         );
     }
 
+    // override
     exit() {
         // hide dom
         this.loadingSceneDiv.style.display = "none";

@@ -1,44 +1,45 @@
-import EventType from "../enums/EventType.js";
-import { on, emit } from "../EventManager.js";
-import { preventRightClick } from "../gameCore/utils/Helpers.js";
-import Game from "../gameCore/Game.js";
+import { Scene } from "../SceneManager.js";
+import { preventRightClick } from "../utils/Helpers.js";
 
-export default class GameScene {
+export default class GameScene extends Scene {
+    // override
     setup() {
         this.gameSceneDiv = document.querySelector("#game-scene");
 
         // prevent contex menu on canvas
         preventRightClick(document.querySelector("#game-scene canvas"));
 
-        // stats
+        // stats show fps
         this.stats = new Stats();
         this.stats.showPanel(0);
         document.body.appendChild(this.stats.dom);
-
-        // game
-        this.game = new Game();
     }
 
+    // override
     enter() {
         // reset dom
         this.gameSceneDiv.style.display = "block";
         this.stats.dom.style.display = "block";
-        this.game.enter();
     }
 
-    exit() {
-        this.gameSceneDiv.style.display = "none";
-        this.stats.dom.style.display = "none";
-        this.game.exit();
-    }
-
+    // override
     draw() {
         this.stats.begin();
-        this.game.gameLoop();
+        // TODO: game loop here
         this.stats.end();
     }
 
-    mouseMoved() {
-        emit(EventType.MOUSE_MOVED);
+    // override
+    exit() {
+        this.gameSceneDiv.style.display = "none";
+        this.stats.dom.style.display = "none";
+    }
+
+    mousePressed() {
+        console.log("mousePressed")
+    }
+    
+    mouseDragged() {
+        console.log("dragged")
     }
 }
