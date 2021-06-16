@@ -14,27 +14,22 @@
 
     <title>LOL2D Core</title>
 
+    <!-- css -->
     <link rel="stylesheet" href="css/hextech-css/hextech.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/loading-scene.css">
     <link rel="stylesheet" href="css/menu-scene.css">
     <link rel="stylesheet" href="css/game-scene.css">
 
-
-    <!-- global libs -->
+    <!-- global js libs -->
     <script src="lib/p5.min.js"></script>
-    <script src="lib/scenemanager.js"></script>
     <script src="lib/stats.min.js"></script>
-    <script src="lib/quadtree.js"></script>
-    <!-- <script src="lib/state-machine.min.js"></script>
-    <script src="lib/anime.min.js"></script>
-    <script src="lib/SAT.js"></script>
-    <script src="lib/decomp.min.js"></script>
-    <script src="lib/visibility_polygon.js"></script> -->
+
+    <!-- main js -->
+    <script type="module" src="./src/app.js"></script>
 </head>
 
 <body>
-
     <div class="center-page-container">
         <div id="game-scene">
             <button>Back</button>
@@ -61,8 +56,6 @@
             <h2>Setting</h2>
         </div>
     </div>
-
-    <script type="module" src="./src/app.js"></script>
 </body>
 
 </html>

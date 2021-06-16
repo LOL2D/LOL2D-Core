@@ -7,8 +7,6 @@ export default class Spell {
         this.owner = owner;
         this.spellName = spellName;
         this.spellScript = getSpellScript(spellName);
-
-        console.log(this);
     }
 
     activate() {
@@ -20,7 +18,7 @@ export default class Spell {
     }
 
     cast(x1, y1, x2, y2, unit = null) {
-        // this.spellScript.onStartCasting(owner, spell, target);
+        this.spellScript.onStartCasting(this.owner, this, unit);
     }
     finishCasting() {
         // this.spellScript.onFinishCasting(owner, spell, target);

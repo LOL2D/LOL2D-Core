@@ -1,5 +1,5 @@
-import AssetManager from "../../AssetManager.js";
-import MenuScene from "../menu/MenuScene.js";
+import AssetManager from "../AssetManager.js";
+import MenuScene from "./MenuScene.js";
 
 export default class LoadingScene {
     setup() {
@@ -15,6 +15,8 @@ export default class LoadingScene {
         this.loadingAnimation.style.display = "block";
         this.loadingText.innerHTML = "0%";
         this.errorText.innerHTML = "";
+
+        const errorAssets = [];
 
         // load assets
         AssetManager.loadAssets(
@@ -33,7 +35,8 @@ export default class LoadingScene {
             // failed
             (error) => {
                 this.loadingAnimation.style.display = "none";
-                this.errorText.innerHTML = `ERROR: Failed to load assets. ${error.path[0].currentSrc}`;
+                errorAssets.push(error.path[0].currentSrc);
+                this.errorText.innerHTML = `ERROR: Failed to load assets. ${errorAssets.join("\n")}`;
             }
         );
     }

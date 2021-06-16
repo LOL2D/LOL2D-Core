@@ -1,10 +1,10 @@
-import LoadingScene from "./scenes/loading/LoadingScene.js";
-
-let mgr;
+import SceneManager from "./SceneManager.js";
+import LoadingScene from "./scenes/LoadingScene.js";
 
 function setup() {
     createCanvas(windowWidth, windowHeight).parent("#game-scene");
 
+    // global p5js setting
     strokeJoin(ROUND);
     strokeCap(ROUND);
     imageMode(CENTER);
@@ -15,7 +15,7 @@ function setup() {
     textSize(17);
 
     // scene manager
-    mgr = new SceneManager();
+    let mgr = new SceneManager();
     mgr.wire();
 
     // holding global data

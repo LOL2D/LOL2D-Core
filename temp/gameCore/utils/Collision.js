@@ -2,7 +2,7 @@
 // TIPS https://gamedev.stackexchange.com/questions/22765/how-do-i-check-collision-when-firing-bullet
 
 // collision in center mode
-const Collision = {
+export const Collision = {
     rectRect(_r1x, _r1y, r1w, r1h, _r2x, _r2y, r2w, r2h) {
         let r1x = _r1x - r1w / 2;
         let r1y = _r1y - r1h / 2;
@@ -19,7 +19,7 @@ const Collision = {
 };
 
 // collision in corner mode
-const CollisionFull = {
+export const CollisionFull = {
     // http://www.jeffreythompson.org/collision-detection/point-point.php
     pointPoint(x1, y1, x2, y2, buffer = 0) {
         return sqr(x1 - x2) <= buffer && sqr(y1 == y2) <= buffer;

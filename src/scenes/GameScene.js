@@ -1,21 +1,14 @@
-import Game from "./Game.js";
+import EventType from "../enums/EventType.js";
+import { on, emit } from "../EventManager.js";
+import { preventRightClick } from "../gameCore/utils/Helpers.js";
+import Game from "../gameCore/Game.js";
 
 export default class GameScene {
-    static instance = null;
-
     setup() {
-        GameScene.instance = this;
-
         this.gameSceneDiv = document.querySelector("#game-scene");
 
         // prevent contex menu on canvas
-        this.gameSceneDiv.getElementsByTagName("canvas")[0].addEventListener(
-            "contextmenu",
-            function (evt) {
-                evt.preventDefault();
-            },
-            false
-        );
+        preventRightClick(document.querySelector("#game-scene canvas"));
 
         // stats
         this.stats = new Stats();
@@ -43,5 +36,9 @@ export default class GameScene {
         this.stats.begin();
         this.game.gameLoop();
         this.stats.end();
+    }
+
+    mouseMoved() {
+        emit(EventType.MOUSE_MOVED);
     }
 }

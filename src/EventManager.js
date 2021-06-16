@@ -1,4 +1,4 @@
-// https://github.com/behnammodi/jetemit/blob/master/src/index.js
+// source: https://github.com/behnammodi/jetemit/blob/master/src/index.js
 
 /**
  * @description subscribes repo
