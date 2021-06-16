@@ -1,8 +1,9 @@
+import StatsJs from "../../lib/stats.js";
+import Game from "../game/Game.js";
 import { Scene } from "../SceneManager.js";
 import { preventRightClick } from "../utils/Helpers.js";
 
 export default class GameScene extends Scene {
-    // override
     setup() {
         this.gameSceneDiv = document.querySelector("#game-scene");
 
@@ -10,36 +11,32 @@ export default class GameScene extends Scene {
         preventRightClick(document.querySelector("#game-scene canvas"));
 
         // stats show fps
-        this.stats = new Stats();
-        this.stats.showPanel(0);
-        document.body.appendChild(this.stats.dom);
+        this.statsJs = new StatsJs();
+        this.statsJs.showPanel(0);
+        document.body.appendChild(this.statsJs.dom);
     }
 
-    // override
     enter() {
         // reset dom
         this.gameSceneDiv.style.display = "block";
-        this.stats.dom.style.display = "block";
+        this.statsJs.dom.style.display = "block";
+
+        this.game = new Game();
     }
 
-    // override
     draw() {
-        this.stats.begin();
-        // TODO: game loop here
-        this.stats.end();
+        this.statsJs.begin();
+        this.game.gameLoop(deltaTime);
+        this.statsJs.end();
     }
 
-    // override
     exit() {
         this.gameSceneDiv.style.display = "none";
-        this.stats.dom.style.display = "none";
+        this.statsJs.dom.style.display = "none";
+
+        this.game = null;
     }
 
     mousePressed() {
-        console.log("mousePressed")
-    }
-    
-    mouseDragged() {
-        console.log("dragged")
     }
 }

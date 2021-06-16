@@ -23,23 +23,32 @@ const P5Events = [
 export class Scene {
     // inject sceneManager and p5_instant as a property of the scene
     constructor(sceneManager, p5) {
+        /** @type SceneManager */
         this.sceneManager = sceneManager;
         this.p5 = p5;
     }
 
-    // hàm setup được gọi khi scene được khởi tạo, chỉ gọi 1 lần
-    // được dùng để khởi tạo các giá trị ban đầu cho scene
+    /**
+     * Được gọi khi scene được khởi tạo, chỉ gọi 1 lần.
+     * Được dùng để khởi tạo các giá trị ban đầu cho scene
+     */
     setup() {}
 
-    // hàm enter được gọi khi scene được hiển thị (SceneManager.showScene)
-    // enter có thể được gọi nhiều lần, mỗi khi sceneManager chuyển tới scene này
+    /**
+     * Được gọi khi scene được hiển thị (SceneManager.showScene).
+     * Có thể được gọi nhiều lần, mỗi khi sceneManager chuyển tới scene này
+     */
     enter() {}
 
-    // hàm draw được gọi liên tục (max là 60 lần/s tương ứng 60fps)
-    // vòng lặp game sẽ được cho vào trong hàm này
+    /**
+     * Được gọi liên tục (max là 60 lần/s tương ứng 60fps).
+     * Vòng lặp game sẽ được cho vào trong hàm này
+     */
     draw() {}
 
-    // hàm exit được gọi khi sceneManager đang từ scene này chuyển qua scene mới
+    /**
+     * Được gọi khi sceneManager đang từ scene này chuyển qua scene mới
+     */
     exit() {}
 
     // p5 events
