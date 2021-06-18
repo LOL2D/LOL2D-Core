@@ -33,10 +33,7 @@ export default class GameScene extends Scene {
     exit() {
         this.gameSceneDiv.style.display = "none";
         this.statsJs.dom.style.display = "none";
-
-        this.game = null;
     }
 
-    mousePressed() {
-    }
+    mousePressed() {}
 }
