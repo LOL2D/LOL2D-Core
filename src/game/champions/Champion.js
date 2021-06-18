@@ -1,4 +1,4 @@
-import AssetManager from "../../AssetManager.js";
+import AssetManager from "../../managers/AssetManager.js";
 import { HasFlag } from "../../utils/Helpers.js";
 import StatusFlags from "../enums/StatusFlags.js";
 import Stats from "../stats/Stats.js";
@@ -23,7 +23,9 @@ export default class Champion {
     }
 
     update(diff) {
-        this.move();
+        if (this.canMove() && this.wayPoints.length > 0) {
+            this.move();
+        }
     }
 
     draw() {
@@ -31,13 +33,20 @@ export default class Champion {
             AssetManager.getAsset(this.skin),
             this.position.x,
             this.position.y,
-            this.stats.size.baseValue,
-            this.stats.size.baseValue
+            this.stats.size.total(),
+            this.stats.size.total()
         );
     }
 
     move() {
-        if (this.canMove()) {
+        let direction = p5.Vector.sub(this.wayPoints[0], this.position);
+        let distance = direction.mag();
+        let speed = this.stats.moveSpeed.total();
+        if (distance > 0) {
+            let d = min(speed, distance);
+            let v = direction.setMag(d);
+
+            this.position.add(v);
         }
     }
 

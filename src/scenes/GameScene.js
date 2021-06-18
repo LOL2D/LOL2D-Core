@@ -1,6 +1,7 @@
 import StatsJs from "../../lib/stats.js";
 import Game from "../game/Game.js";
-import { Scene } from "../SceneManager.js";
+import { emit } from "../managers/EventManager.js";
+import { Scene } from "../managers/SceneManager.js";
 import { preventRightClick } from "../utils/Helpers.js";
 
 export default class GameScene extends Scene {
@@ -35,5 +36,7 @@ export default class GameScene extends Scene {
         this.statsJs.dom.style.display = "none";
     }
 
-    mousePressed() {}
+    mousePressed() {
+        emit("mousePressed");
+    }
 }

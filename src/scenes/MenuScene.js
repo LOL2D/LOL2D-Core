@@ -1,4 +1,4 @@
-import { Scene } from "../SceneManager.js";
+import { Scene } from "../managers/SceneManager.js";
 import GameScene from "./GameScene.js";
 
 export default class MenuScene extends Scene {

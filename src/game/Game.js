@@ -27,12 +27,17 @@ export default class Game {
     }
 
     fixedUpdate() {
+        if (mouseIsPressed) {
+            this.player.wayPoints = [createVector(mouseX, mouseY)];
+        }
+
         this.player.update();
     }
 
     update() {}
 
     draw() {
+        background("#1E1E1E");
         this.player.draw();
     }
 }

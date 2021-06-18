@@ -1,5 +1,5 @@
-import AssetManager from "../AssetManager.js";
-import { Scene } from "../SceneManager.js";
+import AssetManager from "../managers/AssetManager.js";
+import { Scene } from "../managers/SceneManager.js";
 import MenuScene from "./MenuScene.js";
 
 export default class LoadingScene extends Scene {

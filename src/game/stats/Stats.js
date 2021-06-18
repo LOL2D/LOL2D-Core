@@ -14,7 +14,10 @@ export default class Stats {
         this.attackSpeedMult = new Stat(); // % tốc đánh cộng thêm
         this.cooldownReduction = new Stat(); // giảm thời gian hồi chiêu
         this.lifeSteal = new Stat(); // hút máu
-        this.size = new Stat(60); // kích thước
+        this.size = new Stat(75); // kích thước
+
+        this.currentHealth = this.maxHealth.total();
+        this.currentMana = this.maxMana.total();
     }
 
     addModifier(statsModifier = new Stats()) {

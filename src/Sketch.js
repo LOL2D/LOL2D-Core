@@ -1,4 +1,4 @@
-import SceneManager from "./SceneManager.js";
+import SceneManager from "./managers/SceneManager.js";
 import LoadingScene from "./scenes/LoadingScene.js";
 
 function setup() {
