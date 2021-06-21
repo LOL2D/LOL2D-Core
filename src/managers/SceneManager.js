@@ -58,7 +58,7 @@ export class Scene {
     mouseMoved() {}
     mouseDragged() {}
     doubleClicked() {}
-    mouseWheel() {}
+    mouseWheel(e) {}
     keyPressed() {}
     keyReleased() {}
     keyTyped() {}
@@ -81,19 +81,20 @@ export default class SceneManager {
     // If you don't call this method, you need to manually wire events
     wire() {
         let me = this;
-        let o = this.p5 != null ? this.p5 : window;
+        let p5 = this.p5 != null ? this.p5 : window;
 
         // Wire draw manually for speed reasons...
-        o.draw = function () {
+        p5.draw = function () {
             me.draw();
         };
 
         // This loop will wire automatically all P5 events to each scene like this:
-        // o.mouseClicked = function() { me.handleEvent("mouseClicked"); }
+        // p5.mouseClicked = function() { me.handleEvent("mouseClicked"); }
         for (let i = 0; i < P5Events.length; i++) {
             let sEvent = P5Events[i]; // let is necesary to set the scope at the level of for
-            o[sEvent] = function () {
-                me.handleEvent(sEvent);
+            p5[sEvent] = function () {
+                // https://github.com/mveteanu/p5.SceneManager/pull/8/commits
+                me.handleEvent(sEvent, [].slice.call(arguments));
             };
         }
 
@@ -105,6 +106,7 @@ export default class SceneManager {
     addScene(fnScene) {
         let oScene = new fnScene(this, this.p5);
 
+        // create scene container
         var o = {
             fnScene: fnScene,
             oScene: oScene,
@@ -112,10 +114,12 @@ export default class SceneManager {
             hasEnter: "enter" in oScene,
             hasDraw: "draw" in oScene,
             hasExit: "exit" in oScene,
-            setupExecuted: false,
-            enterExecuted: false,
         };
 
+        // trigger setup event on scene
+        if (o.hasSetup) o.oScene.setup();
+
+        // add scene container to array scenes
         this.scenes.push(o);
         return o;
     }
@@ -150,9 +154,6 @@ export default class SceneManager {
 
         if (o == null) o = this.addScene(fnScene);
 
-        // Re-arm the enter function at each show of the scene
-        o.enterExecuted = false;
-
         // trigger exit event on current scene
         if (this.scene != null && this.scene.hasExit) this.scene.oScene.exit();
 
@@ -161,6 +162,9 @@ export default class SceneManager {
 
         // inject sceneArgs as a property of the scene
         o.oScene.sceneArgs = sceneArgs;
+
+        // trigger enter event on new scene
+        if (o.hasEnter) o.oScene.enter();
     }
 
     // Show the next scene in the collection
@@ -189,31 +193,18 @@ export default class SceneManager {
         // take the current scene in a variable to protect it in case
         // it gets changed by the user code in the events such as setup()...
         let currScene = this.scene;
-
         if (currScene == null) return;
 
-        if (currScene.hasSetup && !currScene.setupExecuted) {
-            currScene.oScene.setup();
-            currScene.setupExecuted = true;
-        }
-
-        if (currScene.hasEnter && !currScene.enterExecuted) {
-            currScene.oScene.enter();
-            currScene.enterExecuted = true;
-        }
-
-        if (currScene.hasDraw) {
-            currScene.oScene.draw();
-        }
+        if (currScene.hasDraw) currScene.oScene.draw();
     }
 
     // Handle a certain even for a scene...
     // It is used by the anonymous functions from the wire() function
-    handleEvent(sEvent) {
+    handleEvent(sEvent, args) {
         if (this.scene == null || this.scene.oScene == null) return;
 
         let fnSceneEvent = this.scene.oScene[sEvent];
-        if (fnSceneEvent) fnSceneEvent.call(this.scene.oScene);
+        if (fnSceneEvent) fnSceneEvent.apply(this.scene.oScene, args);
     }
 
     // Legacy method... preserved for maintaining compatibility
