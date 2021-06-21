@@ -1,5 +1,9 @@
+import Game from "../Game.js";
+
 export default class GroundMap {
     constructor(
+        /** @type Game */
+        game,
         width = 1500,
         height = 1500,
         bgColor = "#555555",
@@ -10,6 +14,7 @@ export default class GroundMap {
         gridColor = "#5555",
         gridWeight = 3
     ) {
+        this.game = game;
         this.width = width;
         this.height = height;
         this.bgColor = bgColor;
@@ -39,8 +44,8 @@ export default class GroundMap {
         line(botleft.x, botleft.y, topleft.x, topleft.y);
     }
 
-    drawGrid(viewport) {
-        let { x, y, w, h } = viewport;
+    drawGrid() {
+        let { x, y, w, h } = this.game.camera.getViewport();
         let leftScreen = x,
             rightScreen = x + w,
             topScreen = y,

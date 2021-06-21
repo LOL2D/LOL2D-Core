@@ -1,10 +1,12 @@
 import AssetManager from "../../managers/AssetManager.js";
 import { HasFlag } from "../../utils/Helpers.js";
 import StatusFlags from "../enums/StatusFlags.js";
+import Game from "../Game.js";
 import Stats from "../stats/Stats.js";
 
 export default class Champion {
     constructor(
+        /** @type Game */
         game,
         position = createVector(),
         skin = "",

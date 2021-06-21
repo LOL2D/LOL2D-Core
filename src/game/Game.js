@@ -1,15 +1,22 @@
 import Champion from "./champions/Champion.js";
+import Camera from "./maps/Camera.js";
+import GroundMap from "./maps/GroundMap.js";
 
 const fps = 60; // fixed update fps
 let accumulator = 0;
 
 export default class Game {
     constructor() {
+        this.camera = new Camera();
+        this.groundMap = new GroundMap(this);
+
         this.player = new Champion(
             this,
             createVector(100, 100),
             "asset/image/champion/ahri/Ahri.avatar.circle.png"
         );
+
+        this.camera.follow(this.player.position);
     }
 
     gameLoop(diff) {
@@ -28,16 +35,28 @@ export default class Game {
 
     fixedUpdate() {
         if (mouseIsPressed) {
-            this.player.wayPoints = [createVector(mouseX, mouseY)];
+            let m = this.camera.canvasToWorld(mouseX, mouseY);
+            this.player.wayPoints = [createVector(m.x, m.y)];
         }
 
         this.player.update();
+        this.camera.update();
     }
 
     update() {}
 
     draw() {
         background("#1E1E1E");
+        this.camera.beginState();
+
+        this.groundMap.drawEdge();
+        this.groundMap.drawGrid();
+
+        fill(255);
+        circle(100, 100, 50);
+
         this.player.draw();
+
+        this.camera.endState();
     }
 }
