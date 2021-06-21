@@ -37,6 +37,14 @@ export default class GameScene extends Scene {
     }
 
     mousePressed() {
-        emit("mousePressed");
+        this.game.onMousePressed();
+    }
+
+    keyPressed() {
+        this.game.onKeyPressed();
+    }
+
+    mouseWheel(e) {
+        this.game.onMouseWheel(e);
     }
 }

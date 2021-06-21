@@ -2,12 +2,12 @@ import AssetManager from "../../managers/AssetManager.js";
 import { HasFlag } from "../../utils/Helpers.js";
 import StatusFlags from "../enums/StatusFlags.js";
 import Game from "../Game.js";
+import GroundMap from "../maps/GroundMap.js";
 import Stats from "../stats/Stats.js";
 
 export default class Champion {
     constructor(
-        /** @type Game */
-        game,
+        /** @type Game */ game,
         position = createVector(),
         skin = "",
         stats = new Stats(),
@@ -25,7 +25,7 @@ export default class Champion {
     }
 
     update(diff) {
-        if (this.canMove() && this.wayPoints.length > 0) {
+        if (!this.isDead() && this.canMove() && this.wayPoints.length > 0) {
             this.move();
         }
     }
@@ -52,9 +52,30 @@ export default class Champion {
         }
     }
 
+    bound(/** @type GroundMap */ groundMap) {
+        let radius = this.stats.size.total() / 2;
+        let { top, bottom, left, right } = groundMap.getBound();
+
+        if (this.position.x < left + radius) {
+            this.position.x = left + radius;
+        } else if (this.position.x > right - radius) {
+            this.position.x = right - radius;
+        }
+
+        if (this.position.y < top + radius) {
+            this.position.y = top + radius;
+        } else if (this.position.y > bottom - radius) {
+            this.position.y = bottom - radius;
+        }
+    }
+
     setStatus(statusFlag, enabled) {
         if (enabled) this.status |= statusFlag;
         else this.status &= ~statusFlag;
+    }
+
+    isDead() {
+        return this.stats.currentHealth <= 0;
     }
 
     canMove() {

@@ -2,8 +2,8 @@ import Stat from "./Stat.js";
 
 export default class Stats {
     constructor() {
-        this.maxHealth = new Stat(700); // máu tối đa
-        this.maxMana = new Stat(500); // mana tối đa
+        this.healthPoints = new Stat(700); // máu tối đa
+        this.manaPoints = new Stat(500); // mana tối đa
         this.healthRegen = new Stat(); // hồi máu
         this.manaRegen = new Stat(); // hồi năng lượng
         this.moveSpeed = new Stat(3); // tốc chạy
@@ -14,15 +14,15 @@ export default class Stats {
         this.attackSpeedMult = new Stat(); // % tốc đánh cộng thêm
         this.cooldownReduction = new Stat(); // giảm thời gian hồi chiêu
         this.lifeSteal = new Stat(); // hút máu
-        this.size = new Stat(75); // kích thước
+        this.size = new Stat(65); // kích thước
 
-        this.currentHealth = this.maxHealth.total();
-        this.currentMana = this.maxMana.total();
+        this.currentHealth = this.healthPoints.total();
+        this.currentMana = this.manaPoints.total();
     }
 
     addModifier(statsModifier = new Stats()) {
-        this.maxHealth.addModifier(statsModifier.maxHealth);
-        this.maxMana.addModifier(statsModifier.maxMana);
+        this.healthPoints.addModifier(statsModifier.healthPoints);
+        this.manaPoints.addModifier(statsModifier.manaPoints);
         this.healthRegen.addModifier(statsModifier.healthRegen);
         this.manaRegen.addModifier(statsModifier.manaRegen);
         this.moveSpeed.addModifier(statsModifier.moveSpeed);
@@ -37,8 +37,8 @@ export default class Stats {
     }
 
     removeModifier(statsModifier = new Stats()) {
-        this.maxHealth.removeModifier(statsModifier.maxHealth);
-        this.maxMana.removeModifier(statsModifier.maxMana);
+        this.healthPoints.removeModifier(statsModifier.healthPoints);
+        this.manaPoints.removeModifier(statsModifier.manaPoints);
         this.healthRegen.removeModifier(statsModifier.healthRegen);
         this.manaRegen.removeModifier(statsModifier.manaRegen);
         this.moveSpeed.removeModifier(statsModifier.moveSpeed);

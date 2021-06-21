@@ -1,6 +1,8 @@
 import Champion from "./champions/Champion.js";
+import SpellKeys from "./enums/SpellKeys.js";
 import Camera from "./maps/Camera.js";
 import GroundMap from "./maps/GroundMap.js";
+import Stats from "./stats/Stats.js";
 
 const fps = 60; // fixed update fps
 let accumulator = 0;
@@ -13,7 +15,13 @@ export default class Game {
         this.player = new Champion(
             this,
             createVector(100, 100),
-            "asset/image/champion/ahri/Ahri.avatar.circle.png"
+            "asset/image/champion/ahri/Ahri.avatar.circle.png",
+            new Stats(),
+            {
+                [SpellKeys.A]: () => {
+                    console.log("a");
+                },
+            }
         );
 
         this.camera.follow(this.player.position);
@@ -40,6 +48,7 @@ export default class Game {
         }
 
         this.player.update();
+        this.player.bound(this.groundMap);
         this.camera.update();
     }
 
@@ -58,5 +67,18 @@ export default class Game {
         this.player.draw();
 
         this.camera.endState();
+    }
+
+    onMousePressed() {}
+
+    onKeyPressed() {
+        let spell = this.player.spells[keyCode];
+        if (spell) spell();
+    }
+
+    onMouseWheel(e) {
+        let delta = (this.camera.scaleTo / 10) * (e.delta > 0 ? -1 : 1);
+        this.camera.scaleTo += delta;
+        this.camera.scaleTo = constrain(this.camera.scaleTo, 0.1, 5);
     }
 }
