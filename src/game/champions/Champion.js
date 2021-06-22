@@ -49,6 +49,8 @@ export default class Champion {
             let v = direction.setMag(d);
 
             this.position.add(v);
+        } else {
+            this.wayPoints.shift();
         }
     }
 
