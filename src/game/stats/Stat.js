@@ -1,19 +1,6 @@
-export default class Stat {
-    constructor(
-        baseValue = 0,
-        baseBonus = 0,
-        percentBaseBonus = 0,
-        flatBonus = 0,
-        percentBonus = 0
-    ) {
-        this.baseValue = baseValue;
-        this.baseBonus = baseBonus;
-        this.percentBaseBonus = percentBaseBonus;
+import StatModifier from "./StatModifier.js";
 
-        this.flatBonus = flatBonus;
-        this.percentBonus = percentBonus;
-    }
-
+export default class Stat extends StatModifier {
     total() {
         return (
             ((this.baseValue + this.baseBonus) * (1 + this.percentBaseBonus) +
@@ -22,7 +9,7 @@ export default class Stat {
         );
     }
 
-    applyModifier(statModifier = new Stat()) {
+    applyModifier(statModifier = new StatModifier()) {
         this.baseValue += statModifier.baseValue;
         this.baseBonus += statModifier.baseBonus;
         this.percentBaseBonus += statModifier.percentBaseBonus;
@@ -30,7 +17,7 @@ export default class Stat {
         this.percentBonus += statModifier.percentBonus;
     }
 
-    removeModifier(statModifier = new Stat()) {
+    removeModifier(statModifier = new StatModifier()) {
         this.baseValue -= statModifier.baseValue;
         this.baseBonus -= statModifier.baseBonus;
         this.percentBaseBonus -= statModifier.percentBaseBonus;

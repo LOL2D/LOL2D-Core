@@ -1,5 +1,5 @@
 import { Scene } from "../managers/SceneManager.js";
-import GameScene from "./GameScene.js";
+import PreGameScene from "./PreGameScene.js";
 
 export default class MenuScene extends Scene {
     setup() {
@@ -7,14 +7,13 @@ export default class MenuScene extends Scene {
         this.playBtn = document.querySelector("#play-btn");
 
         this.playBtn.addEventListener("click", () => {
-            this.sceneManager.showScene(GameScene);
+            this.sceneManager.showScene(PreGameScene);
         });
     }
     enter() {
         // reset dom
         this.menuSceneDiv.style.display = "block";
-
-        this.sceneManager.showScene(GameScene);
+        this.sceneManager.showScene(PreGameScene);
     }
 
     exit() {

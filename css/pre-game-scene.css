@@ -1,0 +1,83 @@
+#pre-game-scene {
+    display: none;
+}
+
+#pre-game-scene * {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#pre-game-scene h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.spells-chooser {
+    width: 600px;
+}
+
+.spells-container {
+    padding: 10px;
+    /* display: flex; */
+    /* flex-wrap: wrap;  */
+    height: 400px;
+    overflow: auto;
+}
+
+.spells-container .spell {
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+    border-bottom: 5px transparent solid;
+    transition: .2s all;
+}
+
+.spells-container .spell img {
+    width: 3.5em;
+    height: 3.5em;
+    transition: .2s all;
+}
+
+.spells-container .spell .spell-name {
+    font-size: 0.9em;
+}
+
+.spells-container .spell:hover {
+    border-color: rgb(80, 80, 80);
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.spells-container .spell:hover img {
+    transform: scale(1.1);
+    /* font-weight: bold; */
+}
+
+.spell-info {
+    height: 150px;
+    overflow: auto;
+}
+
+.spell-info-header {
+    display: inline-flex;
+    margin: 10px;
+}
+
+.spell-info-header img {
+    width: 3em;
+    height: 3em;
+    margin-right: 10px;
+}
+
+.spell-info .spell-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.spell-info .spell-name {
+    font-style: italic;
+}
+
+.spell-info .spell-description {
+    font-size: 0.9em;
+}

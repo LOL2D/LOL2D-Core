@@ -37,7 +37,9 @@ export default class LoadingScene extends Scene {
             (error) => {
                 this.loadingAnimation.style.display = "none";
                 errorAssets.push(error.path[0].currentSrc);
-                this.errorText.innerHTML = `ERROR: Failed to load assets. ${errorAssets.join("\n")}`;
+                this.errorText.innerHTML = `ERROR: Failed to load assets. ${errorAssets.join(
+                    "\n"
+                )}`;
             }
         );
     }

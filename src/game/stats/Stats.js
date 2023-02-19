@@ -1,4 +1,5 @@
 import Stat from "./Stat.js";
+import StatsModifier from "./StatsModifier.js";
 
 export default class Stats {
     constructor() {
@@ -15,12 +16,17 @@ export default class Stats {
         this.cooldownReduction = new Stat(); // giảm thời gian hồi chiêu
         this.lifeSteal = new Stat(); // hút máu
         this.size = new Stat(65); // kích thước
-
-        this.currentHealth = this.healthPoints.total();
-        this.currentMana = this.manaPoints.total();
     }
 
-    addModifier(statsModifier = new Stats()) {
+    get currentHealth() {
+        return this.healthPoints.total();
+    }
+
+    get currentMana() {
+        return this.manaPoints.total();
+    }
+
+    addModifier(statsModifier = new StatsModifier()) {
         this.healthPoints.addModifier(statsModifier.healthPoints);
         this.manaPoints.addModifier(statsModifier.manaPoints);
         this.healthRegen.addModifier(statsModifier.healthRegen);
@@ -34,9 +40,10 @@ export default class Stats {
         this.cooldownReduction.addModifier(statsModifier.cooldownReduction);
         this.lifeSteal.addModifier(statsModifier.lifeSteal);
         this.size.addModifier(statsModifier.size);
+        return this;
     }
 
-    removeModifier(statsModifier = new Stats()) {
+    removeModifier(statsModifier = new StatsModifier()) {
         this.healthPoints.removeModifier(statsModifier.healthPoints);
         this.manaPoints.removeModifier(statsModifier.manaPoints);
         this.healthRegen.removeModifier(statsModifier.healthRegen);
@@ -50,5 +57,6 @@ export default class Stats {
         this.cooldownReduction.removeModifier(statsModifier.cooldownReduction);
         this.lifeSteal.removeModifier(statsModifier.lifeSteal);
         this.size.removeModifier(statsModifier.size);
+        return this;
     }
 }
