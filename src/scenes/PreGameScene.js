@@ -113,6 +113,120 @@ export default class PreGameScene extends Scene {
             "https://static.wikia.nocookie.net/leagueoflegends/images/5/55/Annie_Molten_Shield.png",
             "https://static.wikia.nocookie.net/leagueoflegends/images/9/92/Annie_Summon-_Tibbers.png",
             "https://static.wikia.nocookie.net/leagueoflegends/images/2/23/Annie_Command-_Tibbers.png",
+
+            // blitzcrank
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/04/Blitzcrank_Mana_Barrier.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/a/ac/Blitzcrank_Rocket_Grab.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/e/e9/Blitzcrank_Overdrive.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/5/59/Blitzcrank_Power_Fist.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/7/7e/Blitzcrank_Static_Field.png",
+
+            // brand
+            "https://static.wikia.nocookie.net/leagueoflegends/images/a/aa/Brand_Blaze.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/6f/Brand_Blaze_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/4/43/Brand_Sear.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/4/4c/Brand_Pillar_of_Flame.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b7/Brand_Conflagration.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/a/a3/Brand_Pyroclasm.png",
+
+            // caitlyn
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/33/Caitlyn_Headshot.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/69/Headshot_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b8/Caitlyn_Piltover_Peacemaker.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/12/Caitlyn_Yordle_Snap_Trap.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/e/e0/Caitlyn_90_Caliber_Net.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Caitlyn_Ace_in_the_Hole.png",
+
+            // ezreal
+            "https://static.wikia.nocookie.net/leagueoflegends/images/d/dc/Ezreal_Rising_Spell_Force.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/3e/Ezreal_Mystic_Shot.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f6/Ezreal_Essence_Flux.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/d/da/Ezreal_Arcane_Shift.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/68/Ezreal_Trueshot_Barrage.png",
+
+            // heimerdinger
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/03/Heimerdinger_Hextech_Affinity.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/4/41/Heimerdinger_H-28G_Evolution_Turret.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f0/Heimerdinger_H-28Q_Apex_Turret.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/8/8b/Heimerdinger_Hextech_Micro-Rockets.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/9/95/Heimerdinger_Hextech_Rocket_Swarm.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/67/Heimerdinger_CH-2_Electron_Storm_Grenade.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b2/Heimerdinger_CH-3X_Lightning_Grenade.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/19/Heimerdinger_UPGRADE%21%21%21.png",
+
+            // leblanc
+            "https://static.wikia.nocookie.net/leagueoflegends/images/4/4e/LeBlanc_Mirror_Image.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/9/93/LeBlanc_Sigil_of_Malice.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/05/LeBlanc_Distortion.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/9/9a/LeBlanc_Distortion_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/bd/LeBlanc_Ethereal_Chains.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/9/9b/LeBlanc_Mimic.png",
+
+            // lux
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/12/Lux_Illumination.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/5/54/Lux_Light_Binding.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/5/55/Lux_Prismatic_Barrier.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/a/a6/Lux_Lucent_Singularity.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f1/Lux_Final_Spark.png",
+
+            // morgana
+            "https://static.wikia.nocookie.net/leagueoflegends/images/7/71/Morgana_Soul_Siphon.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/3b/Morgana_Dark_Binding.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/8/8f/Morgana_Tormented_Shadow.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/4/4c/Morgana_Black_Shield.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/61/Morgana_Soul_Shackles.png",
+
+            // pyke
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b0/Pyke_Gift_of_the_Drowned_Ones.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/e/e0/Pyke_Bone_Skewer.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/02/Pyke_Ghostwater_Dive.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/1f/Pyke_Phantom_Undertow.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/19/Pyke_Death_from_Below.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/d/d8/Death_from_Below_2.png",
+
+            // shaco
+            "https://static.wikia.nocookie.net/leagueoflegends/images/7/7e/Shaco_Backstab.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/32/Shaco_Deceive.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/7/73/Shaco_Jack_in_the_Box.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/2/26/Shaco_Two-Shiv_Poison.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/6/65/Shaco_Hallucinate.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/d/d7/Shaco_Command-_Hallucinate.png",
+
+            // thresh
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/34/Thresh_Damnation.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/38/Thresh_Death_Sentence.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/a/a7/Thresh_Deathly_Leap.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f5/Thresh_Dark_Passage.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/d/d3/Thresh_Flay.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/fa/Thresh_The_Box.png",
+
+            // yasuo
+            "https://static.wikia.nocookie.net/leagueoflegends/images/2/2a/Yasuo_Way_of_the_Wanderer.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/09/Yasuo_Steel_Tempest.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/e/eb/Yasuo_Steel_Tempest_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/5/59/Yasuo_Steel_Tempest_3.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/2/2c/Yasuo_Wind_Wall.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/c/c9/Yasuo_Sweeping_Blade.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f0/Yasuo_Last_Breath.png",
+
+            // yone
+            "https://static.wikia.nocookie.net/leagueoflegends/images/5/52/Yone_Way_of_the_Hunter.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/2/28/Yone_Mortal_Steel.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/0/05/Yone_Mortal_Steel_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/fc/Yone_Spirit_Cleave.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/3/3e/Yone_Soul_Unbound.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/10/Yone_Soul_Unbound_2.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/c/c7/Yone_Fate_Sealed.png",
+
+            // lee sin
+            "https://static.wikia.nocookie.net/leagueoflegends/images/f/f0/Lee_Sin_Flurry.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b7/Lee_Sin_Sonic_Wave.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/2/29/Lee_Sin_Resonating_Strike.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/b/b7/Lee_Sin_Safeguard.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/e/e6/Lee_Sin_Iron_Will.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/19/Lee_Sin_Tempest.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/c/c5/Lee_Sin_Cripple.png",
+            "https://static.wikia.nocookie.net/leagueoflegends/images/1/1a/Lee_Sin_Dragon%27s_Rage.png",
         ];
 
         for (let spell of spells) {
