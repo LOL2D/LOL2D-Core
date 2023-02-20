@@ -231,32 +231,33 @@ export default class PreGameScene extends Scene {
 
         for (let spell of spells) {
             let s = document.createElement("div");
-            s.classList.add("spell");
+            s.classList = "spell";
 
-            if (typeof spell == "string") {
-                s.innerHTML = `
-                    <img src="${spell}" alt="">
-                    <p class="spell-name">?</p>
-                `;
-            } else {
-                s.innerHTML = `
-                    <img src="${spell.image}" alt="">
-                    <p class="spell-name">${spell.name}</p>
-                `;
-                s.addEventListener("mouseover", () => {
-                    let spellInfo = document.querySelector(".spell-info");
-                    spellInfo.innerHTML = `
+            let {
+                name = "?",
+                image = spell,
+                title = "?",
+                description = "?",
+            } = spell;
+
+            s.innerHTML = `
+                <img src="${image}" alt="">
+                <p class="spell-name">${name}</p>
+            `;
+            s.addEventListener("mouseover", () => {
+                let spellInfo = document.querySelector(".spell-info");
+                spellInfo.innerHTML = `
                     <div class="spell-info-header">
-                        <img src="${spell.image}" alt="">
+                        <img src="${image}" alt="">
                         <div>
-                            <p class="spell-title">${spell.title}</p>
-                            <p class="spell-name">(${spell.name})</p>
+                            <p class="spell-title">${title}</p>
+                            <p class="spell-name">(${name})</p>
                         </div>
                     </div>
-                    <p class="spell-description">${spell.description}</p>
+                    <p class="spell-description">${description}</p>
                 `;
-                });
-            }
+            });
+
             spellsContainer.appendChild(s);
         }
     }

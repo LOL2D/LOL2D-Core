@@ -10,10 +10,11 @@
     text-align: center;
     font-weight: bold;
     font-size: 1.5em;
+    margin-bottom: 20px;
 }
 
 .spells-chooser {
-    width: 600px;
+    width: 565px;
 }
 
 .spells-container {
@@ -30,6 +31,12 @@
     padding: 5px;
     border-bottom: 5px transparent solid;
     transition: .2s all;
+    opacity: 0.5;
+}
+
+.spells-container .spell:hover {
+    /* background-color: aliceblue; */
+    opacity: 1;
 }
 
 .spells-container .spell img {
@@ -54,7 +61,7 @@
 }
 
 .spell-info {
-    height: 150px;
+    height: 130px;
     overflow: auto;
 }
 
