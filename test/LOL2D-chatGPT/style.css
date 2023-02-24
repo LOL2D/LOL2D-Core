@@ -1,0 +1,12 @@
+/* make webpage background nice dark */
+body {
+    background-color: #333;
+}
+
+/* make canvas center - middle of page */
+canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
